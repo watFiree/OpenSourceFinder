@@ -15,5 +15,6 @@ module.exports = {
     indent: ['error', 2],
     'no-multi-spaces': ['error'],
     'no-console': 0,
+    'no-underscore-dangle': 0,
   },
 };

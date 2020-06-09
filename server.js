@@ -9,15 +9,15 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 6969;
 
-const authRouter = require('./routes/authRoutes');
-
 // passport config
 require('./config/passport')();
 
 app.use(bodyParser.json(), cors(), morgan('tiny'));
 
-app.use('/auth', authRouter);
+app.use('/auth', require('./routes/authRoutes'));
+app.use('/user', require('./routes/userRoutes'));
 
+mongoose.set('useFindAndModify', false);
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
