@@ -5,10 +5,10 @@ const jwtAuth = require('../middlewares/auth-middleware');
 const userRouter = express.Router();
 
 userRouter
-  .route('/project/:_id')
+  .route('/:_id')
   .get(jwtAuth, projectController.getProject)
   .delete(jwtAuth, projectController.deleteProject);
 
-userRouter.route('/project').post(jwtAuth, projectController.createProject);
+userRouter.route('/').post(jwtAuth, projectController.createProject);
 
 module.exports = userRouter;

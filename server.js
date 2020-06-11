@@ -15,7 +15,9 @@ require('./config/passport')();
 app.use(bodyParser.json(), cors(), morgan('tiny'));
 
 app.use('/auth', require('./routes/authRoutes'));
-app.use('/', require('./routes/projectRoutes'));
+app.use('/project', require('./routes/projectRoutes'));
+app.use('/task', require('./routes/taskRoutes'));
+app.use('/offer', require('./routes/offerRoutes'));
 
 mongoose.set('useFindAndModify', false);
 mongoose.connect(process.env.MONGO_URI, {

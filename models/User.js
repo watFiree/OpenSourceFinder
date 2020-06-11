@@ -7,6 +7,18 @@ const UserSchema = new Schema(
     email: { type: String, lowercase: true, trim: true, required: true },
     avaible: { type: Number, default: 1 },
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
+    stack: [{ type: String }],
+    about: {
+      fullName: String,
+      age: Number,
+      links: [
+        {
+          link: String,
+          url: String,
+        },
+      ],
+      desc: String,
+    },
   },
   {
     timestamps: true,

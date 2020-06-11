@@ -3,12 +3,17 @@ const User = require('../models/User');
 
 module.exports = {
   async createProject(req, res) {
-    const { name, stack } = req.body;
+    const { name, stack, about } = req.body;
     const data = {
       name,
       admins: [req.user],
       users: [req.user],
+      applications: [],
+      offers: [],
+      announcements: [],
+      tasks: [],
       stack,
+      about,
     };
 
     try {
@@ -24,7 +29,10 @@ module.exports = {
     const { _id } = req.params;
     const project = await Project.findById({ _id })
       .populate('admins', 'name')
-      .populate('users', 'name');
+      .populate('users', 'name')
+      .populate('offers', 'desc')
+      .populate('tasks', 'title');
+
     return res.status(200).send(project);
   },
   async deleteProject(req, res) {
