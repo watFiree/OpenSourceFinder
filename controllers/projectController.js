@@ -1,9 +1,14 @@
+const validator = require('validator');
 const Project = require('../models/Project');
 const User = require('../models/User');
 
 module.exports = {
   async createProject(req, res) {
     const { name, stack, about } = req.body;
+    if (name === undefined || validator.isEmpty(name))
+      return res.status(400).send({ message: 'Name is required ! ' });
+    if (stack === undefined || stack.length === 0)
+      return res.status(400).send({ message: 'Stack is required ! ' });
     const data = {
       name,
       admins: [req.user],
@@ -17,23 +22,39 @@ module.exports = {
     };
 
     try {
+      const exists = Project.findOne({ name });
+      if (exists)
+        return res.status(400).send({ message: 'Project with this name already exists !' });
       const project = await new Project(data);
       await project.save();
       await User.findOneAndUpdate({ _id: req.user._id }, { $push: { projects: project } });
       return res.status(200).send(project);
     } catch (err) {
-      return res.status(404).send(err);
+      return res.status(404).send({ message: 'Could not create :(', err });
     }
   },
   async getProject(req, res) {
     const { _id } = req.params;
-    const project = await Project.findById({ _id })
-      .populate('admins', 'name')
-      .populate('users', 'name')
-      .populate('offers', 'desc')
-      .populate('tasks', 'title');
-
-    return res.status(200).send(project);
+    try {
+      const project = await Project.findById({ _id })
+        .populate('admins', 'name')
+        .populate('users', 'name')
+        .populate('offers', 'desc')
+        .populate('tasks', 'title');
+      if (!project)
+        return res.status(404).send({ message: 'Project with this id does not exist ! ' });
+      return res.status(200).send(project);
+    } catch (err) {
+      return res.status(404).send({ message: 'Could not get project :(', err });
+    }
+  },
+  async fetchAll(req, res) {
+    try {
+      const projects = await Project.find();
+      return res.status(200).send(projects);
+    } catch (err) {
+      return res.status(404).send({ message: 'Something went wrong :(', err });
+    }
   },
   async deleteProject(req, res) {
     const { _id } = req.params;

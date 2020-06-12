@@ -2,6 +2,12 @@ const Project = require('../models/Project');
 const Task = require('../models/Task');
 
 module.exports = {
+  async getTask(req, res) {
+    const { _id } = req.params;
+    const task = await Task.findById(_id).populate('creator', 'name');
+    if (!task) return res.status(404).send({ message: 'Task not found ! ' });
+    return res.status(200).send(task);
+  },
   async createTask(req, res) {
     const { _id, title, content, expiration, status, importance, contributors } = req.body;
     const data = {

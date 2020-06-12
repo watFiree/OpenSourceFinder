@@ -6,7 +6,7 @@ const ProjectSchema = Schema({
   users: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   applications: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   offers: [{ type: Schema.Types.ObjectId, ref: 'Offer' }],
-  stack: [{ type: String }],
+  stack: [{ type: String, required: true }],
   about: {
     links: [{ type: String }],
     desc: String,
