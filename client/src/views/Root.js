@@ -1,19 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
-import Button from '../components/atoms/Button';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import withProviders from '../hoc/withProviders';
-
-const Title = styled.h1`
-  font-size: 2 rem;
-  color: ${(props) => props.theme.purpleLight};
-`;
+import MainView from './Main';
 
 const Root = () => {
   return (
-    <>
-      <Title>Hello react</Title>
-      <Button bg="purpleDark">Sign up</Button>
-    </>
+    <Router>
+      <Switch>
+        <Route exact path="/" component={MainView} />
+      </Switch>
+    </Router>
   );
 };
 

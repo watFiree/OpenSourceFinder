@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 const Wrapper = styled(Button)`
   background-color: ${({ theme, bg }) => theme[bg] || theme.blackLight};
   color: ${({ theme }) => theme.white || 'white'};
-  font-weight: ${({ theme }) => theme.heavy || 500};
+  font-weight: ${({ theme, weight }) => theme[weight] || 500};
   letter-spacing: 1px;
 
   &:hover {
@@ -13,10 +13,13 @@ const Wrapper = styled(Button)`
   }
 `;
 
-const Btn = ({ children, bg, size = 'large' }) => (
-  <Wrapper variant="contained" size={size} bg={bg}>
-    {children}
-  </Wrapper>
-);
+const Btn = ({ children, bg, size = 'large' }) => {
+  window.addEventListener('scroll', () => console.log(window.pageYOffset));
+  return (
+    <Wrapper variant="contained" size={size} bg={bg}>
+      {children}
+    </Wrapper>
+  );
+};
 
 export default Btn;

@@ -1,13 +1,12 @@
 export const theme = {
   light: 400,
-  medium: 500,
-  regular: 600,
+  regular: 500,
   bold: 700,
-  heavy: 700,
+  heavy: 900,
   white: '#FCFCFC',
   purpleLight: '#b17acc',
   purpleDark: '#663399',
-  gray: '#663399',
+  gray: '#b7b5bd',
   blackLight: '#48434f',
   blackDark: '#36313d',
 };

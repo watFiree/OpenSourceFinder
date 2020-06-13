@@ -2,12 +2,14 @@ import React from 'react';
 import { StylesProvider } from '@material-ui/core/styles';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/theme';
+import GlobalStyle from '../styles/GlobalStyle';
 
-const withProviders = (Component) => (props) => {
+const withProviders = (Component) => () => {
   return (
     <StylesProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <Component props={props} />
+        <GlobalStyle />
+        <Component />
       </ThemeProvider>
     </StylesProvider>
   );
