@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import withProviders from '../hoc/withProviders';
-import MainView from './Main';
+import MainView from './MainView';
 
 const Root = () => {
   return (

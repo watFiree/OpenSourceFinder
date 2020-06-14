@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Text = styled.p`
-  width: 100%;
+  width: 75%;
   text-align: justify;
   font-size: ${({ size }) => `${size}rem` || '1.4rem'};
   color: ${({ theme, color }) => theme[color] || theme.white};
