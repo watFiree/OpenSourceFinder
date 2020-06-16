@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components/macro';
+import styled from 'styled-components/macro';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Text from '../atoms/Text';
@@ -28,8 +28,12 @@ const Footer = () => (
       OpenSourceFinder - Created by Karol Piotrowicz
     </Text>
     <Icons>
-      <TwitterIcon fontSize="large" css={Icon} />
-      <GitHubIcon fontSize="large" css={Icon} />
+      <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/hellocharlesp">
+        <TwitterIcon fontSize="large" css={Icon} />
+      </a>
+      <a target="_blank" rel="noopener noreferrer" href="https://github.com/watFiree">
+        <GitHubIcon fontSize="large" css={Icon} />
+      </a>
     </Icons>
   </Wrapper>
 );

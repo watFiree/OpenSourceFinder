@@ -1,12 +1,12 @@
 import React from 'react';
 import styled, { css } from 'styled-components/macro';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import Link from '../atoms/Link';
 import Title from '../atoms/Title';
 import Navigation from '../molecules/Navigation';
 import logoImg from '../../assets/logo.svg';
 import Icon from '../atoms/Icon';
+import MailIcon from '../atoms/MailIcon';
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.blackDark};
@@ -72,7 +72,7 @@ const Header = () => {
           </Link>
         </Navigation>
         <IconsWrapper>
-          <MailOutlineIcon css={Icon} />
+          <MailIcon />
           <AccountCircleIcon fontSize="large" css={Icon} />
         </IconsWrapper>
       </UserActions>

@@ -7,7 +7,7 @@ const Wrapper = styled(Button)`
   color: ${({ theme }) => theme.white || 'white'};
   font-weight: ${({ theme, weight }) => theme[weight] || 700};
   letter-spacing: 1px;
-  padding: 15px 30px;
+  padding: 12px 30px;
   &:hover {
     background-color: ${({ theme, bg }) => theme[bg] || theme.blackLight};
   }
