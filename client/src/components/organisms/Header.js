@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import styled, { css } from 'styled-components/macro';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import Link from '../atoms/Link';
@@ -38,10 +39,18 @@ const Logo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  width: 18%;
+  width: 15%;
   height: 80%;
   img {
     height: 50px;
+    transition: 1s ease-out;
+  }
+  &:hover {
+    cursor: pointer;
+
+    img {
+      transform: translate(2px, -5px);
+    }
   }
 `;
 
@@ -56,9 +65,12 @@ const Header = () => {
   const [fromTop, setFromTop] = React.useState(0);
   window.addEventListener('scroll', () => setFromTop(window.pageYOffset));
 
+  const history = useHistory();
+  const handleRedirect = () => history.push('/');
+
   return (
     <Wrapper as="header" fromTop={fromTop}>
-      <Logo>
+      <Logo onClick={handleRedirect}>
         <Title size="1.6">OpenSourceFinder</Title>
         <img src={logoImg} alt="logo" />
       </Logo>
@@ -67,7 +79,7 @@ const Header = () => {
           <Link size="1.2" to="/projects">
             projects
           </Link>
-          <Link size="1.2" to="/projects">
+          <Link size="1.2" to="/offers">
             offers
           </Link>
         </Navigation>
