@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Wrapper from '../components/atoms/Wrapper';
+import FilterWrapper from '../components/atoms/FilterWrapper';
 import Header from '../components/organisms/Header';
 import Button from '../components/atoms/Button';
 import bgImage from '../assets/stars-background.jpg';
@@ -14,7 +15,7 @@ const Hero = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  p {
+  h1 {
     color: ${({ theme }) => theme.white};
     text-align: center;
     line-height: 130%;
@@ -22,17 +23,8 @@ const Hero = styled.div`
     letter-spacing: 1px;
     font-weight: ${({ theme }) => theme.bold};
     margin-bottom: 30px;
+    text-transform: uppercase;
   }
-`;
-
-const FilterBox = styled.div`
-  width: 100%;
-  height: 50vh;
-  background-color: ${({ theme }) => theme.blackLight};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
 `;
 
 const ProjectsView = () => {
@@ -40,13 +32,13 @@ const ProjectsView = () => {
     <Wrapper image={bgImage}>
       <Header />
       <Hero>
-        <p>START WITH YOUR PROJECT FOR FREE !</p>
+        <h1>START WITH YOUR PROJECT FOR FREE !</h1>
         <Button bg="purpleDark">sign up now</Button>
       </Hero>
-      <FilterBox>
+      <FilterWrapper>
         <FilterByName title="find project for you" />
         <FilterByLanguages />
-      </FilterBox>
+      </FilterWrapper>
     </Wrapper>
   );
 };

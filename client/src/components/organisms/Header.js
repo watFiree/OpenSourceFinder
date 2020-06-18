@@ -71,7 +71,9 @@ const Header = () => {
   return (
     <Wrapper as="header" fromTop={fromTop}>
       <Logo onClick={handleRedirect}>
-        <Title size="1.6">OpenSourceFinder</Title>
+        <Title size="1.6" as="p">
+          OpenSourceFinder
+        </Title>
         <img src={logoImg} alt="logo" />
       </Logo>
       <UserActions>
