@@ -2,7 +2,7 @@ const initialState = {
   name: '',
   email: '',
   isAuth: false,
-  avaible: 0,
+  available: 0,
   projectsIds: [],
   token: '',
   loading: false,

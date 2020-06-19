@@ -29,6 +29,33 @@ const GlobalStyle = createGlobalStyle`
         }
     }
 
+    body{
+        padding-right:0!important;
+        overflow:auto!important;
+        &::-webkit-scrollbar {
+            width: 0.8em;
+            background-color:#b5b5b5;
+            &:hover{
+                transform: scaleX(1.2)
+            }
+        }
+        &::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #b5b5b5;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: #b17acc; 
+            background-image: -webkit-linear-gradient(45deg,
+                                              rgba(102,51,153,.2) 25%,
+                                              transparent 25%,
+                                              transparent 50%,
+                                              rgba(102,51,153,.2) 50%,
+                                              rgba(102,51,153,.2) 75%,
+                                              transparent 75%,
+                                              transparent)
+        }
+    }
     *, *::before, *::after {  
         box-sizing: border-box;
         -webkit-font-smoothing: antialiased;

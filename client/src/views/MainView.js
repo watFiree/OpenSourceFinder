@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import Button from '../components/atoms/Button';
 import Title from '../components/atoms/Title';
 import Text from '../components/atoms/Text';
@@ -9,6 +10,8 @@ import Footer from '../components/molecules/Footer';
 import Explanation from '../components/atoms/Explanation';
 import bgImg from '../assets/earth-background.jpg';
 import handsImg from '../assets/hands.svg';
+
+import { mapStateToProps } from '../helpers/mapStateToProps';
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.blackDark};
@@ -62,14 +65,18 @@ const InstructionBox = styled.div`
   justify-content: space-around;
 `;
 
-const Main = () => (
+const MainView = ({ user }) => (
   <Wrapper>
     <Header />
     <Hero>
       <p>
         CODE WITH <br /> ANYONE <br /> FROM <br /> ANYWHERE !
       </p>
-      <Button bg="purpleDark">sign up now</Button>
+      {user.isAuth ? (
+        <Button bg="purpleDark">create project now !</Button>
+      ) : (
+        <Button bg="purpleDark">sign up now</Button>
+      )}
     </Hero>
     <TechnologiesBar />
     <InfoBox>
@@ -98,4 +105,4 @@ const Main = () => (
   </Wrapper>
 );
 
-export default Main;
+export default connect(mapStateToProps('user'))(MainView);
