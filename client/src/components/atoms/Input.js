@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 const Input = styled(TextField)`
   background-color: ${({ theme }) => theme.purpleLight};
   padding: 12px;
-  width: 30%;
+  width: ${({ width }) => width || '30%'};
   .input:hover {
     color: ${({ theme }) => theme.purpleDark};
   }

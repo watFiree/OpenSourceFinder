@@ -4,6 +4,7 @@ import withProviders from '../hoc/withProviders';
 import MainView from './MainView';
 import ProjectsView from './ProjectsView';
 import OffersView from './OffersView';
+import LoggingView from './LoggingView';
 
 const Root = () => {
   return (
@@ -12,6 +13,7 @@ const Root = () => {
         <Route exact path="/" component={MainView} />
         <Route exact path="/offers" component={OffersView} />
         <Route exact path="/projects" component={ProjectsView} />
+        <Route exact path={['/signin', '/signup']} component={LoggingView} />
       </Switch>
     </Router>
   );

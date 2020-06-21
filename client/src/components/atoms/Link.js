@@ -13,8 +13,8 @@ const Wrapper = styled.a`
   }
 `;
 
-const Link = ({ children, to, size }) => (
-  <Wrapper size={size} as={A} to={to}>
+const Link = ({ children, to, size, color }) => (
+  <Wrapper size={size} as={A} to={to} color={color}>
     {children}
   </Wrapper>
 );
