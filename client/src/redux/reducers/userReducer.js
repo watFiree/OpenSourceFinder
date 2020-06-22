@@ -1,3 +1,5 @@
+import * as types from '../actionTypes/userActions';
+
 const initialState = {
   name: '',
   email: '',
@@ -10,11 +12,35 @@ const initialState = {
 };
 
 const userReducer = (state = initialState, action) => {
+  console.log(action);
   switch (action.type) {
-    case 'LOGED_IN':
+    case types.SIGN_USER_STARTED:
       return {
         ...state,
+        loading: true,
+      };
+    case types.SIGN_USER_SUCCESS:
+      const { _id, name, email, avaible, projects, token } = action.payload;
+
+      localStorage.setItem('token', token);
+
+      return {
+        ...state,
+        _id,
+        name,
+        email,
+        avaible,
+        projects,
+        loading: false,
         isAuth: true,
+        error: null,
+      };
+    case types.SIGN_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        isAuth: false,
+        error: action.payload,
       };
     default:
       return state;

@@ -9,4 +9,5 @@ export const theme = {
   gray: '#b7b5bd',
   blackLight: '#48434f',
   blackDark: '#36313d',
+  error: '#ff0033',
 };

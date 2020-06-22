@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import SearchIcon from '@material-ui/icons/Search';
 import Title from '../atoms/Title';
-import Input from '../atoms/Input';
+import SearchInput from '../atoms/SearchInput';
 
 const StyledSearchIcon = styled(SearchIcon)`
   color: ${({ theme }) => theme.purpleDark};
@@ -16,7 +16,7 @@ const FilterByName = ({ title, placeholder }) => {
       <Title as="h2" size="2.4">
         {title}
       </Title>
-      <Input
+      <SearchInput
         placeholder={placeholder}
         InputProps={{
           startAdornment: (

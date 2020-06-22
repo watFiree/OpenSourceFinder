@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import Checkbox from '@material-ui/core/Checkbox';
 
 const StyledCheckbox = styled(Checkbox)`
-  &.MuiIconButton-root {
+  &.MuiCheckbox-root {
+    color: ${({ theme }) => theme.purpleLight};
   }
   &.MuiCheckbox-colorPrimary.Mui-checked {
     color: ${({ theme }) => theme.purpleLight};

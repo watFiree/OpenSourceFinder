@@ -1,25 +1,30 @@
+import React from 'react';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 
-const Input = styled(TextField)`
-  background-color: ${({ theme }) => theme.purpleLight};
-  padding: 12px;
-  width: ${({ width }) => width || '30%'};
-  .input:hover {
-    color: ${({ theme }) => theme.purpleDark};
+const Input = styled(({ ...props }) => <TextField {...props} />)`
+  .MuiInputBase-root {
+    color: ${({ theme }) => theme.white};
+  }
+  label {
+    color: ${({ theme }) => theme.purpleLight};
+  }
+  .MuiFormLabel-root {
+    &.Mui-focused {
+      color: ${({ theme }) => theme.purpleDark};
+    }
   }
   .MuiInput-underline:before {
-    border-bottom: 1.5px solid ${({ theme }) => theme.purpleLight};
-  }
-  .MuiInput-underline:after {
-    border-bottom: 2px solid ${({ theme }) => theme.purpleDark};
-  }
-  .MuiInput-underline:hover:before {
-    border-bottom: 2px solid ${({ theme }) => theme.purpleDark};
-    opacity: 0.55;
+    border-bottom-color: ${({ theme }) => theme.purpleLight};
   }
   .MuiInput-underline:focus:before {
-    border-bottom: 2px solid ${({ theme }) => theme.purpleDark};
+    border-bottom-color: ${({ theme }) => theme.purpleDark};
+  }
+  .MuiInput-underline:after {
+    border-bottom-color: ${({ theme }) => theme.purpleDark};
+  }
+  .MuiInput-underline:hover:before {
+    border-bottom-color: ${({ theme }) => theme.purpleLight};
   }
 `;
 
