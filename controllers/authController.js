@@ -4,6 +4,7 @@ const User = require('../models/User');
 
 module.exports = {
   async signup(req, res) {
+    console.log(req.body);
     const { name, email, password } = req.body;
     // validation
     if (typeof name !== 'string' || typeof email !== 'string' || typeof password !== 'string')
@@ -13,7 +14,9 @@ module.exports = {
     if (validator.isEmpty(password)) return res.status(400).send({ message: 'Name is required !' });
     if (!validator.isEmail(email))
       return res.status(400).send({ message: 'Incorrect email format !' });
-
+    if (password.length < 6)
+      return res.status(400).send({ message: 'Incorrect password format !' });
+    if (name.length < 4) return res.status(400).send({ message: 'Incorrect name format !' });
     // if exists
     const nameTaken = await User.findOne({ name });
     if (nameTaken) return res.status(400).send({ message: 'This name is already taken !' });
@@ -27,24 +30,59 @@ module.exports = {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: 3600,
       });
-      return res.status(201).send({
+      return res.status(201).cookie('token', token).send({
         _id: user._id,
         name: user.name,
         email: user.email,
         avaible: user.avaible,
         projects: user.projects,
-        token,
       });
     } catch (err) {
       return res.status(400).send({ message: 'Could not create user :(' });
     }
   },
   async signin(req, res) {
-    if (!req.user) return res.status(404).send({ message: 'Invalid nickname or password ' });
+    if (!req.user) return res.status(401).send({ message: 'Invalid nickname or password ' });
     const { _id, name, email, avaible } = req.user;
+    const expirationTime = req.body.remember ? 604800 : 3600;
     const token = jwt.sign({ id: _id }, process.env.JWT_SECRET, {
-      expiresIn: 3600,
+      expiresIn: expirationTime,
     });
-    return res.status(200).send({ _id, name, email, avaible, token });
+    return res.status(200).cookie('token', token).send({ _id, name, email, avaible });
+  },
+  async google(req, res) {
+    return res
+      .status(200)
+      .cookie(
+        'token',
+        jwt.sign({ id: req.user[0]._id }, process.env.JWT_SECRET, {
+          expiresIn: 3600,
+        })
+      )
+      .redirect('http://localhost:3000/');
+  },
+  async github(req, res) {
+    console.log(req.user);
+    return res
+      .status(200)
+      .cookie(
+        'token',
+        jwt.sign({ id: req.user[0]._id }, process.env.JWT_SECRET, {
+          expiresIn: 3600,
+        })
+      )
+      .redirect('http://localhost:3000/');
+  },
+  async twitter(req, res) {
+    console.log(req.user);
+    return res
+      .status(200)
+      .cookie(
+        'token',
+        jwt.sign({ id: req.user[0]._id }, process.env.JWT_SECRET, {
+          expiresIn: 3600,
+        })
+      )
+      .redirect('http://localhost:3000/');
   },
 };

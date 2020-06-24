@@ -22,5 +22,6 @@ module.exports = {
     'import/prefer-default-export': 0,
     indent: ['error', 2, { SwitchCase: 1 }],
     'no-case-declarations': 0,
+    'react/jsx-props-no-spreading': 0,
   },
 };

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components/macro';
 import Menu from '@material-ui/core/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -36,6 +37,10 @@ const UserIcon = ({ isAuth }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const dispatch = useDispatch();
+
+  const handleLogout = () => dispatch({ type: 'USER_LOGOUT' });
   return (
     <div>
       <IconButton
@@ -66,7 +71,7 @@ const UserIcon = ({ isAuth }) => {
           <>
             <MenuItem>My account</MenuItem>
             <MenuItem>My projects</MenuItem>
-            <MenuItem>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </>
         ) : (
           <>

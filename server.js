@@ -5,15 +5,26 @@ const chalk = require('chalk');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const passport = require('passport');
+
+const jwtAuth = require('./middlewares/auth-middleware');
+// passport config
+passport.serializeUser((user, cb) => {
+  cb(null, user);
+});
+
+passport.deserializeUser((user, cb) => {
+  cb(null, user);
+});
+
+require('./config/passport')();
 
 const app = express();
 const port = process.env.PORT || 6969;
 
-// passport config
-require('./config/passport')();
+app.use(bodyParser.json(), cors(), passport.initialize(), morgan('tiny'));
 
-app.use(bodyParser.json(), cors(), morgan('tiny'));
-
+app.use('/user', jwtAuth, (req, res) => res.status(200).send(req.user));
 app.use('/auth', require('./routes/authRoutes'));
 app.use('/project', require('./routes/projectRoutes'));
 app.use('/task', require('./routes/taskRoutes'));

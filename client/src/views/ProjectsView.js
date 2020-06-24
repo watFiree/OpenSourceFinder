@@ -32,12 +32,10 @@ const Hero = styled.div`
   }
 `;
 
-const ProjectsView = ({ user }) => {
+const ProjectsView = ({ user}) => {
   const LoggedAndCanCreate = user.isAuth && user.avaible;
   const LoggedAndCannotCreate = user.isAuth && !user.avaible;
   const NotLoggedIn = !user.isAuth;
-
-  console.log(LoggedAndCannotCreate, NotLoggedIn);
   return (
     <Wrapper image={bgImage}>
       <Header />

@@ -26,3 +26,17 @@ export const signUser = (input, uri) => {
       .catch((err) => dispatch(signUserFailure(err.response.data)));
   };
 };
+
+export const getUser = (token) => {
+  return (dispatch) => {
+    dispatch(signUserStarted());
+    axios
+      .get('/user', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        dispatch(signUserSuccess(response.data));
+      })
+      .catch(() => dispatch(signUserFailure()));
+  };
+};

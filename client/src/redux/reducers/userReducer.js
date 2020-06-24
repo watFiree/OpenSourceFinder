@@ -14,16 +14,18 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   console.log(action);
   switch (action.type) {
+    case types.USER_LOGOUT:
+      document.cookie = 'token=';
+      return {
+        ...initialState,
+      };
     case types.SIGN_USER_STARTED:
       return {
         ...state,
         loading: true,
       };
     case types.SIGN_USER_SUCCESS:
-      const { _id, name, email, avaible, projects, token } = action.payload;
-
-      localStorage.setItem('token', token);
-
+      const { _id, name, email, avaible, projects } = action.payload;
       return {
         ...state,
         _id,

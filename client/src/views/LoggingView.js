@@ -12,9 +12,13 @@ import Link from '../components/atoms/Link';
 import ErrorMessage from '../components/atoms/ErrorMessage';
 import bgImage from '../assets/logging-background.jpg';
 import Text from '../components/atoms/Text';
+import Logo from '../components/molecules/Logo';
 import LoadingCircle from '../components/atoms/LoadingCircle';
 import { FlexCenterAroundColumn, FlexCenterColumn, FlexCenter } from '../helpers/cssFlex';
 import { signUser } from '../redux/actions/signUser';
+import GoogleButton from '../components/atoms/GoogleButton';
+import GithubButton from '../components/atoms/GithubButton';
+import TwitterButton from '../components/atoms/TwitterButton';
 import { mapStateToProps } from '../helpers/mapStateToProps';
 
 const Wrapper = styled.div`
@@ -24,8 +28,14 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-const HeroImage = styled.img`
+const Hero = styled.div`
+  background-image: url(${({ image }) => image});
+  background-size: cover;
+  position: relative;
   height: 100vh;
+  width: 50%;
+  padding-left: 75px;
+  ${FlexCenter}
 `;
 
 const FormWrapper = styled.div`
@@ -41,6 +51,7 @@ const FormWrapper = styled.div`
 `;
 
 const Form = styled.form`
+  margin-top: 20%;
   height: 50%;
   width: 90%;
   ${FlexCenterAroundColumn}
@@ -52,14 +63,22 @@ const Links = styled.div`
   ${FlexCenter}
   justify-content: space-between;
 `;
+
+const SocialMedias = styled.div`
+  width: 30%;
+  ${FlexCenterColumn}
+  height: 30%;
+`;
+
 const LoggingView = ({ match, user, signUser }) => {
   const pageType = match.path.slice(1);
   const titleText = `${pageType[0].toUpperCase()}${pageType.slice(1, 4)} ${pageType.slice(4)}`;
-  console.log(user);
   return (
     <Wrapper>
       {user.isAuth && <Redirect to="/" />}
-      <HeroImage src={bgImage} />
+      <Hero image={bgImage}>
+        <Logo to="/" />
+      </Hero>
       <FormWrapper>
         <Formik
           initialValues={{ name: '', email: '', password: '', remember: false }}
@@ -171,6 +190,11 @@ const LoggingView = ({ match, user, signUser }) => {
         <Text color="gray" weight="bold">
           or Connect with social media
         </Text>
+        <SocialMedias>
+          <GoogleButton />
+          <TwitterButton />
+          <GithubButton />
+        </SocialMedias>
       </FormWrapper>
     </Wrapper>
   );

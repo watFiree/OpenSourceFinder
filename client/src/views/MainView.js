@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { connect } from 'react-redux';
+import Link from '../components/atoms/Link';
 import Button from '../components/atoms/Button';
 import Title from '../components/atoms/Title';
 import Text from '../components/atoms/Text';
@@ -10,8 +10,7 @@ import Footer from '../components/molecules/Footer';
 import Explanation from '../components/atoms/Explanation';
 import bgImg from '../assets/earth-background.jpg';
 import handsImg from '../assets/hands.svg';
-
-import { mapStateToProps } from '../helpers/mapStateToProps';
+import withAuth from '../hoc/withAuth';
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.blackDark};
@@ -65,44 +64,49 @@ const InstructionBox = styled.div`
   justify-content: space-around;
 `;
 
-const MainView = ({ user }) => (
-  <Wrapper>
-    <Header />
-    <Hero>
-      <p>
-        CODE WITH <br /> ANYONE <br /> FROM <br /> ANYWHERE !
-      </p>
-      {user.isAuth ? (
-        <Button bg="purpleDark">create project now !</Button>
-      ) : (
-        <Button bg="purpleDark">sign up now</Button>
-      )}
-    </Hero>
-    <TechnologiesBar />
-    <InfoBox>
-      <img src={handsImg} alt="hands" />
-      <div>
-        <Title size={3.2} weight="regular" margin="32px">
-          Cooperate and contribute with others easily !
+const MainView = ({ user }) => {
+  return (
+    <Wrapper>
+      <Header />
+      <Hero>
+        <p>
+          CODE WITH <br /> ANYONE <br /> FROM <br /> ANYWHERE !
+        </p>
+        {user.isAuth ? (
+          <Button bg="purpleDark">create project now !</Button>
+        ) : (
+          <Link to="/signup">
+            <Button bg="purpleDark">sign up now</Button>
+          </Link>
+        )}
+      </Hero>
+      <TechnologiesBar />
+      <InfoBox>
+        <img src={handsImg} alt="hands" />
+        <div>
+          <Title size={3.2} weight="regular" margin="32px">
+            Cooperate and contribute with others easily !
+          </Title>
+          <Text size={1.8} weight="regular">
+            There are many variations of passages of Lorem Ipsum available, but the majority have
+            suffered alteration in some form, by injected humour, or randomised words which
+            don&apos;t look even slightly believable. If you are going to use a passage of Lorem
+            Ipsum.
+          </Text>
+        </div>
+      </InfoBox>
+      <InstructionBox>
+        <Title size={3.2} weight="regular" margin="48px">
+          How to start ?
         </Title>
-        <Text size={1.8} weight="regular">
-          There are many variations of passages of Lorem Ipsum available, but the majority have
-          suffered alteration in some form, by injected humour, or randomised words which don't look
-          even slightly believable. If you are going to use a passage of Lorem Ipsum.
-        </Text>
-      </div>
-    </InfoBox>
-    <InstructionBox>
-      <Title size={3.2} weight="regular" margin="48px">
-        How to start ?
-      </Title>
-      <Explanation> 1. Create free account</Explanation>
-      <Explanation> 1. Create free account</Explanation>
-      <Explanation> 1. Create free account</Explanation>
-      <Explanation> 1. Create free account</Explanation>
-    </InstructionBox>
-    <Footer />
-  </Wrapper>
-);
+        <Explanation> 1. Create free account</Explanation>
+        <Explanation> 1. Create free account</Explanation>
+        <Explanation> 1. Create free account</Explanation>
+        <Explanation> 1. Create free account</Explanation>
+      </InstructionBox>
+      <Footer />
+    </Wrapper>
+  );
+};
 
-export default connect(mapStateToProps('user'))(MainView);
+export default withAuth(MainView);
