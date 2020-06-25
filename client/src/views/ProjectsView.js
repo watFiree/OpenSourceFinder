@@ -8,7 +8,10 @@ import Button from '../components/atoms/Button';
 import bgImage from '../assets/stars-background.jpg';
 import FilterByLanguages from '../components/molecules/FilterByLanguages';
 import FilterByName from '../components/molecules/FilterByName';
+import { FlexCenterAroundColumn } from '../helpers/cssFlex';
 import { mapStateToProps } from '../helpers/mapStateToProps';
+import { getProject } from '../redux/actions/getProject';
+import ProjectCard from '../components/molecules/ProjectCard';
 
 const Hero = styled.div`
   width: 100%;
@@ -32,10 +35,19 @@ const Hero = styled.div`
   }
 `;
 
-const ProjectsView = ({ user}) => {
+const ProjectsWrapper = styled.div`
+  width: 100%;
+  ${FlexCenterAroundColumn}
+`;
+
+const ProjectsView = ({ user, projects, getProject }) => {
   const LoggedAndCanCreate = user.isAuth && user.avaible;
   const LoggedAndCannotCreate = user.isAuth && !user.avaible;
   const NotLoggedIn = !user.isAuth;
+
+  React.useEffect(() => {
+    getProject();
+  }, [getProject]);
   return (
     <Wrapper image={bgImage}>
       <Header />
@@ -68,8 +80,13 @@ const ProjectsView = ({ user}) => {
         <FilterByName title="find project for you" />
         <FilterByLanguages />
       </FilterWrapper>
+      <ProjectsWrapper>
+        {projects.projects.map((project) => (
+          <ProjectCard data={project} />
+        ))}
+      </ProjectsWrapper>
     </Wrapper>
   );
 };
 
-export default connect(mapStateToProps('user'))(ProjectsView);
+export default connect(mapStateToProps('user', 'projects'), { getProject })(ProjectsView);

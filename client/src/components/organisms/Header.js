@@ -51,10 +51,10 @@ const Header = ({ user }) => {
       <UserActions>
         <Navigation>
           <Link size="1.2" to="/projects">
-            projects
+            find project
           </Link>
-          <Link size="1.2" to="/offers">
-            offers
+          <Link size="1.2" to="/user/projects">
+            your projects
           </Link>
         </Navigation>
         <IconsWrapper>

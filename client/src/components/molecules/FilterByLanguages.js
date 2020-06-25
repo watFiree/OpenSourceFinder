@@ -4,21 +4,13 @@ import { MenuItem } from '@material-ui/core';
 import Chip from '../atoms/Chip';
 import Title from '../atoms/Title';
 import Select from '../atoms/Select';
+import ChipsWrapper from '../atoms/ChipsWrapper';
 
 const Wrapper = styled.div`
   width: 100%;
   height: 40%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-`;
-
-const ChipsWrapper = styled.div`
-  width: 80%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-evenly;
 `;

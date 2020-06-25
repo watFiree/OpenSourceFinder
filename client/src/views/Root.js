@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import withProviders from '../hoc/withProviders';
 import MainView from './MainView';
 import ProjectsView from './ProjectsView';
-import OffersView from './OffersView';
+import UserProjectsView from './UserProjectsView';
 import LoggingView from './LoggingView';
 
 const Root = () => {
@@ -11,7 +11,7 @@ const Root = () => {
     <Router>
       <Switch>
         <Route exact path="/" component={MainView} />
-        <Route exact path="/offers" component={OffersView} />
+        <Route exact path="/user/projects" component={UserProjectsView} />
         <Route exact path="/projects" component={ProjectsView} />
         <Route exact path={['/signin', '/signup']} component={LoggingView} />
       </Switch>

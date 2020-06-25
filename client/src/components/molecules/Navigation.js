@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.nav`
-  width: ${({ width }) => width || '40%'};
+  width: ${({ width }) => width || '60%'};
   ul {
     width: 100%;
     display: flex;

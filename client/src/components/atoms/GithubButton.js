@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Wrapper = styled.a`
   margin: 3%;
   width: 97%;
-  height: 20%;
+  height: 22%;
   background-color: ${({ theme }) => theme.white || 'white'};
   color: #2a2a2a;
   font-size: 1.25rem;

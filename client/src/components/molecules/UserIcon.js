@@ -70,7 +70,6 @@ const UserIcon = ({ isAuth }) => {
         {isAuth ? (
           <>
             <MenuItem>My account</MenuItem>
-            <MenuItem>My projects</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </>
         ) : (

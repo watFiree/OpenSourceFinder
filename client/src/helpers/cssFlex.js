@@ -13,6 +13,12 @@ export const FlexCenter = css`
   justify-content: center;
 `;
 
+export const FlexCenterAround = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+`;
+
 export const FlexCenterColumn = css`
   display: flex;
   flex-direction: column;

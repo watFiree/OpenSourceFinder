@@ -8,16 +8,13 @@ const Wrapper = styled(MaterialChip)`
   color: ${({ theme }) => theme.white};
 `;
 
-const Chip = ({ data, handleDelete }) => {
-  console.log(data);
-  return (
-    <Wrapper
-      label={data.name}
-      col={data.color}
-      onDelete={() => handleDelete(data.name)}
-      avatar={<Avatar src={data.src} />}
-    />
-  );
-};
+const Chip = ({ data, handleDelete }) => (
+  <Wrapper
+    label={data.name}
+    col={data.color}
+    onDelete={handleDelete ? () => handleDelete(data.name) : null}
+    avatar={<Avatar src={data.src} />}
+  />
+);
 
 export default Chip;
