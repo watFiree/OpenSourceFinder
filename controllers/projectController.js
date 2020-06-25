@@ -22,7 +22,7 @@ module.exports = {
     };
 
     try {
-      const exists = Project.findOne({ name });
+      const exists = await Project.findOne({ name });
       if (exists)
         return res.status(400).send({ message: 'Project with this name already exists !' });
       const project = await new Project(data);

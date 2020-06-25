@@ -87,7 +87,7 @@ const MainView = ({ user }) => {
           <Title size={3.2} weight="regular" margin="32px">
             Cooperate and contribute with others easily !
           </Title>
-          <Text size={1.8} weight="regular">
+          <Text size="1.8rem" weight="regular">
             There are many variations of passages of Lorem Ipsum available, but the majority have
             suffered alteration in some form, by injected humour, or randomised words which
             don&apos;t look even slightly believable. If you are going to use a passage of Lorem
@@ -96,7 +96,7 @@ const MainView = ({ user }) => {
         </div>
       </InfoBox>
       <InstructionBox>
-        <Title size={3.2} weight="regular" margin="48px">
+        <Title size="3.2rem" weight="regular" margin="48px">
           How to start ?
         </Title>
         <Explanation> 1. Create free account</Explanation>

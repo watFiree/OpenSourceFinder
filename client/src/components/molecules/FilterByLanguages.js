@@ -71,12 +71,15 @@ const FilterByLanguages = () => {
         multiple
       >
         {data.map((item) => (
-          <MenuItem value={item.name.toLowerCase()}>{item.name}</MenuItem>
+          <MenuItem key={item.name} value={item.name.toLowerCase()}>
+            {item.name}
+          </MenuItem>
         ))}
       </Select>
       <ChipsWrapper>
         {technologies.map((item) => (
           <Chip
+            key={item.name}
             handleDelete={handleDelete}
             data={data.find((lang) => lang.name.toLowerCase() === item)}
           />

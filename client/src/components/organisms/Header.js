@@ -50,10 +50,10 @@ const Header = ({ user }) => {
       <Logo to="/" />
       <UserActions>
         <Navigation>
-          <Link size="1.2" to="/projects">
+          <Link size="1.2rem" to="/projects">
             find project
           </Link>
-          <Link size="1.2" to="/user/projects">
+          <Link size="1.2rem" to="/user/projects">
             your projects
           </Link>
         </Navigation>

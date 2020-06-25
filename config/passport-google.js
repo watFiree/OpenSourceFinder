@@ -17,7 +17,7 @@ const verify = async (req, accessToken, refreshToken, profile, done) => {
   try {
     const user = await User.find({ googleId: profile.id });
     if (!user.length) {
-      const data = await {
+      const data = {
         googleId: profile.id,
         name: profile.given_name,
         email: profile.email,

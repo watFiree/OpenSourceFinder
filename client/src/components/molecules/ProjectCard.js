@@ -46,7 +46,7 @@ const Icons = styled.div`
 const Divider = styled.div`
   background-color: white;
   margin: 0 50px;
-  height: 100%;
+  height: 70%;
   width: 2px;
   opacity: 0.4;
 `;
@@ -64,7 +64,7 @@ const ProjectCard = ({ data }) => (
       </Icons>
       <ChipsWrapper height="30%" width="100%">
         {data.stack.map((item) => (
-          <Chip data={{ name: item, src: '/images/react.svg', color: '#427aa1' }} />
+          <Chip key={item} data={{ name: item, src: '/images/react.svg', color: '#427aa1' }} />
         ))}
         <Chip
           data={{

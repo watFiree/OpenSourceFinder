@@ -28,7 +28,7 @@ const Logo = ({ to }) => {
   const handleRedirect = () => history.push(to);
   return (
     <Wrapper onClick={handleRedirect}>
-      <Title size="1.6" as="p">
+      <Title size="1.6rem" as="p">
         OpenSourceFinder
       </Title>
       <img src={LogoImage} alt="logo" />

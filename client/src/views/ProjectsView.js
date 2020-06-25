@@ -82,7 +82,7 @@ const ProjectsView = ({ user, projects, getProject }) => {
       </FilterWrapper>
       <ProjectsWrapper>
         {projects.projects.map((project) => (
-          <ProjectCard data={project} />
+          <ProjectCard key={project.name} data={project} />
         ))}
       </ProjectsWrapper>
     </Wrapper>
