@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import Pagination from '@material-ui/lab/Pagination';
 import Wrapper from '../components/atoms/Wrapper';
 import FilterWrapper from '../components/atoms/FilterWrapper';
 import Header from '../components/organisms/Header';
@@ -8,10 +9,11 @@ import Button from '../components/atoms/Button';
 import bgImage from '../assets/stars-background.jpg';
 import FilterByLanguages from '../components/molecules/FilterByLanguages';
 import FilterByName from '../components/molecules/FilterByName';
-import { FlexCenterAroundColumn } from '../helpers/cssFlex';
+import { FlexCenterAroundColumn, FlexCenter } from '../helpers/cssFlex';
 import { mapStateToProps } from '../helpers/mapStateToProps';
 import { getProject } from '../redux/actions/getProject';
 import ProjectCard from '../components/molecules/ProjectCard';
+import usePagination from '../hooks/usePagination';
 
 const Hero = styled.div`
   width: 100%;
@@ -40,14 +42,28 @@ const ProjectsWrapper = styled.div`
   ${FlexCenterAroundColumn}
 `;
 
+const StyledPagination = styled(Pagination)`
+  background-color: ${({ theme }) => theme.purpleLight};
+  border-top: 3px solid ${({ theme }) => theme.purpleDark};
+  padding: 10px;
+  margin-top: 20px;
+  ${FlexCenter}
+`;
+
 const ProjectsView = ({ user, projects, getProject }) => {
   const LoggedAndCanCreate = user.isAuth && user.avaible;
   const LoggedAndCannotCreate = user.isAuth && !user.avaible;
   const NotLoggedIn = !user.isAuth;
+  const [currentPage, setCurrentPage] = useState(0);
 
-  React.useEffect(() => {
+  const handlePagination = (event, value) => setCurrentPage(value - 1);
+
+  useEffect(() => {
     getProject();
   }, [getProject]);
+
+  const [data, pages] = usePagination(currentPage, projects.projects);
+
   return (
     <Wrapper image={bgImage}>
       <Header />
@@ -81,10 +97,18 @@ const ProjectsView = ({ user, projects, getProject }) => {
         <FilterByLanguages />
       </FilterWrapper>
       <ProjectsWrapper>
-        {projects.projects.map((project) => (
+        {data?.map((project) => (
           <ProjectCard key={project.name} data={project} />
         ))}
       </ProjectsWrapper>
+      <StyledPagination
+        count={pages}
+        variant="outlined"
+        shape="rounded"
+        showFirstButton
+        showLastButton
+        onChange={handlePagination}
+      />
     </Wrapper>
   );
 };
