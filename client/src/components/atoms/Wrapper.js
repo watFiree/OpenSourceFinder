@@ -5,6 +5,7 @@ const Wrapper = styled.div`
   background-image: url(${({ image }) => image});
   color: ${({ theme }) => theme.white};
   width: 100%;
+  min-height: 100vh;
   padding-top: 125px;
 `;
 

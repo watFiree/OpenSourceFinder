@@ -10,6 +10,7 @@ import Title from '../atoms/Title';
 import Text from '../atoms/Text';
 import Link from '../atoms/Link';
 import ChipsWrapper from '../atoms/ChipsWrapper';
+import List from './List';
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.blackDark};
@@ -51,7 +52,19 @@ const Divider = styled.div`
   opacity: 0.4;
 `;
 
-const ProjectCard = ({ data }) => (
+const Buttons = styled.div`
+  height: 60%;
+  width: 100%;
+  ${FlexCenterAround}
+`;
+
+const Container = styled.div`
+  height: 100%;
+  width: 75%;
+  ${FlexCenterAroundColumn}
+`;
+
+export const ProjectCard = ({ data }) => (
   <Wrapper>
     <Image src={img} />
     <Info>
@@ -83,4 +96,24 @@ const ProjectCard = ({ data }) => (
   </Wrapper>
 );
 
-export default ProjectCard;
+export const SimpleProjectCard = ({ data }) => (
+  <Wrapper>
+    <Image src={img} />
+    <Container>
+      <Title size="2.1rem">{data.name}</Title>
+      <Buttons>
+        <Link to={`project/${data.name}`}>
+          <Button bg="purpleDark">See more</Button>
+        </Link>
+        <List title="Add" options={['User', 'Offer', 'Task', 'Announcement']} />
+
+        <Link to={`project/${data.name}`}>
+          <Button bg="purpleDark">Edit</Button>
+        </Link>
+        <Link to={`project/${data.name}`}>
+          <Button bg="error">Leave</Button>
+        </Link>
+      </Buttons>
+    </Container>
+  </Wrapper>
+);

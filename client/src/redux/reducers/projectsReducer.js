@@ -1,7 +1,7 @@
 import * as types from '../actionTypes/projectsActions';
 
 const initialState = {
-  projects: [],
+  data: [],
   loading: false,
   error: null,
 };
@@ -18,9 +18,9 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
 
-        projects: [
+        data: [
           ...action.payload.filter(
-            (item) => !state.projects.forEach((project) => project._id === item._id)
+            (item) => !state.data.forEach((project) => project._id === item._id)
           ),
         ],
         error: null,

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Pagination from '@material-ui/lab/Pagination';
 import Wrapper from '../components/atoms/Wrapper';
 import FilterWrapper from '../components/atoms/FilterWrapper';
+import Link from '../components/atoms/Link';
 import Header from '../components/organisms/Header';
 import Button from '../components/atoms/Button';
 import bgImage from '../assets/stars-background.jpg';
@@ -12,7 +14,7 @@ import FilterByName from '../components/molecules/FilterByName';
 import { FlexCenterAroundColumn, FlexCenter } from '../helpers/cssFlex';
 import { mapStateToProps } from '../helpers/mapStateToProps';
 import { getProject } from '../redux/actions/getProject';
-import ProjectCard from '../components/molecules/ProjectCard';
+import { ProjectCard } from '../components/molecules/ProjectCards';
 import usePagination from '../hooks/usePagination';
 
 const Hero = styled.div`
@@ -50,6 +52,14 @@ const StyledPagination = styled(Pagination)`
   ${FlexCenter}
 `;
 
+const Loading = styled(LinearProgress)`
+  width: 90%;
+  margin: 50px 0;
+  .MuiLinearProgress-barColorPrimary {
+    background-color: ${({ theme }) => theme.purpleDark};
+  }
+`;
+
 const ProjectsView = ({ user, projects, getProject }) => {
   const LoggedAndCanCreate = user.isAuth && user.avaible;
   const LoggedAndCannotCreate = user.isAuth && !user.avaible;
@@ -62,7 +72,7 @@ const ProjectsView = ({ user, projects, getProject }) => {
     getProject();
   }, [getProject]);
 
-  const [data, pages] = usePagination(currentPage, projects.projects);
+  const [data, pages] = usePagination(currentPage, projects.data);
 
   return (
     <Wrapper image={bgImage}>
@@ -72,7 +82,9 @@ const ProjectsView = ({ user, projects, getProject }) => {
           <>
             <h1>CREATE YOUR PROJECT FOR FREE !</h1>
             <h4>{user.avaible} left </h4>
-            <Button bg="purpleDark">create now !</Button>{' '}
+            <Link to="/user/projects">
+              <Button bg="purpleDark">create now !</Button>
+            </Link>
           </>
         )}
         {!!LoggedAndCannotCreate && (
@@ -81,14 +93,18 @@ const ProjectsView = ({ user, projects, getProject }) => {
               YOU HAVE ANY AVAIBLE <br /> PROJECTS TO CREATE !
             </h1>
             <h4> only 0,99$ </h4>
-            <Button bg="purpleDark">buy now !</Button>{' '}
+            <Link to="/user/projects">
+              <Button bg="purpleDark">buy now !</Button>
+            </Link>
           </>
         )}
         {!!NotLoggedIn && (
           <>
             <h1>CREATE YOUR PROJECT FOR FREE !</h1>
             <h4> for free</h4>
-            <Button bg="purpleDark">sign up now !</Button>{' '}
+            <Link to="/signup">
+              <Button bg="purpleDark">sign up now !</Button>
+            </Link>
           </>
         )}
       </Hero>
@@ -97,6 +113,7 @@ const ProjectsView = ({ user, projects, getProject }) => {
         <FilterByLanguages />
       </FilterWrapper>
       <ProjectsWrapper>
+        {projects.loading && <Loading />}
         {data?.map((project) => (
           <ProjectCard key={project.name} data={project} />
         ))}
