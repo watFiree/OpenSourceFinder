@@ -4,7 +4,7 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 const AddIcon = styled(AddCircleIcon)`
   color: ${({ theme, color }) => theme[color] || 'white'};
   height: ${({ size }) => size || '45%'};
-  width: 30%;
+  width: 40%;
   transition: opacity 0.3s ease;
   &:hover {
     cursor: pointer;

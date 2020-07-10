@@ -5,9 +5,9 @@ const User = require('../models/User');
 const TwitterStrategy = passportTwitter.Strategy;
 
 const config = {
-  clientID: process.env.TWITTER_OAUTH_CLIENT_ID,
-  clientSecret: process.env.TWITTER_OAUTH_CLIENT_SECRET,
-  callbackURL: 'http://localhost:3000/',
+  consumerKey: process.env.TWITTER_OAUTH_CLIENT_ID,
+  consumerSecret: process.env.TWITTER_OAUTH_CLIENT_SECRET,
+  callbackURL: 'auth/twitter/callback',
   proxy: true,
 };
 

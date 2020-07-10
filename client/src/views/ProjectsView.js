@@ -8,13 +8,14 @@ import FilterWrapper from '../components/atoms/FilterWrapper';
 import Link from '../components/atoms/Link';
 import Header from '../components/organisms/Header';
 import Button from '../components/atoms/Button';
+import Title from '../components/atoms/Title';
 import bgImage from '../assets/stars-background.jpg';
 import FilterByLanguages from '../components/molecules/FilterByLanguages';
 import FilterByName from '../components/molecules/FilterByName';
 import { FlexCenterAroundColumn, FlexCenter } from '../helpers/cssFlex';
 import { mapStateToProps } from '../helpers/mapStateToProps';
 import { getProject } from '../redux/actions/getProject';
-import { ProjectCard } from '../components/molecules/ProjectCards';
+import { ProjectCard } from '../components/organisms/ProjectCards';
 import usePagination from '../hooks/usePagination';
 
 const Hero = styled.div`
@@ -114,6 +115,11 @@ const ProjectsView = ({ user, projects, getProject }) => {
       </FilterWrapper>
       <ProjectsWrapper>
         {projects.loading && <Loading />}
+        {!projects.loading && !projects.data.length && (
+          <Title margin="15px 0 0 0" size="2.1rem">
+            There are no projects :({' '}
+          </Title>
+        )}
         {data?.map((project) => (
           <ProjectCard key={project.name} data={project} />
         ))}

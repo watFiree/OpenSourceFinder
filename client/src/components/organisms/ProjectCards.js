@@ -10,7 +10,7 @@ import Title from '../atoms/Title';
 import Text from '../atoms/Text';
 import Link from '../atoms/Link';
 import ChipsWrapper from '../atoms/ChipsWrapper';
-import List from './List';
+import List from '../molecules/List';
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.blackDark};

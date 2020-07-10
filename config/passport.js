@@ -9,5 +9,5 @@ module.exports = () => {
   local();
   google();
   github();
-  // twitter();
+  twitter();
 };

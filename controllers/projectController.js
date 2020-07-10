@@ -1,6 +1,7 @@
 const validator = require('validator');
 const Project = require('../models/Project');
 const User = require('../models/User');
+const convertToSlug = require('../helpers/convertToSlug');
 
 module.exports = {
   async createProject(req, res) {
@@ -11,6 +12,7 @@ module.exports = {
       return res.status(400).send({ message: 'Stack is required ! ' });
     const data = {
       name,
+      slug: convertToSlug(name),
       admins: [req.user],
       users: [req.user],
       applications: [],
@@ -34,15 +36,14 @@ module.exports = {
     }
   },
   async getProject(req, res) {
-    const { _id } = req.params;
+    const { slug } = req.params;
     try {
-      const project = await Project.findById({ _id })
+      const project = await Project.find({ slug })
         .populate('admins', 'name')
         .populate('users', 'name')
         .populate('offers', 'desc')
         .populate('tasks', 'title');
-      if (!project)
-        return res.status(404).send({ message: 'Project with this id does not exist ! ' });
+      if (!project) return res.status(404).send({ message: 'Project does not exist ! ' });
       return res.status(200).send(project);
     } catch (err) {
       return res.status(404).send({ message: 'Could not get project :(', err });

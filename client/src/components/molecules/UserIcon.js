@@ -47,7 +47,6 @@ const UserIcon = ({ isAuth }) => {
         aria-controls="user-menu"
         aria-label="account of current user"
         aria-haspopup="true"
-        keepMounted
         onClick={handleMenu}
       >
         <AccountCircleIcon fontSize="large" css={Icon} />
@@ -55,32 +54,31 @@ const UserIcon = ({ isAuth }) => {
       <StyledMenu
         id="user-menu"
         anchorEl={anchorEl}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
+        // anchorOrigin={{
+        //   vertical: 'bottom',
+        //   horizontal: 'right',
+        // }}
+        // transformOrigin={{
+        //   vertical: 'top',
+        //   horizontal: 'right',
+        // }}
         open={open}
         onClose={handleClose}
       >
         {isAuth ? (
-          <>
+          <div>
             <MenuItem>My account</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          </>
+          </div>
         ) : (
-          <>
+          <div>
             <Link to="/signin" color="white">
               <MenuItem>Sign in</MenuItem>
             </Link>
             <Link to="/signup" color="white">
               <MenuItem>Sign up</MenuItem>
             </Link>
-          </>
+          </div>
         )}
       </StyledMenu>
     </div>
