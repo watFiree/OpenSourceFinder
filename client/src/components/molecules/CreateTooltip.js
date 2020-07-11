@@ -13,10 +13,10 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `;
 
-const CreateTooltip = ({ children, color = 'purpleLight', size, width }) => (
+const CreateTooltip = ({ children, color = 'purpleLight', size, width, onClick }) => (
   <Wrapper size={size} width={width}>
     {children}
-    <Tooltip title="Create" aria-label="create" arrow>
+    <Tooltip title={children.trim().split(' ')[0]} aria-label="create" arrow onClick={onClick}>
       <AddIcon color={color} size="60%" />
     </Tooltip>
   </Wrapper>

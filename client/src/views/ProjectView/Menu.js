@@ -1,9 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import CreateTooltip from '../molecules/CreateTooltip';
-import Title from '../atoms/Title';
-import RecentActivity from '../atoms/RecentActivity';
+import CreateTooltip from '../../components/molecules/CreateTooltip';
+import Title from '../../components/atoms/Title';
+import RecentActivity from '../../components/atoms/RecentActivity';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
+import AddUserForm from '../../components/organisms/AddUserForm';
+import CreateOfferForm from '../../components/organisms/CreateOfferForm';
+import CreateTaskForm from '../../components/organisms/CreateTaskForm';
+import useViews from '../../hooks/useViews';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -30,6 +34,7 @@ const Flex = styled.div`
 `;
 
 const ProjectMenu = () => {
+  const [view, setView, closeView, { userView, taskView, offerView }] = useViews();
   return (
     <Wrapper>
       <Recent>
@@ -50,11 +55,24 @@ const ProjectMenu = () => {
           ACTIONS
         </Title>
         <Flex>
-          <CreateTooltip width="30%">Add user</CreateTooltip>
-          <CreateTooltip width="30%">Create offer</CreateTooltip>
+          <CreateTooltip width="30%" onClick={() => setView(userView)}>
+            Add user
+          </CreateTooltip>
+
+          <CreateTooltip width="30%" onClick={() => setView(offerView)}>
+            Create offer
+          </CreateTooltip>
+
+          <CreateTooltip width="30%" onClick={() => setView(taskView)}>
+            Create task
+          </CreateTooltip>
+
           <CreateTooltip width="30%">Create announcement</CreateTooltip>
         </Flex>
       </Actions>
+      {view === userView && <AddUserForm close={closeView} />}
+      {view === offerView && <CreateOfferForm close={closeView} />}
+      {view === taskView && <CreateTaskForm close={closeView} />}
     </Wrapper>
   );
 };

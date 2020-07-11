@@ -3,18 +3,18 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import withProviders from '../hoc/withProviders';
 import MainView from './MainView';
 import ProjectsView from './ProjectsView';
-import UserProjectsView from './UserProjectsView';
+import UsersProjectsView from './UsersProjectsView';
 import LoggingView from './LoggingView';
-import ProjectView from './ProjectView';
+import MembersProjectView from './ProjectView/MainView';
 
 const Root = () => {
   return (
     <Router>
       <Switch>
         <Route exact path="/" component={MainView} />
-        <Route exact path="/user/projects" component={UserProjectsView} />
         <Route exact path="/projects" component={ProjectsView} />
-        <Route exact path="/project/:slug" component={ProjectView} />
+        <Route exact path="/user/projects" component={UsersProjectsView} />
+        <Route exact path="/user/project/:slug" component={MembersProjectView} />
         <Route exact path={['/signin', '/signup']} component={LoggingView} />
       </Switch>
     </Router>

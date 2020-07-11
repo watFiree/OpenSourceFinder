@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import TaskCard from '../molecules/TaskCard';
-import Title from '../atoms/Title';
+import TaskCard from '../../components/molecules/TaskCard';
+import Title from '../../components/atoms/Title';
 
 const Wrapper = styled.div`
   width: 100%;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { OfferCard, ApplicationCard } from './OfferCards';
-import Title from '../atoms/Title';
+import { OfferCard, ApplicationCard } from '../../components/organisms/OfferCards';
+import Title from '../../components/atoms/Title';
 import { FlexCenterColumn } from '../../helpers/cssFlex';
 
 const Wrapper = styled.div`

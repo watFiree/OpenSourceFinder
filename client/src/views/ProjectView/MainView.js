@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from '../components/organisms/Header';
-import ProjectMenu from '../components/organisms/ProjectMenu';
-import ProjectUsers from '../components/organisms/ProjectUsers';
-import ProjectOffers from '../components/organisms/ProjectOffers';
-import ProjectTasks from '../components/organisms/ProjectTasks';
-import ProjectNavigation from '../components/molecules/ProjectNavigation';
-import Wrapper from '../components/atoms/Wrapper';
-import bgImage from '../assets/project-view-background.jpg';
-import { ProjectNavigationContext } from '../context/ProjectNavigationContext';
+import Header from '../../components/organisms/Header';
+import ProjectMenu from './Menu';
+import ProjectUsers from './Users';
+import ProjectOffers from './Offers';
+import ProjectTasks from './Tasks';
+import ProjectNavigation from '../../components/molecules/ProjectNavigation';
+import Wrapper from '../../components/atoms/Wrapper';
+import bgImage from '../../assets/project-view-background.jpg';
+import { ProjectNavigationContext } from '../../context/ProjectNavigationContext';
 
 const Content = styled.div`
   background-color: ${({ theme }) => theme.blackLight};

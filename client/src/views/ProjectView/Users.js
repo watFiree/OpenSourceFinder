@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Title from '../atoms/Title';
+import Title from '../../components/atoms/Title';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
-import UserCard from '../molecules/UserCard';
+import UserCard from '../../components/molecules/UserCard';
 
 const Wrapper = styled.div`
   width: 100%;

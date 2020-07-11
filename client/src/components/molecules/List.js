@@ -34,7 +34,7 @@ const List = ({ title, options }) => {
         <StyledList component="div" disablePadding>
           {options?.map((option) => (
             <ListItem button>
-              <ListItemText primary={option} onClick={() => console.log('hello')} />
+              <ListItemText primary={option.placeholder} onClick={option.onClick} />
             </ListItem>
           ))}
         </StyledList>
