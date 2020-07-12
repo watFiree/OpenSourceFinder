@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Title from '../../components/atoms/Title';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
@@ -18,24 +18,32 @@ const UsersList = styled.div`
   ${FlexCenterAroundColumn};
 `;
 
-const ProjectUsers = () => {
+const ProjectUsers = ({ data }) => {
+  const { admins, users } = data;
+  const [usersWithoutAdmins, setUsersWithoutAdmins] = useState([]);
+  useEffect(() => {
+    const adminsIds = admins.map((admin) => admin._id);
+    console.log(adminsIds);
+    setUsersWithoutAdmins(users.filter((user) => !adminsIds.includes(user._id)));
+  }, [admins, users]);
+  console.log(usersWithoutAdmins);
   return (
     <Wrapper>
       <Title size="1.8rem" margin="30px 0">
         ADMINS
       </Title>
       <UsersList>
-        <UserCard />
-        <UserCard />
-        <UserCard />
+        {admins.map((user) => (
+          <UserCard admin="true" data={user} />
+        ))}
       </UsersList>
       <Title size="1.8rem" margin="30px 0">
         USERS
       </Title>
       <UsersList>
-        <UserCard />
-        <UserCard />
-        <UserCard />
+        {usersWithoutAdmins.map((user) => (
+          <UserCard data={user} />
+        ))}
       </UsersList>
     </Wrapper>
   );

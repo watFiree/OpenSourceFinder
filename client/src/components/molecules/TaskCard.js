@@ -58,9 +58,8 @@ const Buttons = styled.div`
   }
 `;
 
-const TaskCard = ({ expanded, handleChange, number = 0 }) => {
+const TaskCard = ({ data, expanded, handleChange, number }) => {
   return (
-    // while mapping send here index to make it unique
     <Wrapper expanded={expanded === `panel${number}`} onChange={handleChange(`panel${number}`)}>
       <ExpansionPanelSummary
         expandIcon={<ExpandMoreIcon />}
@@ -68,39 +67,35 @@ const TaskCard = ({ expanded, handleChange, number = 0 }) => {
         id={`panel${number}-header`}
       >
         <Heading>
-          <Title size="2.1rem">Title</Title>
+          <Title size="2.1rem">{data.title}</Title>
           <Text color="gray" size="1.1rem">
-            May 24th 2019 13:23
+            {data.updatedAt}
           </Text>
         </Heading>
         <Heading>
           <Text color="gray">Status:</Text>
-          <Text color="gray">In progress</Text>
+          <Text color="gray">{data.status}</Text>
         </Heading>
       </ExpansionPanelSummary>
       <Content>
         <Flex>
           <Text width="70%" margin="20px 0">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-            has been the industrys standard dummy text ever since the 1500s, when an unknown printer
-            took a galley of type and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting, remaining
-            essentially unchanged. It was popularised in the 1960s with the release of Letraset
-            sheets containing Lorem Ipsum passages, and more recently with desktop publishing
-            software like Aldus PageMaker including versions of Lorem Ipsum
+            {data.content}
           </Text>
           <Contributors>
             <Title size="1.6rem" margin="20px 0">
               CONTRIBUTORS
             </Title>
             <div>
-              <Text color="gray">watFiree</Text>
+              {data.contributors.map((contributor) => (
+                <Text color="gray">contributor.name</Text>
+              ))}
             </div>
           </Contributors>
         </Flex>
         <Buttons>
           <Text size="1.1rem" color="gray">
-            Should be done until : 23 May
+            Should be done until : {data.expiration}
           </Text>
           <div>
             <Button size="small" bg="purpleDark">

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Formik } from 'formik';
 import Wrapper from '../molecules/CreateFormWrapper';
@@ -9,6 +10,7 @@ import Title from '../atoms/Title';
 import ErrorMessage from '../atoms/ErrorMessage';
 import Select from '../atoms/Select';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
+import { createOffer } from '../../redux/actions/createOffer';
 
 const Form = styled.form`
   width: 80%;
@@ -16,13 +18,13 @@ const Form = styled.form`
   ${FlexCenterAroundColumn}
 `;
 
-const CreateOfferForm = ({ close }) => {
+const CreateOfferForm = ({ createOffer, id, close }) => {
   return (
     <Wrapper close={close}>
       <Title size="1.8rem">Create offer</Title>
 
       <Formik
-        initialValues={{ name: '', stack: ['react'], desc: '' }}
+        initialValues={{ id, name: '', stack: ['react'], desc: '' }}
         validate={(values) => {
           const errors = {};
           if (!values.name) {
@@ -33,7 +35,7 @@ const CreateOfferForm = ({ close }) => {
           return errors;
         }}
         onSubmit={(values) => {
-          console.log(values);
+          createOffer(values);
         }}
       >
         {({ values, errors, touched, handleSubmit, handleBlur, handleChange }) => (
@@ -55,7 +57,7 @@ const CreateOfferForm = ({ close }) => {
             </Select>
             {errors.stack && touched.stack ? <ErrorMessage>{errors.stack}</ErrorMessage> : null}
             <Input
-              label="About"
+              label="Description"
               multiline
               fullWidth
               id="desc"
@@ -75,4 +77,4 @@ const CreateOfferForm = ({ close }) => {
   );
 };
 
-export default CreateOfferForm;
+export default connect(null, { createOffer })(CreateOfferForm);

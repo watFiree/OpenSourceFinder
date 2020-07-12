@@ -17,7 +17,6 @@ const userReducer = (state = initialState, action) => {
     case types.GET_PROJECT_SUCCESS:
       return {
         ...state,
-
         data: [
           ...action.payload.filter(
             (item) => !state.data.forEach((project) => project._id === item._id)

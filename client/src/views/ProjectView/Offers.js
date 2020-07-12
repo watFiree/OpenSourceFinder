@@ -23,7 +23,8 @@ const Flex = styled.div`
   ${FlexCenterColumn}
 `;
 
-const ProjectOffers = () => {
+const ProjectOffers = ({ data }) => {
+  const { applications, offers } = data;
   return (
     <Wrapper>
       <Container>
@@ -31,8 +32,9 @@ const ProjectOffers = () => {
           Offers
         </Title>
         <Flex>
-          <OfferCard />
-          <OfferCard />
+          {offers.map((offer) => (
+            <OfferCard data={offer} />
+          ))}
         </Flex>
       </Container>
       <Container>

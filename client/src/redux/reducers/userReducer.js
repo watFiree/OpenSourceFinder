@@ -1,4 +1,5 @@
 import * as types from '../actionTypes/userActions';
+import { getCookies } from '../../helpers/getCookies';
 
 const initialState = {
   name: '',
@@ -26,13 +27,15 @@ const userReducer = (state = initialState, action) => {
       };
     case types.SIGN_USER_SUCCESS:
       const { _id, name, email, avaible, projects } = action.payload;
+      const { token } = getCookies();
       return {
         ...state,
         _id,
         name,
         email,
         avaible,
-        projects,
+        projectsIds: projects,
+        token,
         loading: false,
         isAuth: true,
         error: null,

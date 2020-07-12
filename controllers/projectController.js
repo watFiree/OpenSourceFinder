@@ -6,10 +6,16 @@ const convertToSlug = require('../helpers/convertToSlug');
 module.exports = {
   async createProject(req, res) {
     const { name, stack, about } = req.body;
+    console.log(req.body);
     if (name === undefined || validator.isEmpty(name))
       return res.status(400).send({ message: 'Name is required ! ' });
     if (stack === undefined || stack.length === 0)
       return res.status(400).send({ message: 'Stack is required ! ' });
+    if (about.biogram) {
+      if (about.biogram.length > 20)
+        return res.status(400).send({ message: 'Biogram too long ! ' });
+    }
+
     const data = {
       name,
       slug: convertToSlug(name),
@@ -36,15 +42,13 @@ module.exports = {
     }
   },
   async getProject(req, res) {
-    const { slug } = req.params;
+    const { id } = req.params;
     try {
-      const project = await Project.find({ slug })
+      const project = await Project.findById(id)
         .populate('admins', 'name')
-        .populate('users', 'name')
-        .populate('offers', 'desc')
-        .populate('tasks', 'title');
+        .populate('users', 'name');
       if (!project) return res.status(404).send({ message: 'Project does not exist ! ' });
-      return res.status(200).send(project);
+      return res.status(200).send([project]);
     } catch (err) {
       return res.status(404).send({ message: 'Could not get project :(', err });
     }

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components/macro';
+import { connect } from 'react-redux';
 import Wrapper from '../components/atoms/Wrapper';
 import Title from '../components/atoms/Title';
 import Header from '../components/organisms/Header';
@@ -15,6 +16,8 @@ import { SimpleProjectCard } from '../components/organisms/ProjectCards';
 import CreateTooltip from '../components/molecules/CreateTooltip';
 import CreateProjectForm from '../components/organisms/CreateProjectForm';
 import useViews from '../hooks/useViews';
+import { mapStateToProps } from '../helpers/mapStateToProps';
+import { getProject } from '../redux/actions/getProject';
 
 const Heading = styled.div`
   height: 25vh;
@@ -43,7 +46,18 @@ const ProjectsList = styled.div`
   ${FlexCenterAroundColumn};
 `;
 
-const UsersProjectsView = ({ user }) => {
+const UsersProjectsView = ({ user, projects, getProject }) => {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    user.projectsIds.forEach((id) => {
+      const project = projects.data.find((project) => project._id === id);
+      if (project) {
+        setData((prev) => [...prev, project]);
+      } else {
+        getProject(id);
+      }
+    });
+  }, [projects.data, user.projectsIds, getProject]);
   const [view, setView, closeView, { userView, taskView, offerView }] = useViews();
   const projectView = 'projectView';
   return (
@@ -69,9 +83,9 @@ const UsersProjectsView = ({ user }) => {
         <Title margin="25px 0 0 0" size="3.6rem">
           Your projects{' '}
         </Title>
-        <SimpleProjectCard openFnc={setView} data={{ name: 'Hello' }} />
-        <SimpleProjectCard openFnc={setView} data={{ name: 'Hello' }} />
-        <SimpleProjectCard openFnc={setView} data={{ name: 'Hello' }} />
+        {data?.map((project) => (
+          <SimpleProjectCard openFnc={setView} data={project} />
+        ))}
       </ProjectsList>
       {view === userView && <AddUserForm close={closeView} />}
       {view === offerView && <CreateOfferForm close={closeView} />}
@@ -80,4 +94,4 @@ const UsersProjectsView = ({ user }) => {
   );
 };
 
-export default withAuth(UsersProjectsView);
+export default connect(mapStateToProps('projects'), { getProject })(withAuth(UsersProjectsView));

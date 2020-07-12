@@ -9,19 +9,20 @@ module.exports = {
     return res.status(200).send(task);
   },
   async createTask(req, res) {
-    const { _id, title, content, expiration, status, importance, contributors } = req.body;
-    const data = {
-      creator: req.user,
-      title,
-      content,
-      expiration,
-      status,
-      importance,
-      contributors,
-    };
+    const { id, title, content, expiration, status, importance, contributors } = req.body;
     try {
-      const project = await Project.findById(_id);
+      const project = await Project.findById(id);
       if (!project) return res.status(404).send({ message: 'Project not found !' });
+      const data = {
+        project,
+        creator: req.user,
+        title,
+        content,
+        expiration,
+        status,
+        importance,
+        contributors,
+      };
       const task = await new Task(data);
       await task.save();
       await project.tasks.push(task);

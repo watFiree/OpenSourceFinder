@@ -5,8 +5,8 @@ const jwtAuth = require('../middlewares/auth-middleware');
 const projectRouter = express.Router();
 
 projectRouter
-  .route('/:slug')
-  .get(jwtAuth, projectController.getProject)
+  .route('/:id')
+  .get(projectController.getProject)
   .delete(jwtAuth, projectController.deleteProject);
 
 projectRouter

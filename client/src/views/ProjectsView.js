@@ -17,6 +17,7 @@ import { mapStateToProps } from '../helpers/mapStateToProps';
 import { getProject } from '../redux/actions/getProject';
 import { ProjectCard } from '../components/organisms/ProjectCards';
 import usePagination from '../hooks/usePagination';
+import withAuth from '../hoc/withAuth';
 
 const Hero = styled.div`
   width: 100%;
@@ -136,4 +137,4 @@ const ProjectsView = ({ user, projects, getProject }) => {
   );
 };
 
-export default connect(mapStateToProps('user', 'projects'), { getProject })(ProjectsView);
+export default connect(mapStateToProps('user', 'projects'), { getProject })(withAuth(ProjectsView));

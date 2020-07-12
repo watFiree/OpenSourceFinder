@@ -9,11 +9,11 @@ module.exports = {
     return res.status(200).send(offer);
   },
   async createOffer(req, res) {
-    const { _id, name, stack, desc } = req.body;
+    const { id, name, stack, desc } = req.body;
     if (stack === undefined || stack.length === 0)
       return res.status(400).send({ message: 'Stack is required ! ' });
     try {
-      const project = await Project.findById(_id);
+      const project = await Project.findById(id);
       if (!project) return res.status(404).send({ message: 'Project not found !' });
       const offer = await new Offer({
         project,

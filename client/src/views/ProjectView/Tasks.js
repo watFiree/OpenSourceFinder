@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const ProjectTasks = () => {
+const ProjectTasks = ({ data }) => {
   const [expanded, setExpanded] = useState(false);
 
   const handleChange = (panel) => (event, isExpanded) => {
@@ -23,8 +23,9 @@ const ProjectTasks = () => {
       <Title size="1.8rem" margin="40px 0">
         TASKS
       </Title>
-      <TaskCard expanded={expanded} handleChange={handleChange} />
-      <TaskCard expanded={expanded} handleChange={handleChange} number={1} />
+      {data.map((task, index) => (
+        <TaskCard data={task} expanded={expanded} handleChange={handleChange} number={index} />
+      ))}
     </Wrapper>
   );
 };

@@ -9,8 +9,8 @@ const ProjectSchema = Schema({
   offers: [{ type: Schema.Types.ObjectId, ref: 'Offer' }],
   stack: [{ type: String, required: true }],
   about: {
-    links: [{ type: String }],
     desc: String,
+    biogram: String,
   },
   announcements: [{ type: Schema.Types.ObjectId, ref: 'Announcement' }],
   tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],

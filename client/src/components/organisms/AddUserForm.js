@@ -35,7 +35,7 @@ const CreateProjectForm = ({ close }) => {
         {({ values, errors, touched, handleSubmit, handleBlur, handleChange }) => (
           <Form onSubmit={handleSubmit}>
             <Input
-              label="nickname"
+              label="Nickname"
               fullWidth
               id="nickname"
               nickname="nickname"

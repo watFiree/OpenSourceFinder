@@ -4,6 +4,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 //
 const Wrapper = styled.div`
+  z-index: 2;
   position: absolute;
   position: fixed;
   top: 25%;

@@ -14,7 +14,7 @@ const Root = () => {
         <Route exact path="/" component={MainView} />
         <Route exact path="/projects" component={ProjectsView} />
         <Route exact path="/user/projects" component={UsersProjectsView} />
-        <Route exact path="/user/project/:slug" component={MembersProjectView} />
+        <Route exact path="/user/project/:id" component={MembersProjectView} />
         <Route exact path={['/signin', '/signup']} component={LoggingView} />
       </Switch>
     </Router>

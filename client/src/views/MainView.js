@@ -73,7 +73,9 @@ const MainView = ({ user }) => {
           CODE WITH <br /> ANYONE <br /> FROM <br /> ANYWHERE !
         </p>
         {user.isAuth ? (
-          <Button bg="purpleDark">create project now !</Button>
+          <Link to="/user/projects">
+            <Button bg="purpleDark">create project now !</Button>
+          </Link>
         ) : (
           <Link to="/signup">
             <Button bg="purpleDark">sign up now</Button>

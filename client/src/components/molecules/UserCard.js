@@ -21,14 +21,14 @@ const Buttons = styled.div`
   ${FlexCenterAround};
 `;
 
-const UserCard = () => {
+const UserCard = ({ data, admin }) => {
   return (
     <Wrapper>
       <Avatar alt="nickname" src="/images/angular.svg" />
-      <Text color="gray">nickname</Text>
+      <Text color="gray">{data.name}</Text>
       <Buttons>
         <Button size="small" bg="purpleDark">
-          Degrade
+          {admin === 'true' ? 'Degrade' : 'Promote'}
         </Button>
         <Button size="small" bg="error">
           Remove

@@ -33,7 +33,7 @@ const Flex = styled.div`
   ${FlexCenterAroundColumn}
 `;
 
-const ProjectMenu = () => {
+const ProjectMenu = ({ data }) => {
   const [view, setView, closeView, { userView, taskView, offerView }] = useViews();
   return (
     <Wrapper>
@@ -41,11 +41,6 @@ const ProjectMenu = () => {
         <Title size="1.8rem" margin="5% 0">
           RECENT ACTIVITY
         </Title>
-        <RecentActivity />
-        <RecentActivity />
-        <RecentActivity />
-        <RecentActivity />
-        <RecentActivity />
         <RecentActivity />
         <RecentActivity />
         <RecentActivity />
@@ -71,8 +66,8 @@ const ProjectMenu = () => {
         </Flex>
       </Actions>
       {view === userView && <AddUserForm close={closeView} />}
-      {view === offerView && <CreateOfferForm close={closeView} />}
-      {view === taskView && <CreateTaskForm close={closeView} />}
+      {view === offerView && <CreateOfferForm id={data._id} close={closeView} />}
+      {view === taskView && <CreateTaskForm id={data._id} close={closeView} />}
     </Wrapper>
   );
 };

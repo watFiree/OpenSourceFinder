@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/dayjs';
@@ -9,6 +10,7 @@ import Input from '../atoms/Input';
 import Title from '../atoms/Title';
 import ErrorMessage from '../atoms/ErrorMessage';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
+import { createTask } from '../../redux/actions/createTask';
 
 const Form = styled.form`
   width: 80%;
@@ -60,14 +62,14 @@ const DatePickerField = ({ name, value, onChange }) => {
   );
 };
 
-const CreateTaskForm = ({ close }) => {
+const CreateTaskForm = ({ createTask, id, close }) => {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Wrapper close={close}>
         <Title size="1.8rem">Create task</Title>
 
         <Formik
-          initialValues={{ title: '', content: '', expiration: '' }}
+          initialValues={{ id, title: '', content: '', expiration: '' }}
           validate={(values) => {
             const errors = {};
             if (!values.title) {
@@ -79,7 +81,7 @@ const CreateTaskForm = ({ close }) => {
             return errors;
           }}
           onSubmit={(values) => {
-            console.log(values);
+            createTask(values);
           }}
         >
           {({ values, errors, touched, setFieldValue, handleSubmit, handleBlur, handleChange }) => (
@@ -123,4 +125,4 @@ const CreateTaskForm = ({ close }) => {
   );
 };
 
-export default CreateTaskForm;
+export default connect(null, { createTask })(CreateTaskForm);

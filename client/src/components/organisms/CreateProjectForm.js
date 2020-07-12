@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Formik } from 'formik';
 import Wrapper from '../molecules/CreateFormWrapper';
@@ -9,6 +10,8 @@ import Title from '../atoms/Title';
 import ErrorMessage from '../atoms/ErrorMessage';
 import Select from '../atoms/Select';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
+import { mapStateToProps } from '../../helpers/mapStateToProps';
+import { createProject } from '../../redux/actions/createProject';
 
 const Form = styled.form`
   width: 80%;
@@ -16,13 +19,16 @@ const Form = styled.form`
   ${FlexCenterAroundColumn}
 `;
 
-const CreateProjectForm = ({ close }) => {
+const CreateProjectForm = ({ user, createProject, close }) => {
+  useEffect(() => {
+    if (!user.isAuth) return close(null);
+  });
   return (
     <Wrapper close={close}>
       <Title size="1.8rem">Create Project</Title>
 
       <Formik
-        initialValues={{ name: '', stack: ['react'], about: '' }}
+        initialValues={{ name: '', stack: ['react'], about: { desc: '', biogram: '' } }}
         validate={(values) => {
           const errors = {};
           if (!values.name) {
@@ -30,10 +36,14 @@ const CreateProjectForm = ({ close }) => {
           } else if (!values.stack.length) {
             errors.stack = 'Stack is required !';
           }
+
+          if (values.about.biogram) {
+            if (values.about.biogram.length > 20) errors.biogram = 'Biogram too long !';
+          }
           return errors;
         }}
         onSubmit={(values) => {
-          console.log(values);
+          createProject(values);
         }}
       >
         {({ values, errors, touched, handleSubmit, handleBlur, handleChange }) => (
@@ -55,15 +65,26 @@ const CreateProjectForm = ({ close }) => {
             </Select>
             {errors.stack && touched.stack ? <ErrorMessage>{errors.stack}</ErrorMessage> : null}
             <Input
-              label="About"
-              multiline
+              label="Biogram"
               fullWidth
-              id="about"
-              name="about"
-              autoComplete="about"
+              id="about.biogram"
+              name="about.biogram"
+              autoComplete="biogram"
               onChange={handleChange}
               onBlur={handleBlur}
-              value={values.about}
+              value={values.about.biogram}
+            />
+            {errors.biogram && touched.stack ? <ErrorMessage>{errors.biogram}</ErrorMessage> : null}
+            <Input
+              label="Description"
+              multiline
+              fullWidth
+              id="about.desc"
+              name="about.desc"
+              autoComplete="desc"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.about.desc}
             />
             <Button type="submit" fullWidth bg="purpleDark" width="100%">
               Create
@@ -75,4 +96,4 @@ const CreateProjectForm = ({ close }) => {
   );
 };
 
-export default CreateProjectForm;
+export default connect(mapStateToProps('user'), { createProject })(CreateProjectForm);

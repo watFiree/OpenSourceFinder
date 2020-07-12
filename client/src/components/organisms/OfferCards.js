@@ -21,10 +21,10 @@ const Buttons = styled.div`
   ${FlexCenterAround}
 `;
 
-export const OfferCard = () => {
+export const OfferCard = ({ data }) => {
   return (
     <Wrapper>
-      <Text>Offer type</Text>
+      <Text>{data.name}</Text>
       <Buttons>
         <Button size="small" bg="purpleDark">
           More

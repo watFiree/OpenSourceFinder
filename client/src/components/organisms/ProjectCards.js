@@ -70,7 +70,7 @@ export const ProjectCard = ({ data }) => (
     <Image src={img} />
     <Info>
       <Title size="2.1rem">{data.name}</Title>
-      <Text>{data.about.desc}</Text>
+      <Text color="gray">{data.about.biogram}</Text>
       <Icons>
         <PersonIcon fontSize="large" /> <p>{data.users.length}</p>
         <Divider />
@@ -91,7 +91,7 @@ export const ProjectCard = ({ data }) => (
         </Chip>
       </ChipsWrapper>
     </Info>
-    <Link to={`project/${data.name}`}>
+    <Link to={`project/${data._id}`}>
       <Button bg="purpleDark">See more</Button>
     </Link>
   </Wrapper>
@@ -108,7 +108,7 @@ export const SimpleProjectCard = ({ data, openFnc }) => {
       <Container>
         <Title size="2.1rem">{data.name}</Title>
         <Buttons>
-          <Link to={`project/${data.name}`}>
+          <Link to={`/user/project/${data._id}`}>
             <Button bg="purpleDark">See more</Button>
           </Link>
           <List
