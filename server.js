@@ -24,7 +24,7 @@ const port = process.env.PORT || 6969;
 
 app.use(bodyParser.json(), cors(), passport.initialize(), morgan('tiny'));
 
-app.use('/user', jwtAuth, (req, res) => res.status(200).send(req.user));
+app.use('/user', require('./routes/userRoutes.js'));
 app.use('/auth', require('./routes/authRoutes'));
 app.use('/project', require('./routes/projectRoutes'));
 app.use('/task', require('./routes/taskRoutes'));

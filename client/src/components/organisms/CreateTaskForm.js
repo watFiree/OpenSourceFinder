@@ -3,14 +3,18 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DateFnsUtils from '@date-io/dayjs';
 import Wrapper from '../molecules/CreateFormWrapper';
 import Button from '../atoms/Button';
 import Input from '../atoms/Input';
 import Title from '../atoms/Title';
+import Checkbox from '../atoms/Checkbox';
 import ErrorMessage from '../atoms/ErrorMessage';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
 import { createTask } from '../../redux/actions/createTask';
+import { mapStateToProps } from '../../helpers/mapStateToProps';
+import useFormClose from '../../hooks/useFormClose';
 
 const Form = styled.form`
   width: 80%;
@@ -62,26 +66,28 @@ const DatePickerField = ({ name, value, onChange }) => {
   );
 };
 
-const CreateTaskForm = ({ createTask, id, close }) => {
+const CreateTaskForm = ({ forms: { createTaskForm }, createTask, id, close }) => {
+  const [setSubmitted] = useFormClose(createTaskForm, close);
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Wrapper close={close}>
         <Title size="1.8rem">Create task</Title>
 
         <Formik
-          initialValues={{ id, title: '', content: '', expiration: '' }}
+          initialValues={{ id, title: '', content: '', expiration: '', taken: false }}
           validate={(values) => {
             const errors = {};
             if (!values.title) {
               errors.title = 'Title is required !';
             }
             if (!values.content) {
-              errors.title = 'Content is required !';
+              errors.content = 'Content is required !';
             }
             return errors;
           }}
           onSubmit={(values) => {
             createTask(values);
+            setSubmitted(true);
           }}
         >
           {({ values, errors, touched, setFieldValue, handleSubmit, handleBlur, handleChange }) => (
@@ -108,12 +114,28 @@ const CreateTaskForm = ({ createTask, id, close }) => {
                 onBlur={handleBlur}
                 value={values.content}
               />
+              {errors.content && touched.content ? (
+                <ErrorMessage>{errors.content}</ErrorMessage>
+              ) : null}
               <DatePickerField
                 name="expiration"
                 value={values.expiration}
                 onChange={setFieldValue}
               />
-
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    id="taken"
+                    onChange={handleChange}
+                    value={values.taken}
+                    color="primary"
+                  />
+                }
+                label="Mark me as contributor"
+              />
+              {!createTaskForm.processing && createTaskForm.error ? (
+                <ErrorMessage>{createTaskForm.error}</ErrorMessage>
+              ) : null}
               <Button type="submit" fullWidth bg="purpleDark" width="100%">
                 Create
               </Button>
@@ -125,4 +147,4 @@ const CreateTaskForm = ({ createTask, id, close }) => {
   );
 };
 
-export default connect(null, { createTask })(CreateTaskForm);
+export default connect(mapStateToProps('forms'), { createTask })(CreateTaskForm);

@@ -30,6 +30,6 @@ export const createTask = (input) => {
         },
       })
       .then((response) => dispatch(createTaskSuccess(response.data)))
-      .catch((err) => dispatch(createTaskFailure(err.response.data.message)));
+      .catch((err) => dispatch(createTaskFailure(err.response.data)));
   };
 };

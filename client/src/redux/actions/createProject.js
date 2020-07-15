@@ -30,6 +30,6 @@ export const createProject = (input) => {
         },
       })
       .then((response) => dispatch(createProjectSuccess(response.data)))
-      .catch((err) => dispatch(createProjectFailure(err.response.data.message)));
+      .catch((err) => dispatch(createProjectFailure(err.response.data)));
   };
 };

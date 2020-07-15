@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -12,6 +12,7 @@ import Select from '../atoms/Select';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
 import { mapStateToProps } from '../../helpers/mapStateToProps';
 import { createProject } from '../../redux/actions/createProject';
+import useFormClose from '../../hooks/useFormClose';
 
 const Form = styled.form`
   width: 80%;
@@ -19,10 +20,11 @@ const Form = styled.form`
   ${FlexCenterAroundColumn}
 `;
 
-const CreateProjectForm = ({ user, createProject, close }) => {
+const CreateProjectForm = ({ user, forms: { createProjectForm }, createProject, close }) => {
   useEffect(() => {
     if (!user.isAuth) return close(null);
-  });
+  }, [user, close]);
+  const [setSubmitted] = useFormClose(createProjectForm, close);
   return (
     <Wrapper close={close}>
       <Title size="1.8rem">Create Project</Title>
@@ -44,6 +46,7 @@ const CreateProjectForm = ({ user, createProject, close }) => {
         }}
         onSubmit={(values) => {
           createProject(values);
+          setSubmitted(true);
         }}
       >
         {({ values, errors, touched, handleSubmit, handleBlur, handleChange }) => (
@@ -86,6 +89,9 @@ const CreateProjectForm = ({ user, createProject, close }) => {
               onBlur={handleBlur}
               value={values.about.desc}
             />
+            {!createProjectForm.processing && createProjectForm.error ? (
+              <ErrorMessage>{createProjectForm.error}</ErrorMessage>
+            ) : null}
             <Button type="submit" fullWidth bg="purpleDark" width="100%">
               Create
             </Button>
@@ -96,4 +102,4 @@ const CreateProjectForm = ({ user, createProject, close }) => {
   );
 };
 
-export default connect(mapStateToProps('user'), { createProject })(CreateProjectForm);
+export default connect(mapStateToProps('user', 'forms'), { createProject })(CreateProjectForm);

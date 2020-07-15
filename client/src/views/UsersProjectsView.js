@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Wrapper from '../components/atoms/Wrapper';
 import Title from '../components/atoms/Title';
 import Header from '../components/organisms/Header';
-import AddUserForm from '../components/organisms/AddUserForm';
+import InviteUserForm from '../components/organisms/InviteUserForm';
 import CreateOfferForm from '../components/organisms/CreateOfferForm';
 import CreateTaskForm from '../components/organisms/CreateTaskForm';
 import bgImage from '../assets/offers-background.jpg';
@@ -18,6 +18,7 @@ import CreateProjectForm from '../components/organisms/CreateProjectForm';
 import useViews from '../hooks/useViews';
 import { mapStateToProps } from '../helpers/mapStateToProps';
 import { getProject } from '../redux/actions/getProject';
+import useProjectData from '../hooks/useProjectData';
 
 const Heading = styled.div`
   height: 25vh;
@@ -47,17 +48,7 @@ const ProjectsList = styled.div`
 `;
 
 const UsersProjectsView = ({ user, projects, getProject }) => {
-  const [data, setData] = useState([]);
-  useEffect(() => {
-    user.projectsIds.forEach((id) => {
-      const project = projects.data.find((project) => project._id === id);
-      if (project) {
-        setData((prev) => [...prev, project]);
-      } else {
-        getProject(id);
-      }
-    });
-  }, [projects.data, user.projectsIds, getProject]);
+  const [data] = useProjectData(user.projectsIds, projects.data, getProject);
   const [view, setView, closeView, { userView, taskView, offerView }] = useViews();
   const projectView = 'projectView';
   return (
@@ -84,10 +75,10 @@ const UsersProjectsView = ({ user, projects, getProject }) => {
           Your projects{' '}
         </Title>
         {data?.map((project) => (
-          <SimpleProjectCard openFnc={setView} data={project} />
+          <SimpleProjectCard key={project.slug} openFnc={setView} data={project} />
         ))}
       </ProjectsList>
-      {view === userView && <AddUserForm close={closeView} />}
+      {view === userView && <InviteUserForm close={closeView} />}
       {view === offerView && <CreateOfferForm close={closeView} />}
       {view === taskView && <CreateTaskForm close={closeView} />}
     </Wrapper>

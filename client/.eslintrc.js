@@ -23,5 +23,6 @@ module.exports = {
     indent: ['error', 2, { SwitchCase: 1 }],
     'no-case-declarations': 0,
     'react/jsx-props-no-spreading': 0,
+    'no-underscore-dangle': 0,
   },
 };

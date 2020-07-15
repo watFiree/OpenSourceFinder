@@ -1,4 +1,4 @@
-import * as types from '../actionTypes/projectsActions';
+import * as types from '../actionTypes/offersActions';
 
 const initialState = {
   data: [],
@@ -6,44 +6,43 @@ const initialState = {
   error: null,
 };
 
-const userReducer = (state = initialState, action) => {
-  console.log(action.payload);
+const offersReducer = (state = initialState, action) => {
   switch (action.type) {
-    case types.GET_PROJECT_STARTED:
+    case types.GET_OFFER_STARTED:
       return {
         ...state,
         loading: true,
       };
-    case types.GET_PROJECT_SUCCESS:
-      const existingIds = state.data.map((project) => project._id);
+    case types.GET_OFFER_SUCCESS:
+      const existingIds = state.data.map((offer) => offer._id);
       return {
         ...state,
         data: [
           ...state.data,
-          ...action.payload.filter((project) => !existingIds.includes(project._id)),
+          ...action.payload.filter((offer) => !existingIds.includes(offer._id)),
         ],
-        error: null,
         loading: false,
+        error: null,
       };
-    case types.GET_PROJECT_FAILURE:
+    case types.GET_OFFER_FAILURE:
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: action.payload.message,
       };
-    case types.CREATE_PROJECT_STARTED:
+    case types.CREATE_OFFER_STARTED:
       return {
         ...state,
         loading: true,
       };
-    case types.CREATE_PROJECT_SUCCESS:
+    case types.CREATE_OFFER_SUCCESS:
       return {
         ...state,
         data: [...state.data, action.payload],
         loading: false,
         error: null,
       };
-    case types.CREATE_PROJECT_FAILURE:
+    case types.CREATE_OFFER_FAILURE:
       return {
         ...state,
         loading: false,
@@ -54,4 +53,4 @@ const userReducer = (state = initialState, action) => {
   }
 };
 
-export default userReducer;
+export default offersReducer;

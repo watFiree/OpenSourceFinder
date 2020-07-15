@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import { OfferCard, ApplicationCard } from '../../components/organisms/OfferCards';
 import Title from '../../components/atoms/Title';
 import { FlexCenterColumn } from '../../helpers/cssFlex';
+import { mapStateToProps } from '../../helpers/mapStateToProps';
+import useProjectData from '../../hooks/useProjectData';
+import { getOffer } from '../../redux/actions/getOffer';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -23,8 +27,9 @@ const Flex = styled.div`
   ${FlexCenterColumn}
 `;
 
-const ProjectOffers = ({ data }) => {
-  const { applications, offers } = data;
+const ProjectOffers = ({ offersIds, offers, getOffer }) => {
+  const [data] = useProjectData(offersIds, offers.data, getOffer);
+  console.log(data);
   return (
     <Wrapper>
       <Container>
@@ -32,7 +37,7 @@ const ProjectOffers = ({ data }) => {
           Offers
         </Title>
         <Flex>
-          {offers.map((offer) => (
+          {data.map((offer) => (
             <OfferCard data={offer} />
           ))}
         </Flex>
@@ -50,4 +55,4 @@ const ProjectOffers = ({ data }) => {
   );
 };
 
-export default ProjectOffers;
+export default connect(mapStateToProps('offers'), { getOffer })(ProjectOffers);

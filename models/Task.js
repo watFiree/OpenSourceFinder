@@ -5,7 +5,7 @@ const TaskSchema = Schema({
   project: { type: Schema.Types.ObjectId, required: true, ref: 'Project' },
   title: { type: String, required: true },
   content: { type: String, required: true },
-  expiration: { type: Date },
+  expiration: { type: Date, default: null },
   status: { type: String, default: 'In progress' },
   contributors: [{ type: Schema.Types.ObjectId, ref: 'User' }],
 });

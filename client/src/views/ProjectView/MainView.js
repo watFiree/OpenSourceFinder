@@ -40,7 +40,7 @@ const ProjectView = ({ user, projects, getProject, match }) => {
   useEffect(() => {
     if (!user.projectsIds.includes(id)) return history.push('/');
     const project = projects.data.find((p) => p._id === id);
-    if (!project._id) return getProject(id);
+    if (!project) return getProject(id);
     return setData(project);
   }, [user, match, projects, getProject, history, id]);
 
@@ -57,10 +57,10 @@ const ProjectView = ({ user, projects, getProject, match }) => {
             <ProjectUsers data={data} />
           </ContentPanel>
           <ContentPanel value={page} index={2}>
-            <ProjectOffers data={data} />
+            <ProjectOffers offersIds={data.offers} id={id} />
           </ContentPanel>
           <ContentPanel value={page} index={3}>
-            <ProjectTasks data={data.tasks} />
+            <ProjectTasks tasksIds={data.tasks} />
           </ContentPanel>
         </div>
       </Wrapper>

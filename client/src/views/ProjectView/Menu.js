@@ -4,7 +4,7 @@ import CreateTooltip from '../../components/molecules/CreateTooltip';
 import Title from '../../components/atoms/Title';
 import RecentActivity from '../../components/atoms/RecentActivity';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
-import AddUserForm from '../../components/organisms/AddUserForm';
+import InviteUserForm from '../../components/organisms/InviteUserForm';
 import CreateOfferForm from '../../components/organisms/CreateOfferForm';
 import CreateTaskForm from '../../components/organisms/CreateTaskForm';
 import useViews from '../../hooks/useViews';
@@ -51,7 +51,7 @@ const ProjectMenu = ({ data }) => {
         </Title>
         <Flex>
           <CreateTooltip width="30%" onClick={() => setView(userView)}>
-            Add user
+            Invite user
           </CreateTooltip>
 
           <CreateTooltip width="30%" onClick={() => setView(offerView)}>
@@ -65,7 +65,9 @@ const ProjectMenu = ({ data }) => {
           <CreateTooltip width="30%">Create announcement</CreateTooltip>
         </Flex>
       </Actions>
-      {view === userView && <AddUserForm close={closeView} />}
+      {view === userView && (
+        <InviteUserForm projectId={data._id} projectName={data.name} close={closeView} />
+      )}
       {view === offerView && <CreateOfferForm id={data._id} close={closeView} />}
       {view === taskView && <CreateTaskForm id={data._id} close={closeView} />}
     </Wrapper>

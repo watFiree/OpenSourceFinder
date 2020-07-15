@@ -88,15 +88,16 @@ const TaskCard = ({ data, expanded, handleChange, number }) => {
             </Title>
             <div>
               {data.contributors.map((contributor) => (
-                <Text color="gray">contributor.name</Text>
+                <Text color="gray">{contributor.name}</Text>
               ))}
             </div>
           </Contributors>
         </Flex>
         <Buttons>
           <Text size="1.1rem" color="gray">
-            Should be done until : {data.expiration}
+            {data.expiration && <>Should be done until : {new Date(data.expiration).toString()}</>}
           </Text>
+
           <div>
             <Button size="small" bg="purpleDark">
               Done

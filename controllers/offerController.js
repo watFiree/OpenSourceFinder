@@ -4,12 +4,16 @@ const Offer = require('../models/Offer');
 module.exports = {
   async getOffer(req, res) {
     const { _id } = req.params;
-    const offer = await Offer.findById(_id).populate('project', 'name');
-    if (!offer) return res.status(404).send({ message: 'Offer not found ! ' });
-    return res.status(200).send(offer);
+    try {
+      const offer = await Offer.findById(_id).populate('project', 'name');
+      if (!offer) return res.status(404).send({ message: 'Offer not found ! ' });
+      return res.status(200).send(offer);
+    } catch (err) {
+      return res.status(404).send({ message: 'Offer not found ! ' });
+    }
   },
   async createOffer(req, res) {
-    const { id, name, stack, desc } = req.body;
+    const { id, name, stack, position, desc } = req.body;
     if (stack === undefined || stack.length === 0)
       return res.status(400).send({ message: 'Stack is required ! ' });
     try {
@@ -19,6 +23,7 @@ module.exports = {
         project,
         name,
         stack,
+        position,
         desc,
       });
       await offer.save();

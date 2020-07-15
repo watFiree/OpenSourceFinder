@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import TaskCard from '../../components/molecules/TaskCard';
 import Title from '../../components/atoms/Title';
+import { mapStateToProps } from '../../helpers/mapStateToProps';
+import useProjectData from '../../hooks/useProjectData';
+import { getTask } from '../../redux/actions/getTask';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -12,9 +16,9 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 
-const ProjectTasks = ({ data }) => {
+const ProjectTasks = ({ tasksIds, tasks, getTask }) => {
   const [expanded, setExpanded] = useState(false);
-
+  const [data] = useProjectData(tasksIds, tasks.data, getTask);
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -30,4 +34,4 @@ const ProjectTasks = ({ data }) => {
   );
 };
 
-export default ProjectTasks;
+export default connect(mapStateToProps('tasks'), { getTask })(ProjectTasks);

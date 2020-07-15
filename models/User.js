@@ -12,6 +12,7 @@ const UserSchema = new Schema(
     avaible: { type: Number, default: 1 },
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
     stack: [{ type: String }],
+    invitations: Array,
     about: {
       fullName: String,
       age: Number,

@@ -4,6 +4,7 @@ const OfferSchema = Schema({
   project: { type: Schema.Types.ObjectId, required: true, ref: 'Project' },
   name: { type: String, required: true },
   stack: [{ type: String, required: true }],
+  position: { type: String, required: true },
   desc: String,
 });
 

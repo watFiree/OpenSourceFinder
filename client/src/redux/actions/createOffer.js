@@ -30,6 +30,6 @@ export const createOffer = (input) => {
         },
       })
       .then((response) => dispatch(createOfferSuccess(response.data)))
-      .catch((err) => dispatch(createOfferFailure(err.response.data.message)));
+      .catch((err) => dispatch(createOfferFailure(err.response.data)));
   };
 };

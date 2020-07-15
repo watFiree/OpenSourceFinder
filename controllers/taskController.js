@@ -4,12 +4,19 @@ const Task = require('../models/Task');
 module.exports = {
   async getTask(req, res) {
     const { _id } = req.params;
-    const task = await Task.findById(_id).populate('creator', 'name');
-    if (!task) return res.status(404).send({ message: 'Task not found ! ' });
-    return res.status(200).send(task);
+    try {
+      const task = await Task.findById(_id)
+        .populate('creator', 'name')
+        .populate('contributors', 'name');
+      if (!task) return res.status(404).send({ message: 'Task not found ! ' });
+      return res.status(200).send(task);
+    } catch (err) {
+      return res.status(404).send({ message: 'Task not found ! ' });
+    }
   },
   async createTask(req, res) {
-    const { id, title, content, expiration, status, importance, contributors } = req.body;
+    const { id, title, content, expiration, status, taken } = req.body;
+    const contributors = taken ? [req.user] : [];
     try {
       const project = await Project.findById(id);
       if (!project) return res.status(404).send({ message: 'Project not found !' });
@@ -20,7 +27,6 @@ module.exports = {
         content,
         expiration,
         status,
-        importance,
         contributors,
       };
       const task = await new Task(data);

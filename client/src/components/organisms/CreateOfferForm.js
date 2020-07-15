@@ -11,6 +11,8 @@ import ErrorMessage from '../atoms/ErrorMessage';
 import Select from '../atoms/Select';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
 import { createOffer } from '../../redux/actions/createOffer';
+import { mapStateToProps } from '../../helpers/mapStateToProps';
+import useFormClose from '../../hooks/useFormClose';
 
 const Form = styled.form`
   width: 80%;
@@ -18,24 +20,30 @@ const Form = styled.form`
   ${FlexCenterAroundColumn}
 `;
 
-const CreateOfferForm = ({ createOffer, id, close }) => {
+const CreateOfferForm = ({ forms: { createOfferForm }, createOffer, id, close }) => {
+  const [setSubmitted] = useFormClose(createOfferForm, close);
   return (
     <Wrapper close={close}>
       <Title size="1.8rem">Create offer</Title>
 
       <Formik
-        initialValues={{ id, name: '', stack: ['react'], desc: '' }}
+        initialValues={{ id, name: '', stack: ['react'], position: '', desc: '' }}
         validate={(values) => {
           const errors = {};
           if (!values.name) {
             errors.name = 'Name is required !';
-          } else if (!values.stack.length) {
+          }
+          if (!values.stack.length) {
             errors.stack = 'Stack is required !';
+          }
+          if (!values.position) {
+            errors.positioin = 'Position is required !';
           }
           return errors;
         }}
         onSubmit={(values) => {
           createOffer(values);
+          setSubmitted(true);
         }}
       >
         {({ values, errors, touched, handleSubmit, handleBlur, handleChange }) => (
@@ -57,6 +65,20 @@ const CreateOfferForm = ({ createOffer, id, close }) => {
             </Select>
             {errors.stack && touched.stack ? <ErrorMessage>{errors.stack}</ErrorMessage> : null}
             <Input
+              label="Position"
+              multiline
+              fullWidth
+              id="position"
+              name="position"
+              autoComplete="position"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.position}
+            />
+            {errors.position && touched.position ? (
+              <ErrorMessage>{errors.position}</ErrorMessage>
+            ) : null}
+            <Input
               label="Description"
               multiline
               fullWidth
@@ -67,6 +89,9 @@ const CreateOfferForm = ({ createOffer, id, close }) => {
               onBlur={handleBlur}
               value={values.desc}
             />
+            {!createOfferForm.processing && createOfferForm.error ? (
+              <ErrorMessage>{createOfferForm.error}</ErrorMessage>
+            ) : null}
             <Button type="submit" fullWidth bg="purpleDark" width="100%">
               Create
             </Button>
@@ -77,4 +102,4 @@ const CreateOfferForm = ({ createOffer, id, close }) => {
   );
 };
 
-export default connect(null, { createOffer })(CreateOfferForm);
+export default connect(mapStateToProps('forms'), { createOffer })(CreateOfferForm);
