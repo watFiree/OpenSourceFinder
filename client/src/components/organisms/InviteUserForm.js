@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
@@ -11,6 +11,7 @@ import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
 import { inviteUser } from '../../redux/actions/inviteUser';
 import { mapStateToProps } from '../../helpers/mapStateToProps';
 import useFormClose from '../../hooks/useFormClose';
+
 const Form = styled.form`
   width: 80%;
   height: 80%;

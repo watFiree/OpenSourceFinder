@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { OfferCard, ApplicationCard } from '../../components/organisms/OfferCards';
@@ -29,7 +29,6 @@ const Flex = styled.div`
 
 const ProjectOffers = ({ offersIds, offers, getOffer }) => {
   const [data] = useProjectData(offersIds, offers.data, getOffer);
-  console.log(data);
   return (
     <Wrapper>
       <Container>
@@ -38,7 +37,7 @@ const ProjectOffers = ({ offersIds, offers, getOffer }) => {
         </Title>
         <Flex>
           {data.map((offer) => (
-            <OfferCard data={offer} />
+            <OfferCard key={offer._id} data={offer} />
           ))}
         </Flex>
       </Container>

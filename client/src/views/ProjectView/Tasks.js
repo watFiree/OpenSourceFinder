@@ -28,7 +28,13 @@ const ProjectTasks = ({ tasksIds, tasks, getTask }) => {
         TASKS
       </Title>
       {data.map((task, index) => (
-        <TaskCard data={task} expanded={expanded} handleChange={handleChange} number={index} />
+        <TaskCard
+          key={task._id}
+          data={task}
+          expanded={expanded}
+          handleChange={handleChange}
+          number={index}
+        />
       ))}
     </Wrapper>
   );

@@ -34,7 +34,7 @@ const ProjectUsers = ({ data }) => {
       </Title>
       <UsersList>
         {admins.map((user) => (
-          <UserCard admin="true" data={user} />
+          <UserCard key={user._id} admin="true" data={user} />
         ))}
       </UsersList>
       <Title size="1.8rem" margin="30px 0">
@@ -42,7 +42,7 @@ const ProjectUsers = ({ data }) => {
       </Title>
       <UsersList>
         {usersWithoutAdmins.map((user) => (
-          <UserCard data={user} />
+          <UserCard key={user._id} data={user} />
         ))}
       </UsersList>
     </Wrapper>

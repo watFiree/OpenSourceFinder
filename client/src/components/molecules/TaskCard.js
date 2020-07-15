@@ -88,7 +88,9 @@ const TaskCard = ({ data, expanded, handleChange, number }) => {
             </Title>
             <div>
               {data.contributors.map((contributor) => (
-                <Text color="gray">{contributor.name}</Text>
+                <Text key={contributor.name} color="gray">
+                  {contributor.name}
+                </Text>
               ))}
             </div>
           </Contributors>

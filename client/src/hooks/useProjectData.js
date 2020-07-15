@@ -8,9 +8,9 @@ const useProjectData = (dataIds, reduxData, getFunction) => {
       const alreadyInState = state.find((inState) => inState._id === id);
       if (alreadyInState) return () => console.log('no team here');
       const data = reduxData.find((redux) => redux._id === id);
-      if (data && !alreadyInState) {
+      if (data) {
         setState((prev) => [...prev, data]);
-      } else if (!data) {
+      } else {
         getFunction(id);
       }
     });

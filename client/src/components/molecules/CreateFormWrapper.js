@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   margin-right: auto;
   left: ${({ width }) =>
     width
-      ? `calc(50% - ${width?.slice(0, 2) / 2 + width?.slice(2)} - 20px)`
+      ? `calc(50% - ${width.slice(0, 2) / 2 + width.slice(2)} - 20px)`
       : 'calc(50% - 20vw - 20px)'};
   width: ${({ width }) => width || '40vw'};
   height: ${({ height }) => height || '50vh'};

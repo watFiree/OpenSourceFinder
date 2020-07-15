@@ -33,7 +33,7 @@ const List = ({ title, options }) => {
       <Collapse in={open} timeout="auto">
         <StyledList component="div" disablePadding>
           {options?.map((option) => (
-            <ListItem button>
+            <ListItem key={option.placeholder} button>
               <ListItemText primary={option.placeholder} onClick={option.onClick} />
             </ListItem>
           ))}
