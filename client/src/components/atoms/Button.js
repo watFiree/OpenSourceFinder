@@ -14,8 +14,16 @@ const Wrapper = styled(Button)`
   }
 `;
 
-const Btn = ({ children, bg, size = 'large', weight, width, type }) => (
-  <Wrapper variant="contained" size={size} bg={bg} weight={weight} width={width} type={type}>
+const Btn = ({ children, bg, size = 'large', weight, width, type, onClick }) => (
+  <Wrapper
+    onClick={onClick}
+    variant="contained"
+    size={size}
+    bg={bg}
+    weight={weight}
+    width={width}
+    type={type}
+  >
     {children}
   </Wrapper>
 );

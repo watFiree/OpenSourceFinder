@@ -26,6 +26,10 @@ const Input = styled(({ ...props }) => <TextField {...props} />)`
   .MuiInput-underline:hover:before {
     border-bottom-color: ${({ theme }) => theme.purpleLight};
   }
+  p {
+    color: ${({ theme }) => theme.gray};
+    font-style: italic;
+  }
 `;
 
 export default Input;

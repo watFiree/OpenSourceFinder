@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Text from '../atoms/Text';
+import Link from '../atoms/Link';
 import Button from '../atoms/Button';
 import { FlexCenterAroundColumn, FlexCenterAround } from '../../helpers/cssFlex';
 
@@ -26,9 +27,11 @@ export const OfferCard = ({ data }) => {
     <Wrapper>
       <Text>{data.name}</Text>
       <Buttons>
-        <Button size="small" bg="purpleDark">
-          More
-        </Button>
+        <Link to={`/offer/${data._id}`}>
+          <Button size="small" bg="purpleDark">
+            More
+          </Button>
+        </Link>
         <Button size="small" bg="purpleLight">
           Edit
         </Button>

@@ -20,13 +20,10 @@ const getOfferFailure = (error) => ({
 });
 
 export const getOffer = (id) => {
-  return (dispatch, getState) => {
-    const { token } = getState().user;
+  return (dispatch) => {
     dispatch(getOfferStarted());
     axios
-      .get(`/offer/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+      .get(`/offer/${id}`)
       .then((response) => dispatch(getOfferSuccess(response.data)))
       .catch((err) => dispatch(getOfferFailure(err.response.data)));
   };

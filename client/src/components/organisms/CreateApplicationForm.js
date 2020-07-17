@@ -8,7 +8,7 @@ import Input from '../atoms/Input';
 import Title from '../atoms/Title';
 import ErrorMessage from '../atoms/ErrorMessage';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
-import { inviteUser } from '../../redux/actions/inviteUser';
+import { createApplication } from '../../redux/actions/createApplication';
 import { mapStateToProps } from '../../helpers/mapStateToProps';
 import useFormClose from '../../hooks/useFormClose';
 
@@ -18,50 +18,44 @@ const Form = styled.form`
   ${FlexCenterAroundColumn}
 `;
 
-const InviteUserForm = ({
-  projectId,
-  projectName,
-  inviteUser,
+const CreateApplicationForm = ({
+  forms: { createApplicationForm },
+  createApplication,
+  offerId,
   close,
-  forms: { inviteUserForm },
 }) => {
-  const [setSubmitted] = useFormClose(inviteUserForm, close);
+  const [setSubmitted] = useFormClose(createApplicationForm, close);
   return (
-    <Wrapper height="25vh" close={close}>
-      <Title size="1.8rem">Add user</Title>
+    <Wrapper close={close} height="30vh">
+      <Title size="1.8rem">Create Application</Title>
 
       <Formik
-        initialValues={{ name: '', projectId, projectName }}
-        validate={(values) => {
-          const errors = {};
-          if (!values.name) {
-            errors.name = 'Name is required !';
-          }
-          return errors;
-        }}
+        initialValues={{ offerId, desc: '' }}
         onSubmit={(values) => {
-          inviteUser(values);
+          createApplication(values);
           setSubmitted(true);
         }}
       >
         {({ values, errors, touched, handleSubmit, handleBlur, handleChange }) => (
           <Form onSubmit={handleSubmit}>
             <Input
-              label="Name"
+              label="About you"
+              helperText="optional"
+              multiline
               fullWidth
-              id="name"
-              name="name"
-              autoComplete="name"
+              id="desc"
+              name="desc"
+              autoComplete="desc"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.name}
             />
             {errors.name && touched.name ? <ErrorMessage>{errors.name}</ErrorMessage> : null}
-            {!inviteUserForm.processing && inviteUserForm.error ? (
-              <ErrorMessage>{inviteUserForm.error}</ErrorMessage>
+            {!createApplicationForm.processing && createApplicationForm.error ? (
+              <ErrorMessage>{createApplicationForm.error}</ErrorMessage>
             ) : null}
             <Button type="submit" fullWidth bg="purpleDark" width="100%">
-              Invite
+              Create
             </Button>
           </Form>
         )}
@@ -70,4 +64,4 @@ const InviteUserForm = ({
   );
 };
 
-export default connect(mapStateToProps('forms'), { inviteUser })(InviteUserForm);
+export default connect(mapStateToProps('forms'), { createApplication })(CreateApplicationForm);

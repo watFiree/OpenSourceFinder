@@ -6,8 +6,6 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
-
-const jwtAuth = require('./middlewares/auth-middleware');
 // passport config
 passport.serializeUser((user, cb) => {
   cb(null, user);
@@ -29,6 +27,7 @@ app.use('/auth', require('./routes/authRoutes'));
 app.use('/project', require('./routes/projectRoutes'));
 app.use('/task', require('./routes/taskRoutes'));
 app.use('/offer', require('./routes/offerRoutes'));
+app.use('/application', require('./routes/applicationRoutes'));
 
 mongoose.set('useFindAndModify', false);
 mongoose.connect(process.env.MONGO_URI, {

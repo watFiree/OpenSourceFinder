@@ -6,7 +6,7 @@ const Wrapper = styled.div`
   color: ${({ theme }) => theme.white};
   width: 100%;
   min-height: 100vh;
-  padding-top: 125px;
+  padding-top: 120px;
 `;
 
 export default Wrapper;

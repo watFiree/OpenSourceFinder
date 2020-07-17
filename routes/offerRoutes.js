@@ -4,7 +4,7 @@ const jwtAuth = require('../middlewares/auth-middleware');
 
 const offerRouter = express.Router();
 
-offerRouter.route('/:_id').get(jwtAuth, offerController.getOffer);
+offerRouter.route('/:_id').get(offerController.getOffer);
 
 offerRouter.route('/').post(jwtAuth, offerController.createOffer);
 

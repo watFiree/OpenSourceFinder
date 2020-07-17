@@ -7,7 +7,7 @@ import Header from '../components/organisms/Header';
 import InviteUserForm from '../components/organisms/InviteUserForm';
 import CreateOfferForm from '../components/organisms/CreateOfferForm';
 import CreateTaskForm from '../components/organisms/CreateTaskForm';
-import bgImage from '../assets/offers-background.jpg';
+import bgImage from '../assets/user-projects-background.jpg';
 import withAuth from '../hoc/withAuth';
 import { FlexCenterColumn, FlexCenterAroundColumn, FlexCenter } from '../helpers/cssFlex';
 import Button from '../components/atoms/Button';
@@ -42,6 +42,7 @@ const CreateProjectWrapper = styled.div`
 
 const ProjectsList = styled.div`
   width: 100%;
+  min-height: 45vh;
   height: 100%;
   background-color: rgba(72, 67, 79, 0.8);
   ${FlexCenterAroundColumn};
@@ -67,17 +68,22 @@ const UsersProjectsView = ({ user, projects, getProject }) => {
         )}
       </Heading>
       {view === projectView && <CreateProjectForm close={closeView} />}
-      <CreateProjectWrapper>
-        <CreateTooltip onClick={() => setView(projectView)}>Create Project</CreateTooltip>
-      </CreateProjectWrapper>
-      <ProjectsList>
-        <Title margin="25px 0 0 0" size="3.6rem">
-          Your projects{' '}
-        </Title>
-        {data?.map((project) => (
-          <SimpleProjectCard key={project.slug} openFnc={setView} data={project} />
-        ))}
-      </ProjectsList>
+      {user.isAuth && (
+        <>
+          <CreateProjectWrapper>
+            <CreateTooltip onClick={() => setView(projectView)}>Create Project</CreateTooltip>
+          </CreateProjectWrapper>
+          <ProjectsList>
+            <Title margin="25px 0 0 0" size="3.6rem">
+              Your projects{' '}
+            </Title>
+            {data?.map((project) => (
+              <SimpleProjectCard key={project.slug} openFnc={setView} data={project} />
+            ))}
+          </ProjectsList>
+        </>
+      )}
+
       {view === userView && <InviteUserForm close={closeView} />}
       {view === offerView && <CreateOfferForm close={closeView} />}
       {view === taskView && <CreateTaskForm close={closeView} />}

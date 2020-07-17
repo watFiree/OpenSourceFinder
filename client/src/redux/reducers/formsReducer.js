@@ -2,6 +2,7 @@ import * as userTypes from '../actionTypes/userActions';
 import * as projectsTypes from '../actionTypes/projectsActions';
 import * as tasksTypes from '../actionTypes/tasksActions';
 import * as offersTypes from '../actionTypes/offersActions';
+import * as applicationTypes from '../actionTypes/applicationActions';
 
 const CLEAR_FORMS = 'CLEAR_FORMS';
 
@@ -19,6 +20,10 @@ const initialState = {
     error: null,
   },
   createOfferForm: {
+    processing: false,
+    error: null,
+  },
+  createApplicationForm: {
     processing: false,
     error: null,
   },
@@ -130,6 +135,32 @@ const formsReducer = (state = initialState, action) => {
         ...state,
         createOfferForm: {
           ...state.createOfferForm,
+          processing: false,
+          error: action.payload.message,
+        },
+      };
+    case applicationTypes.CREATE_APPLICATION_STARTED:
+      return {
+        ...state,
+        createApplicationForm: {
+          ...state.createApplicationForm,
+          processing: true,
+        },
+      };
+    case applicationTypes.CREATE_APPLICATION_SUCCESS:
+      return {
+        ...state,
+        createApplicationForm: {
+          ...state.createApplicationForm,
+          processing: false,
+          error: null,
+        },
+      };
+    case applicationTypes.CREATE_APPLICATION_FAILURE:
+      return {
+        ...state,
+        createApplicationForm: {
+          ...state.createApplicationForm,
           processing: false,
           error: action.payload.message,
         },

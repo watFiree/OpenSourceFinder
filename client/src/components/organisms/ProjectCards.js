@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PersonIcon from '@material-ui/icons/Person';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Button from '../atoms/Button';
-import img from '../../assets/offers-background.jpg';
+import img from '../../assets/offer-view-background.jpg';
 import { FlexCenterAround, FlexCenterAroundColumn, FlexCenter } from '../../helpers/cssFlex';
 import Chip from '../atoms/Chip';
 import Title from '../atoms/Title';
