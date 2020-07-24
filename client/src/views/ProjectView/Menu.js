@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   min-height: 60vh;
   height: 100%;
   display: flex;
+  padding: 2% 0;
 `;
 
 const Actions = styled.div`
@@ -38,7 +39,7 @@ const ProjectMenu = ({ data }) => {
   return (
     <Wrapper>
       <Recent>
-        <Title size="1.8rem" margin="5% 0">
+        <Title size="1.8rem" margin="0 0 5% 0">
           RECENT ACTIVITY
         </Title>
         <RecentActivity />
@@ -46,7 +47,7 @@ const ProjectMenu = ({ data }) => {
         <RecentActivity />
       </Recent>
       <Actions>
-        <Title size="1.8rem" margin="5% 0">
+        <Title size="1.8rem" margin="0 0 5% 0">
           ACTIONS
         </Title>
         <Flex>

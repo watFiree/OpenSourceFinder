@@ -11,6 +11,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 2% 0;
 `;
 
 const UsersList = styled.div`
@@ -23,13 +24,11 @@ const ProjectUsers = ({ data }) => {
   const [usersWithoutAdmins, setUsersWithoutAdmins] = useState([]);
   useEffect(() => {
     const adminsIds = admins.map((admin) => admin._id);
-    console.log(adminsIds);
     setUsersWithoutAdmins(users.filter((user) => !adminsIds.includes(user._id)));
   }, [admins, users]);
-  console.log(usersWithoutAdmins);
   return (
     <Wrapper>
-      <Title size="1.8rem" margin="30px 0">
+      <Title size="1.8rem" margin="0 0 30px 0">
         ADMINS
       </Title>
       <UsersList>

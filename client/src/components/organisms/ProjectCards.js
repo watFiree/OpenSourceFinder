@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import PersonIcon from '@material-ui/icons/Person';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Button from '../atoms/Button';
@@ -12,10 +13,11 @@ import Link from '../atoms/Link';
 import ChipsWrapper from '../atoms/ChipsWrapper';
 import List from '../molecules/List';
 import options from '../../helpers/viewsNames';
+import { removeProject } from '../../redux/actions/removeProject';
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.blackDark};
-  margin-top: 40px;
+  margin: 30px 0;
   width: 90%;
   height: 220px;
   border-radius: 40px;
@@ -97,11 +99,12 @@ export const ProjectCard = ({ data }) => (
   </Wrapper>
 );
 
-export const SimpleProjectCard = ({ data, openFnc }) => {
+const SimpleProjectCard = ({ data, admin, setProjectFnc, openFnc, removeProject }) => {
   const { userView, offerView, taskView } = options;
-  const openUser = () => openFnc(userView);
-  const openOffer = () => openFnc(offerView);
-  const openTask = () => openFnc(taskView);
+  const setView = (view) => {
+    setProjectFnc(data);
+    openFnc(view);
+  };
   return (
     <Wrapper>
       <Image src={img} />
@@ -114,20 +117,21 @@ export const SimpleProjectCard = ({ data, openFnc }) => {
           <List
             title="Add"
             options={[
-              { placeholder: 'User', onClick: openUser },
-              { placeholder: 'Offer', onClick: openOffer },
-              { placeholder: 'Task', onClick: openTask },
+              { placeholder: 'User', onClick: () => setView(userView) },
+              { placeholder: 'Offer', onClick: () => setView(offerView) },
+              { placeholder: 'Task', onClick: () => setView(taskView) },
             ]}
           />
-
           <Link to={`project/${data.name}`}>
             <Button bg="purpleDark">Edit</Button>
           </Link>
-          <Link to={`project/${data.name}`}>
-            <Button bg="error">Leave</Button>
-          </Link>
+          <Button onClick={() => removeProject(data._id)} bg="error">
+            {admin ? 'Remove' : 'Leave'}
+          </Button>
         </Buttons>
       </Container>
     </Wrapper>
   );
 };
+
+export default connect(null, { removeProject })(SimpleProjectCard);

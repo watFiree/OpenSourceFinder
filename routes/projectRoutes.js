@@ -7,7 +7,9 @@ const projectRouter = express.Router();
 projectRouter
   .route('/:id')
   .get(projectController.getProject)
-  .delete(jwtAuth, projectController.deleteProject);
+  .delete(jwtAuth, projectController.removeProject);
+
+projectRouter.route('/user').delete(jwtAuth, projectController.removeUser);
 
 projectRouter
   .route('/')

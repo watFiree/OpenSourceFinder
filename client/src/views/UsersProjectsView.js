@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import { connect } from 'react-redux';
 import Wrapper from '../components/atoms/Wrapper';
@@ -12,7 +12,7 @@ import withAuth from '../hoc/withAuth';
 import { FlexCenterColumn, FlexCenterAroundColumn, FlexCenter } from '../helpers/cssFlex';
 import Button from '../components/atoms/Button';
 import Link from '../components/atoms/Link';
-import { SimpleProjectCard } from '../components/organisms/ProjectCards';
+import SimpleProjectCard from '../components/organisms/ProjectCards';
 import CreateTooltip from '../components/molecules/CreateTooltip';
 import CreateProjectForm from '../components/organisms/CreateProjectForm';
 import useViews from '../hooks/useViews';
@@ -49,7 +49,8 @@ const ProjectsList = styled.div`
 `;
 
 const UsersProjectsView = ({ user, projects, getProject }) => {
-  const [data] = useProjectData(user.projectsIds, projects.data, getProject);
+  const [exactProjectView, setExactProjectView] = useState({});
+  const [data] = useProjectData(user.projectsIds, projects, getProject);
   const [view, setView, closeView, { userView, taskView, offerView }] = useViews();
   const projectView = 'projectView';
   return (
@@ -78,15 +79,27 @@ const UsersProjectsView = ({ user, projects, getProject }) => {
               Your projects{' '}
             </Title>
             {data?.map((project) => (
-              <SimpleProjectCard key={project.slug} openFnc={setView} data={project} />
+              <SimpleProjectCard
+                key={project.slug}
+                admin={project.admins.map((admin) => admin._id).includes(user._id)}
+                openFnc={setView}
+                data={project}
+                setProjectFnc={setExactProjectView}
+              />
             ))}
           </ProjectsList>
         </>
       )}
 
-      {view === userView && <InviteUserForm close={closeView} />}
-      {view === offerView && <CreateOfferForm close={closeView} />}
-      {view === taskView && <CreateTaskForm close={closeView} />}
+      {view === userView && (
+        <InviteUserForm
+          projectId={exactProjectView._id}
+          projectName={exactProjectView.name}
+          close={closeView}
+        />
+      )}
+      {view === offerView && <CreateOfferForm id={exactProjectView._id} close={closeView} />}
+      {view === taskView && <CreateTaskForm id={exactProjectView._id} close={closeView} />}
     </Wrapper>
   );
 };

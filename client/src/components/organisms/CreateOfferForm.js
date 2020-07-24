@@ -27,7 +27,7 @@ const CreateOfferForm = ({ forms: { createOfferForm }, createOffer, id, close })
       <Title size="1.8rem">Create offer</Title>
 
       <Formik
-        initialValues={{ id, name: '', stack: ['react'], position: '', desc: '' }}
+        initialValues={{ id, name: '', stack: ['react'], desc: '' }}
         validate={(values) => {
           const errors = {};
           if (!values.name) {
@@ -35,9 +35,6 @@ const CreateOfferForm = ({ forms: { createOfferForm }, createOffer, id, close })
           }
           if (!values.stack.length) {
             errors.stack = 'Stack is required !';
-          }
-          if (!values.position) {
-            errors.positioin = 'Position is required !';
           }
           return errors;
         }}
@@ -64,20 +61,6 @@ const CreateOfferForm = ({ forms: { createOfferForm }, createOffer, id, close })
               <MenuItem value="node">node</MenuItem>
             </Select>
             {errors.stack && touched.stack ? <ErrorMessage>{errors.stack}</ErrorMessage> : null}
-            <Input
-              label="Position"
-              multiline
-              fullWidth
-              id="position"
-              name="position"
-              autoComplete="position"
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.position}
-            />
-            {errors.position && touched.position ? (
-              <ErrorMessage>{errors.position}</ErrorMessage>
-            ) : null}
             <Input
               label="Description"
               multiline

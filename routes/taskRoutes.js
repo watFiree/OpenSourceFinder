@@ -4,7 +4,10 @@ const jwtAuth = require('../middlewares/auth-middleware');
 
 const taskRouter = express.Router();
 
-taskRouter.route('/:_id').get(jwtAuth, taskController.getTask);
+taskRouter
+  .route('/:_id')
+  .get(jwtAuth, taskController.getTask)
+  .delete(jwtAuth, taskController.removeTask);
 
 taskRouter.route('/').post(jwtAuth, taskController.createTask);
 

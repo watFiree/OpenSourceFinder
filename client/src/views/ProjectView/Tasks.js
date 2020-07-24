@@ -14,17 +14,18 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 2% 0;
 `;
 
 const ProjectTasks = ({ tasksIds, tasks, getTask }) => {
   const [expanded, setExpanded] = useState(false);
-  const [data] = useProjectData(tasksIds, tasks.data, getTask);
+  const [data] = useProjectData(tasksIds, tasks, getTask);
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
   return (
     <Wrapper>
-      <Title size="1.8rem" margin="40px 0">
+      <Title size="1.8rem" margin="0 0 40px 0">
         TASKS
       </Title>
       {data.map((task, index) => (

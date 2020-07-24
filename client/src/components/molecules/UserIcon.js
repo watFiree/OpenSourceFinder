@@ -54,14 +54,14 @@ const UserIcon = ({ isAuth }) => {
       <StyledMenu
         id="user-menu"
         anchorEl={anchorEl}
-        // anchorOrigin={{
-        //   vertical: 'bottom',
-        //   horizontal: 'right',
-        // }}
-        // transformOrigin={{
-        //   vertical: 'top',
-        //   horizontal: 'right',
-        // }}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
         open={open}
         onClose={handleClose}
       >

@@ -34,4 +34,25 @@ module.exports = {
       return res.status(404).send({ message: 'Could not create offer :(', err });
     }
   },
+  async removeOffer(req, res) {
+    const { _id } = req.params;
+    // return res.status(404).send({ message: 'Offer not found ! ' });
+    try {
+      const offer = await Offer.findById(_id);
+      if (!offer) return res.status(404).send({ message: 'Offer not found ! ' });
+      const projectId = offer.project._id;
+      const havePermissions = await Project.findOne({ _id: projectId, admins: req.user });
+      if (!havePermissions)
+        return res.status(404).send({ message: 'You cannot remove this offer ! ' });
+      await Offer.deleteOne(offer);
+      const project = await Project.findOneAndUpdate(
+        { _id: projectId },
+        { $pull: { offers: { $in: offer._id } } }
+      );
+      if (!project) return res.status(404).send({ message: 'Project not found ! ' });
+      return res.status(200).send({ offerId: _id, projectId: project._id });
+    } catch (err) {
+      return res.status(400).send({ message: 'Could not delete offer ! ' });
+    }
+  },
 };

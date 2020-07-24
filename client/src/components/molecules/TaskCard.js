@@ -97,7 +97,9 @@ const TaskCard = ({ data, expanded, handleChange, number }) => {
         </Flex>
         <Buttons>
           <Text size="1.1rem" color="gray">
-            {data.expiration && <>Should be done until : {new Date(data.expiration).toString()}</>}
+            {data.expiration && (
+              <>Should be done until : {new Date(data.expiration).toString().slice(0, 15)}</>
+            )}
           </Text>
 
           <div>

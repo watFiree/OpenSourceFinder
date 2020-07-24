@@ -3,17 +3,25 @@ import { useState, useEffect } from 'react';
 const useProjectData = (dataIds, reduxData, getFunction) => {
   const [state, setState] = useState([]);
   useEffect(() => {
-    if (!dataIds.length) return () => console.log('no teams');
-    dataIds.forEach((id) => {
-      const alreadyInState = state.find((inState) => inState._id === id);
-      if (alreadyInState) return () => console.log('no team here');
-      const data = reduxData.find((redux) => redux._id === id);
-      if (data) {
-        setState((prev) => [...prev, data]);
-      } else {
-        getFunction(id);
-      }
-    });
+    console.log('State', state);
+    console.log('fetching', reduxData.fetching);
+    if (reduxData.deleted && state?.find((inState) => inState._id === reduxData.deleted)) {
+      setState((prev) => [...prev.filter((x) => x._id !== reduxData.deleted)]);
+    }
+    if (dataIds.length && dataIds.length > reduxData.fetching) {
+      dataIds.forEach((id) => {
+        const alreadyInState = state?.find((inState) => inState._id === id);
+        if (!alreadyInState) {
+          const data = reduxData?.data.find((redux) => redux._id === id);
+          if (data) {
+            setState((prev) => [...prev, data]);
+          } else {
+            getFunction(id);
+          }
+          return () => setState([]);
+        }
+      });
+    }
   }, [dataIds, reduxData, state, getFunction]);
   return [state];
 };

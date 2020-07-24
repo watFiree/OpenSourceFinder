@@ -1,6 +1,9 @@
 const validator = require('validator');
 const Project = require('../models/Project');
 const User = require('../models/User');
+const Offer = require('../models/Offer');
+const Task = require('../models/Task');
+const Application = require('../models/Application');
 const convertToSlug = require('../helpers/convertToSlug');
 
 module.exports = {
@@ -55,23 +58,44 @@ module.exports = {
   },
   async fetchAll(req, res) {
     try {
-      const projects = await Project.find();
+      const projects = await Project.find().populate('admins', 'name').populate('users', 'name');
       return res.status(200).send(projects);
     } catch (err) {
       return res.status(404).send({ message: 'Something went wrong :(', err });
     }
   },
-  async deleteProject(req, res) {
-    const { _id } = req.params;
+  async removeProject(req, res) {
+    const { id } = req.params;
     try {
-      const project = await Project.findById({ _id });
+      const project = await Project.findById(id);
       if (!project) return res.status(404).send({ message: ' Project with this id not found !' });
       const users = await project.users;
-      await User.updateMany({ _id: { $in: users } }, { $pull: { projects: _id } });
-      await project.remove();
-      return res.status(200).send({ message: 'Deleted successfuly !' });
+      const applications = await project.applications;
+      await User.updateMany({ _id: { $in: users } }, { $pull: { projects: id } });
+      await Task.deleteMany({ project });
+      await Offer.deleteMany({ project });
+      await Application.deleteMany({ _id: { $in: applications } });
+      await Project.deleteOne(project);
+      return res.status(200).send({
+        projectId: id,
+        offersIds: project.offers,
+        applicationsIds: project.applications,
+        tasksIds: project.tasks,
+      });
     } catch (err) {
       return res.status(404).send({ message: ' Could not delete :(' });
+    }
+  },
+  async removeUser(req, res) {
+    const { userId, projectId } = req.body;
+    try {
+      const user = await User.findByIdAndUpdate({ userId }, { $pull: { projects: projectId } });
+      if (!user) return res.status(400).send({ message: 'User not found !' });
+      const project = await Project.findByIdAndUpdate({ projectId }, { $pull: { user: userId } });
+      if (!project) return res.status(400).send({ message: 'Project not found !' });
+      return res.status(200).send({ userId, projectId });
+    } catch (err) {
+      return res.status(404).send({ message: 'Could not remove this user !' });
     }
   },
 };
