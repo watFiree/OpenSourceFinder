@@ -15,10 +15,10 @@ module.exports = {
     }
   },
   async createTask(req, res) {
-    const { id, title, content, expiration, status, taken } = req.body;
+    const { projectId, title, content, expiration, status, taken } = req.body;
     const contributors = taken ? [req.user] : [];
     try {
-      const project = await Project.findById(id);
+      const project = await Project.findById(projectId);
       if (!project) return res.status(404).send({ message: 'Project not found !' });
       const data = {
         project,
@@ -56,6 +56,21 @@ module.exports = {
       return res.status(200).send({ taskId: _id, projectId: project._id });
     } catch (err) {
       return res.status(400).send({ message: 'Could not delete task ! ' });
+    }
+  },
+  async editTask(req, res) {
+    const { taskId, title, content, expiration } = req.body;
+    try {
+      const task = await Task.findById(taskId);
+      if (!task) return res.status(404).send({ message: 'Task not found ! ' });
+      const updated = await Task.findOneAndUpdate(
+        { _id: taskId },
+        { title, content, expiration },
+        { new: true }
+      );
+      return res.status(200).send(updated);
+    } catch (err) {
+      return res.status(404).send({ message: 'Could not edit offer ! ' });
     }
   },
 };

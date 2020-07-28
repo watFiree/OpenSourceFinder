@@ -25,9 +25,9 @@ const Dot = styled(Badge)`
   }
 `;
 
-const MailIcon = () => (
+const MailIcon = ({ onClick }) => (
   <Dot variant="dot">
-    <Mail />
+    <Mail onClick={onClick} />
   </Dot>
 );
 

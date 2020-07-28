@@ -9,6 +9,9 @@ offerRouter
   .get(offerController.getOffer)
   .delete(jwtAuth, offerController.removeOffer);
 
-offerRouter.route('/').post(jwtAuth, offerController.createOffer);
+offerRouter
+  .route('/')
+  .post(jwtAuth, offerController.createOffer)
+  .put(jwtAuth, offerController.editOffer);
 
 module.exports = offerRouter;

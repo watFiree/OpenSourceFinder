@@ -13,6 +13,7 @@ import Checkbox from '../atoms/Checkbox';
 import ErrorMessage from '../atoms/ErrorMessage';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
 import { createTask } from '../../redux/actions/createTask';
+import { editTask } from '../../redux/actions/editTask';
 import { mapStateToProps } from '../../helpers/mapStateToProps';
 import useFormClose from '../../hooks/useFormClose';
 
@@ -66,15 +67,23 @@ const DatePickerField = ({ name, value, onChange }) => {
   );
 };
 
-const CreateTaskForm = ({ forms: { createTaskForm }, createTask, id, close }) => {
+const CreateTaskForm = ({
+  forms: { createTaskForm },
+  createTask,
+  editTask,
+  data,
+  close,
+  edit = false,
+}) => {
   const [setSubmitted] = useFormClose(createTaskForm, close);
+  const { projectId = '', _id: taskId = '', title = '', content = '', expiration = '' } = data;
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Wrapper close={close}>
-        <Title size="1.8rem">Create task</Title>
+        <Title size="1.8rem">{edit ? 'Edit' : 'Create'} task</Title>
 
         <Formik
-          initialValues={{ id, title: '', content: '', expiration: '', taken: false }}
+          initialValues={{ projectId, taskId, title, content, expiration, taken: false }}
           validate={(values) => {
             const errors = {};
             if (!values.title) {
@@ -86,7 +95,11 @@ const CreateTaskForm = ({ forms: { createTaskForm }, createTask, id, close }) =>
             return errors;
           }}
           onSubmit={(values) => {
-            createTask(values);
+            if (edit) {
+              editTask(values);
+            } else {
+              createTask(values);
+            }
             setSubmitted(true);
           }}
         >
@@ -122,22 +135,24 @@ const CreateTaskForm = ({ forms: { createTaskForm }, createTask, id, close }) =>
                 value={values.expiration}
                 onChange={setFieldValue}
               />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    id="taken"
-                    onChange={handleChange}
-                    value={values.taken}
-                    color="primary"
-                  />
-                }
-                label="Mark me as contributor"
-              />
+              {!edit && (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      id="taken"
+                      onChange={handleChange}
+                      value={values.taken}
+                      color="primary"
+                    />
+                  }
+                  label="Mark me as contributor"
+                />
+              )}
               {!createTaskForm.processing && createTaskForm.error ? (
                 <ErrorMessage>{createTaskForm.error}</ErrorMessage>
               ) : null}
               <Button type="submit" fullWidth bg="purpleDark" width="100%">
-                Create
+                {edit ? 'Edit' : 'Create'}
               </Button>
             </Form>
           )}
@@ -147,4 +162,4 @@ const CreateTaskForm = ({ forms: { createTaskForm }, createTask, id, close }) =>
   );
 };
 
-export default connect(mapStateToProps('forms'), { createTask })(CreateTaskForm);
+export default connect(mapStateToProps('forms'), { createTask, editTask })(CreateTaskForm);

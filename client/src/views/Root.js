@@ -7,6 +7,7 @@ import UsersProjectsView from './UsersProjectsView';
 import LoggingView from './LoggingView';
 import OfferView from './OfferView';
 import MembersProjectView from './ProjectView/MainView';
+import MyAccountView from './MyAccountView';
 
 const Root = () => {
   return (
@@ -15,6 +16,7 @@ const Root = () => {
         <Route exact path="/" component={MainView} />
         <Route exact path="/projects" component={ProjectsView} />
         <Route exact path="/offer/:id" component={OfferView} />
+        <Route exact path="/user" component={MyAccountView} />
         <Route exact path="/user/projects" component={UsersProjectsView} />
         <Route exact path="/user/project/:id" component={MembersProjectView} />
         <Route exact path={['/signin', '/signup']} component={LoggingView} />

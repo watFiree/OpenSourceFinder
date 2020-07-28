@@ -2,9 +2,9 @@ import styled from 'styled-components';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const LoadingCircle = styled(CircularProgress)`
-  margin-right: 20px;
-  .MuiCircularProgress {
-    color: ${({ theme, color }) => theme[color]};
+  margin: ${({ margin }) => margin || 0};
+  circle {
+    color: ${({ theme, color }) => theme[color] || 'white'};
   }
 `;
 

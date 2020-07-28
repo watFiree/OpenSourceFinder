@@ -9,6 +9,8 @@ import { mapStateToProps } from '../../helpers/mapStateToProps';
 import useProjectData from '../../hooks/useProjectData';
 import { getOffer } from '../../redux/actions/getOffer';
 import { getApplication } from '../../redux/actions/getApplication';
+import EditOfferForm from '../../components/organisms/CreateOfferForm';
+import useEditForm from '../../hooks/useEditForm';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -40,6 +42,7 @@ const ProjectOffers = ({
 }) => {
   const [offers] = useProjectData(offersIds, reduxOffers, getOffer);
   const [applications] = useProjectData(applicationsIds, reduxApplications.data, getApplication);
+  const [editing, editingData, editOpen, editClose] = useEditForm();
   return (
     <Wrapper>
       <Container>
@@ -48,7 +51,7 @@ const ProjectOffers = ({
         </Title>
         <Flex>
           {offers?.map((offer) => (
-            <OfferCard key={offer._id} data={offer} />
+            <OfferCard key={offer._id} data={offer} editOffer={editOpen} />
           ))}
         </Flex>
       </Container>
@@ -62,6 +65,7 @@ const ProjectOffers = ({
           ))}
         </Flex>
       </Container>
+      {editing && <EditOfferForm data={editingData} close={editClose} edit={editing} />}
     </Wrapper>
   );
 };

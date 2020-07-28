@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { getUser } from '../redux/actions/signUser';
@@ -7,12 +8,14 @@ import { mapStateToProps } from '../helpers/mapStateToProps';
 
 const withAuth = (Component) => (props) => {
   const { getUser: getData, user } = props;
+  const history = useHistory();
   useEffect(() => {
     if (!user.isAuth) {
       const { token } = getCookies();
       if (token) getData(token);
+      if (!token && !user.loading) history.push('/');
     }
-  }, [user.isAuth, getData]);
+  }, [user.isAuth, user.loading, getData, history]);
 
   return <Component {...props} />;
 };

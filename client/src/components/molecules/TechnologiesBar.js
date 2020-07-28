@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import * as flex from 'styled-components-flexbox-tooltip';
 import reactImg from '../../assets/react.svg';
 import angularImg from '../../assets/angular.svg';
 import csharpImg from '../../assets/csharp.svg';
@@ -7,8 +8,7 @@ import nodejsImg from '../../assets/nodejs.svg';
 import typescriptImg from '../../assets/typescript.svg';
 
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
+  ${flex.CenterDefault};
   justify-content: space-evenly;
   background-color: ${({ theme }) => theme.blackLight};
   border-top: 5px solid ${({ theme }) => theme.purpleDark};

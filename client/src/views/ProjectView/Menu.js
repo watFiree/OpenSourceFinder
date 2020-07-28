@@ -69,8 +69,8 @@ const ProjectMenu = ({ data }) => {
       {view === userView && (
         <InviteUserForm projectId={data._id} projectName={data.name} close={closeView} />
       )}
-      {view === offerView && <CreateOfferForm id={data._id} close={closeView} />}
-      {view === taskView && <CreateTaskForm id={data._id} close={closeView} />}
+      {view === offerView && <CreateOfferForm data={{ projectId: data._id }} close={closeView} />}
+      {view === taskView && <CreateTaskForm data={{ projectId: data._id }} close={closeView} />}
     </Wrapper>
   );
 };

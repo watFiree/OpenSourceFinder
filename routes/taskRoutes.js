@@ -9,6 +9,9 @@ taskRouter
   .get(jwtAuth, taskController.getTask)
   .delete(jwtAuth, taskController.removeTask);
 
-taskRouter.route('/').post(jwtAuth, taskController.createTask);
+taskRouter
+  .route('/')
+  .post(jwtAuth, taskController.createTask)
+  .put(jwtAuth, taskController.editTask);
 
 module.exports = taskRouter;

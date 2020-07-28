@@ -13,17 +13,16 @@ module.exports = {
     }
   },
   async createOffer(req, res) {
-    const { id, name, stack, position, desc } = req.body;
+    const { projectId, name, stack, desc } = req.body;
     if (stack === undefined || stack.length === 0)
       return res.status(400).send({ message: 'Stack is required ! ' });
     try {
-      const project = await Project.findById(id);
+      const project = await Project.findById(projectId);
       if (!project) return res.status(404).send({ message: 'Project not found !' });
       const offer = await new Offer({
         project,
         name,
         stack,
-        position,
         desc,
       });
       await offer.save();
@@ -36,7 +35,6 @@ module.exports = {
   },
   async removeOffer(req, res) {
     const { _id } = req.params;
-    // return res.status(404).send({ message: 'Offer not found ! ' });
     try {
       const offer = await Offer.findById(_id);
       if (!offer) return res.status(404).send({ message: 'Offer not found ! ' });
@@ -53,6 +51,21 @@ module.exports = {
       return res.status(200).send({ offerId: _id, projectId: project._id });
     } catch (err) {
       return res.status(400).send({ message: 'Could not delete offer ! ' });
+    }
+  },
+  async editOffer(req, res) {
+    const { offerId, name, stack, desc } = req.body;
+    try {
+      const offer = await Offer.findById(offerId);
+      if (!offer) return res.status(404).send({ message: 'Offer not found ! ' });
+      const updated = await Offer.findOneAndUpdate(
+        { _id: offerId },
+        { name, stack, desc },
+        { new: true }
+      );
+      return res.status(200).send(updated);
+    } catch (err) {
+      return res.status(404).send({ message: 'Could not edit offer ! ' });
     }
   },
 };

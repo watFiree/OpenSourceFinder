@@ -5,7 +5,9 @@ import TaskCard from '../../components/molecules/TaskCard';
 import Title from '../../components/atoms/Title';
 import { mapStateToProps } from '../../helpers/mapStateToProps';
 import useProjectData from '../../hooks/useProjectData';
+import useEditForm from '../../hooks/useEditForm';
 import { getTask } from '../../redux/actions/getTask';
+import EditTaskForm from '../../components/organisms/CreateTaskForm';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -20,6 +22,7 @@ const Wrapper = styled.div`
 const ProjectTasks = ({ tasksIds, tasks, getTask }) => {
   const [expanded, setExpanded] = useState(false);
   const [data] = useProjectData(tasksIds, tasks, getTask);
+  const [editing, editingData, editOpen, editClose] = useEditForm();
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
@@ -32,11 +35,13 @@ const ProjectTasks = ({ tasksIds, tasks, getTask }) => {
         <TaskCard
           key={task._id}
           data={task}
+          editTask={editOpen}
           expanded={expanded}
           handleChange={handleChange}
           number={index}
         />
       ))}
+      {editing && <EditTaskForm data={editingData} close={editClose} edit={editing} />}
     </Wrapper>
   );
 };

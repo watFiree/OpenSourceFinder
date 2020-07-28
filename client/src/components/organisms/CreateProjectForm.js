@@ -12,6 +12,7 @@ import Select from '../atoms/Select';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
 import { mapStateToProps } from '../../helpers/mapStateToProps';
 import { createProject } from '../../redux/actions/createProject';
+import { editProject } from '../../redux/actions/editProject';
 import useFormClose from '../../hooks/useFormClose';
 
 const Form = styled.form`
@@ -20,17 +21,26 @@ const Form = styled.form`
   ${FlexCenterAroundColumn}
 `;
 
-const CreateProjectForm = ({ user, forms: { createProjectForm }, createProject, close }) => {
+const CreateProjectForm = ({
+  user,
+  forms: { createProjectForm },
+  createProject,
+  editProject,
+  close,
+  data = {},
+  edit = false,
+}) => {
   useEffect(() => {
     if (!user.isAuth) return close(null);
   }, [user, close]);
   const [setSubmitted] = useFormClose(createProjectForm, close);
+  const { _id = '', name = '', stack = ['react'], about = { desc: '', biogram: '' } } = data;
   return (
     <Wrapper close={close}>
-      <Title size="1.8rem">Create Project</Title>
+      <Title size="1.8rem">{edit ? 'Edit' : 'Create'} Project</Title>
 
       <Formik
-        initialValues={{ name: '', stack: ['react'], about: { desc: '', biogram: '' } }}
+        initialValues={{ _id, name, stack, about }}
         validate={(values) => {
           const errors = {};
           if (!values.name) {
@@ -45,7 +55,11 @@ const CreateProjectForm = ({ user, forms: { createProjectForm }, createProject, 
           return errors;
         }}
         onSubmit={(values) => {
-          createProject(values);
+          if (edit) {
+            editProject(values);
+          } else {
+            createProject(values);
+          }
           setSubmitted(true);
         }}
       >
@@ -93,7 +107,7 @@ const CreateProjectForm = ({ user, forms: { createProjectForm }, createProject, 
               <ErrorMessage>{createProjectForm.error}</ErrorMessage>
             ) : null}
             <Button type="submit" fullWidth bg="purpleDark" width="100%">
-              Create
+              {edit ? 'Edit' : 'Create'}
             </Button>
           </Form>
         )}
@@ -102,4 +116,6 @@ const CreateProjectForm = ({ user, forms: { createProjectForm }, createProject, 
   );
 };
 
-export default connect(mapStateToProps('user', 'forms'), { createProject })(CreateProjectForm);
+export default connect(mapStateToProps('user', 'forms'), { createProject, editProject })(
+  CreateProjectForm
+);

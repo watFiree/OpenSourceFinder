@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Logo from '../molecules/Logo';
 import Link from '../atoms/Link';
 import Navigation from '../molecules/Navigation';
-import MailIcon from '../atoms/MailIcon';
+import Notifications from './Notifications';
 import UserIcon from '../molecules/UserIcon';
 import { mapStateToProps } from '../../helpers/mapStateToProps';
 
@@ -58,7 +58,7 @@ const Header = ({ user }) => {
           </Link>
         </Navigation>
         <IconsWrapper>
-          {user.isAuth && <MailIcon />} <UserIcon isAuth={user.isAuth} />
+          {user.isAuth && <Notifications />} <UserIcon isAuth={user.isAuth} />
         </IconsWrapper>
       </UserActions>
     </Wrapper>

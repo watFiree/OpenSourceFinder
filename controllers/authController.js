@@ -36,6 +36,8 @@ module.exports = {
         email: user.email,
         avaible: user.avaible,
         projects: user.projects,
+        about: user.about,
+        invitations: user.invitations,
       });
     } catch (err) {
       return res.status(400).send({ message: 'Could not create user :(' });
@@ -43,12 +45,15 @@ module.exports = {
   },
   async signin(req, res) {
     if (!req.user) return res.status(401).send({ message: 'Invalid nickname or password ' });
-    const { _id, name, email, avaible } = req.user;
+    const { _id, name, email, avaible, about, projects, invitations } = req.user;
     const expirationTime = req.body.remember ? 604800 : 3600;
     const token = jwt.sign({ id: _id }, process.env.JWT_SECRET, {
       expiresIn: expirationTime,
     });
-    return res.status(200).cookie('token', token).send({ _id, name, email, avaible });
+    return res
+      .status(200)
+      .cookie('token', token)
+      .send({ _id, name, email, avaible, about, projects, invitations });
   },
   async google(req, res) {
     return res

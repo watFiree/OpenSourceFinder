@@ -9,7 +9,6 @@ const convertToSlug = require('../helpers/convertToSlug');
 module.exports = {
   async createProject(req, res) {
     const { name, stack, about } = req.body;
-    console.log(req.body);
     if (name === undefined || validator.isEmpty(name))
       return res.status(400).send({ message: 'Name is required ! ' });
     if (stack === undefined || stack.length === 0)
@@ -96,6 +95,24 @@ module.exports = {
       return res.status(200).send({ userId, projectId });
     } catch (err) {
       return res.status(404).send({ message: 'Could not remove this user !' });
+    }
+  },
+  async editProject(req, res) {
+    const { _id, name, stack, about } = req.body;
+    try {
+      const project = await Project.findById(_id);
+      const alreadyExists = await Project.findOne({ name });
+      if (name !== project.name && alreadyExists)
+        return res.status(404).send({ message: 'Project name already taken ! ' });
+      if (!project) return res.status(404).send({ message: 'Project not found ! ' });
+      const updated = await Project.findOneAndUpdate(
+        { _id },
+        { name, slug: convertToSlug(name), stack, about },
+        { new: true }
+      );
+      return res.status(200).send(updated);
+    } catch (err) {
+      return res.status(404).send({ message: 'Could not edit project ! ' });
     }
   },
 };

@@ -24,7 +24,7 @@ export const Buttons = styled.div`
   ${FlexCenterAround}
 `;
 
-const OfferCard = ({ data, removeOffer }) => (
+const OfferCard = ({ data, removeOffer, editOffer }) => (
   <Wrapper>
     <Text>{data.name}</Text>
     <Buttons>
@@ -33,7 +33,7 @@ const OfferCard = ({ data, removeOffer }) => (
           More
         </Button>
       </Link>
-      <Button size="small" bg="purpleLight">
+      <Button size="small" bg="purpleLight" onClick={() => editOffer(data)}>
         Edit
       </Button>
       <Button size="small" bg="error" onClick={() => removeOffer(data._id)}>

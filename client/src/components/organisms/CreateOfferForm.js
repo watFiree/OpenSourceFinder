@@ -11,6 +11,7 @@ import ErrorMessage from '../atoms/ErrorMessage';
 import Select from '../atoms/Select';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
 import { createOffer } from '../../redux/actions/createOffer';
+import { editOffer } from '../../redux/actions/editOffer';
 import { mapStateToProps } from '../../helpers/mapStateToProps';
 import useFormClose from '../../hooks/useFormClose';
 
@@ -20,14 +21,28 @@ const Form = styled.form`
   ${FlexCenterAroundColumn}
 `;
 
-const CreateOfferForm = ({ forms: { createOfferForm }, createOffer, id, close }) => {
+const CreateOfferForm = ({
+  forms: { createOfferForm },
+  createOffer,
+  editOffer,
+  close,
+  data,
+  edit = false,
+}) => {
   const [setSubmitted] = useFormClose(createOfferForm, close);
+  const { projectId = '', _id: offerId = '', name = '', stack = ['react'], desc = '' } = data;
   return (
     <Wrapper close={close}>
-      <Title size="1.8rem">Create offer</Title>
+      <Title size="1.8rem">{edit ? 'Edit' : 'Create'} offer</Title>
 
       <Formik
-        initialValues={{ id, name: '', stack: ['react'], desc: '' }}
+        initialValues={{
+          projectId,
+          offerId,
+          name,
+          stack,
+          desc,
+        }}
         validate={(values) => {
           const errors = {};
           if (!values.name) {
@@ -39,7 +54,11 @@ const CreateOfferForm = ({ forms: { createOfferForm }, createOffer, id, close })
           return errors;
         }}
         onSubmit={(values) => {
-          createOffer(values);
+          if (edit) {
+            editOffer(values);
+          } else {
+            createOffer(values);
+          }
           setSubmitted(true);
         }}
       >
@@ -76,7 +95,7 @@ const CreateOfferForm = ({ forms: { createOfferForm }, createOffer, id, close })
               <ErrorMessage>{createOfferForm.error}</ErrorMessage>
             ) : null}
             <Button type="submit" fullWidth bg="purpleDark" width="100%">
-              Create
+              {edit ? 'Edit' : 'Create'}
             </Button>
           </Form>
         )}
@@ -85,4 +104,4 @@ const CreateOfferForm = ({ forms: { createOfferForm }, createOffer, id, close })
   );
 };
 
-export default connect(mapStateToProps('forms'), { createOffer })(CreateOfferForm);
+export default connect(mapStateToProps('forms'), { createOffer, editOffer })(CreateOfferForm);

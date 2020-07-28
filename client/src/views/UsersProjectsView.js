@@ -19,6 +19,7 @@ import useViews from '../hooks/useViews';
 import { mapStateToProps } from '../helpers/mapStateToProps';
 import { getProject } from '../redux/actions/getProject';
 import useProjectData from '../hooks/useProjectData';
+import useEditForm from '../hooks/useEditForm';
 
 const Heading = styled.div`
   height: 25vh;
@@ -52,6 +53,7 @@ const UsersProjectsView = ({ user, projects, getProject }) => {
   const [exactProjectView, setExactProjectView] = useState({});
   const [data] = useProjectData(user.projectsIds, projects, getProject);
   const [view, setView, closeView, { userView, taskView, offerView }] = useViews();
+  const [editing, editingData, editOpen, editClose] = useEditForm();
   const projectView = 'projectView';
   return (
     <Wrapper css={FlexCenterAroundColumn} image={bgImage}>
@@ -69,6 +71,7 @@ const UsersProjectsView = ({ user, projects, getProject }) => {
         )}
       </Heading>
       {view === projectView && <CreateProjectForm close={closeView} />}
+      {editing && <CreateProjectForm data={editingData} close={editClose} edit={editing} />}
       {user.isAuth && (
         <>
           <CreateProjectWrapper>
@@ -85,6 +88,7 @@ const UsersProjectsView = ({ user, projects, getProject }) => {
                 openFnc={setView}
                 data={project}
                 setProjectFnc={setExactProjectView}
+                editProject={editOpen}
               />
             ))}
           </ProjectsList>

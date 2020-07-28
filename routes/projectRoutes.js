@@ -14,6 +14,7 @@ projectRouter.route('/user').delete(jwtAuth, projectController.removeUser);
 projectRouter
   .route('/')
   .get(projectController.fetchAll)
-  .post(jwtAuth, projectController.createProject);
+  .post(jwtAuth, projectController.createProject)
+  .put(jwtAuth, projectController.editProject);
 
 module.exports = projectRouter;

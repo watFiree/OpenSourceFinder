@@ -5,6 +5,9 @@ const initialState = {
   name: '',
   email: '',
   isAuth: false,
+  notifications: [],
+  invitations: [],
+  about: '',
   avaible: 0,
   projectsIds: [],
   token: '',
@@ -25,7 +28,7 @@ const userReducer = (state = initialState, action) => {
         loading: true,
       };
     case types.SIGN_USER_SUCCESS:
-      const { _id, name, email, avaible, projects } = action.payload;
+      const { _id, name, email, avaible, projects, invitations, about } = action.payload;
       const { token } = getCookies();
       return {
         ...state,
@@ -35,6 +38,8 @@ const userReducer = (state = initialState, action) => {
         avaible,
         projectsIds: projects,
         token,
+        invitations,
+        about,
         loading: false,
         isAuth: true,
         error: null,

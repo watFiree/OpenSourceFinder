@@ -99,7 +99,7 @@ export const ProjectCard = ({ data }) => (
   </Wrapper>
 );
 
-const SimpleProjectCard = ({ data, admin, setProjectFnc, openFnc, removeProject }) => {
+const SimpleProjectCard = ({ data, admin, setProjectFnc, openFnc, removeProject, editProject }) => {
   const { userView, offerView, taskView } = options;
   const setView = (view) => {
     setProjectFnc(data);
@@ -122,9 +122,9 @@ const SimpleProjectCard = ({ data, admin, setProjectFnc, openFnc, removeProject 
               { placeholder: 'Task', onClick: () => setView(taskView) },
             ]}
           />
-          <Link to={`project/${data.name}`}>
-            <Button bg="purpleDark">Edit</Button>
-          </Link>
+          <Button bg="purpleDark" onClick={() => editProject(data)}>
+            Edit
+          </Button>
           <Button onClick={() => removeProject(data._id)} bg="error">
             {admin ? 'Remove' : 'Leave'}
           </Button>

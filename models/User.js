@@ -13,17 +13,7 @@ const UserSchema = new Schema(
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
     stack: [{ type: String }],
     invitations: Array,
-    about: {
-      fullName: String,
-      age: Number,
-      links: [
-        {
-          link: String,
-          url: String,
-        },
-      ],
-      desc: String,
-    },
+    about: String,
   },
   {
     timestamps: true,

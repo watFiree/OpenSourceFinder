@@ -58,7 +58,7 @@ const Buttons = styled.div`
   }
 `;
 
-const TaskCard = ({ data, expanded, handleChange, number }) => {
+const TaskCard = ({ data, expanded, handleChange, number, editTask }) => {
   return (
     <Wrapper expanded={expanded === `panel${number}`} onChange={handleChange(`panel${number}`)}>
       <ExpansionPanelSummary
@@ -109,7 +109,7 @@ const TaskCard = ({ data, expanded, handleChange, number }) => {
             <Button size="small" bg="purpleLight">
               Take
             </Button>
-            <Button size="small" bg="purpleLight">
+            <Button size="small" bg="purpleLight" onClick={() => editTask(data)}>
               Edit
             </Button>
             <Button size="small" bg="error">

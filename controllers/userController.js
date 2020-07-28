@@ -3,7 +3,6 @@ const Project = require('../models/Project');
 
 module.exports = {
   async inviteUser(req, res) {
-    console.log(req.body);
     const { name, projectId, projectName } = req.body;
     const data = { projectId, projectName };
     try {
@@ -17,7 +16,6 @@ module.exports = {
       await user.save();
       return res.status(200).send({ message: 'User invited successfully !' });
     } catch (err) {
-      console.log(err);
       return res.status(400).send({ message: 'Could not invite user !' });
     }
   },
