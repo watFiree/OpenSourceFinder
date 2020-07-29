@@ -7,15 +7,16 @@ import { getCookies } from '../helpers/getCookies';
 import { mapStateToProps } from '../helpers/mapStateToProps';
 
 const withAuth = (Component) => (props) => {
-  const { getUser: getData, user } = props;
+  const { getUser: getData, user, match } = props;
   const history = useHistory();
   useEffect(() => {
     if (!user.isAuth) {
       const { token } = getCookies();
       if (token) getData(token);
-      if (!token && !user.loading) history.push('/');
+      if (!token && !user.loading && match.path !== '/' && match.path !== '/projects')
+        history.push('/');
     }
-  }, [user.isAuth, user.loading, getData, history]);
+  }, [user.isAuth, user.loading, getData, history, match.path]);
 
   return <Component {...props} />;
 };

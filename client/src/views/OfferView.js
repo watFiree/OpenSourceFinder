@@ -14,6 +14,7 @@ import { mapStateToProps } from '../helpers/mapStateToProps';
 import { FlexCenterColumn, FlexCenterAround } from '../helpers/cssFlex';
 import CreateApplicationForm from '../components/organisms/CreateApplicationForm';
 import withAuth from '../hoc/withAuth';
+import BackgroundLoading from '../components/molecules/BackgroundLoading';
 
 const WrapperFlex = styled(Wrapper)`
   display: flex;
@@ -61,6 +62,7 @@ const OfferView = ({ offers, match, getOffer, user }) => {
     <WrapperFlex image={bgImage}>
       <Header />
       <ContentWrapper>
+        {offers.loading ? <BackgroundLoading color="purpleLight" /> : null}
         {notFound && (
           <>
             <div>
@@ -81,7 +83,7 @@ const OfferView = ({ offers, match, getOffer, user }) => {
                   Applicate
                 </Button>
               )}
-              <Link to={`/user/project/${data.project._id}`}>
+              <Link to={`/project/${data.project._id}`}>
                 <Button size="medium" bg="purpleLight">
                   More about project
                 </Button>

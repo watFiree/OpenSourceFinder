@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 import Avatar from '@material-ui/core/Avatar';
 import Text from '../atoms/Text';
 import Button from '../atoms/Button';
 import { FlexCenter, FlexCenterAround } from '../../helpers/cssFlex';
+import { promoteOrDegradeUser } from '../../redux/actions/promoteOrDegradeUser';
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.blackDark};
@@ -21,13 +23,19 @@ const Buttons = styled.div`
   ${FlexCenterAround};
 `;
 
-const UserCard = ({ data, admin }) => {
+const UserCard = ({ data, admin, projectId, promoteOrDegradeUser }) => {
+  const handlePromoteOrDegrade = (type) =>
+    promoteOrDegradeUser({ projectId, userId: data._id, type });
   return (
     <Wrapper>
       <Avatar alt="nickname" src="/images/angular.svg" />
       <Text color="gray">{data.name}</Text>
       <Buttons>
-        <Button size="small" bg="purpleDark">
+        <Button
+          size="small"
+          bg="purpleDark"
+          onClick={() => handlePromoteOrDegrade(admin === 'true' ? 'degrade' : 'promote')}
+        >
           {admin === 'true' ? 'Degrade' : 'Promote'}
         </Button>
         <Button size="small" bg="error">
@@ -38,4 +46,4 @@ const UserCard = ({ data, admin }) => {
   );
 };
 
-export default UserCard;
+export default connect(null, { promoteOrDegradeUser })(UserCard);

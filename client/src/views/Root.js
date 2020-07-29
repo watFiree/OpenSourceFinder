@@ -8,6 +8,7 @@ import LoggingView from './LoggingView';
 import OfferView from './OfferView';
 import MembersProjectView from './ProjectView/MainView';
 import MyAccountView from './MyAccountView';
+import PublicProjectView from './PublicProjectView';
 
 const Root = () => {
   return (
@@ -15,6 +16,7 @@ const Root = () => {
       <Switch>
         <Route exact path="/" component={MainView} />
         <Route exact path="/projects" component={ProjectsView} />
+        <Route exact path="/project/:id" component={PublicProjectView} />
         <Route exact path="/offer/:id" component={OfferView} />
         <Route exact path="/user" component={MyAccountView} />
         <Route exact path="/user/projects" component={UsersProjectsView} />

@@ -20,7 +20,7 @@ const UsersList = styled.div`
 `;
 
 const ProjectUsers = ({ data }) => {
-  const { admins, users } = data;
+  const { admins, users, _id } = data;
   const [usersWithoutAdmins, setUsersWithoutAdmins] = useState([]);
   useEffect(() => {
     const adminsIds = admins.map((admin) => admin._id);
@@ -33,7 +33,7 @@ const ProjectUsers = ({ data }) => {
       </Title>
       <UsersList>
         {admins.map((user) => (
-          <UserCard key={user._id} admin="true" data={user} />
+          <UserCard key={user._id} admin="true" data={user} projectId={_id} />
         ))}
       </UsersList>
       <Title size="1.8rem" margin="30px 0">
@@ -41,7 +41,7 @@ const ProjectUsers = ({ data }) => {
       </Title>
       <UsersList>
         {usersWithoutAdmins.map((user) => (
-          <UserCard key={user._id} data={user} />
+          <UserCard key={user._id} data={user} projectId={_id} />
         ))}
       </UsersList>
     </Wrapper>

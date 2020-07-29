@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useLayoutEffect } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { connect } from 'react-redux';
 import Logo from '../molecules/Logo';
@@ -43,7 +43,9 @@ const UserActions = styled.div`
 
 const Header = ({ user }) => {
   const [fromTop, setFromTop] = useState(0);
-  window.addEventListener('scroll', () => setFromTop(window.pageYOffset));
+  useLayoutEffect(() => {
+    window.addEventListener('scroll', () => setFromTop(window.pageYOffset));
+  });
 
   return (
     <Wrapper as="header" fromTop={fromTop}>
