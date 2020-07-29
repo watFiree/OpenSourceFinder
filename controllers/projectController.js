@@ -48,7 +48,8 @@ module.exports = {
     try {
       const project = await Project.findById(id)
         .populate('admins', 'name')
-        .populate('users', 'name');
+        .populate('users', 'name')
+        .populate('offers', 'name');
       if (!project) return res.status(404).send({ message: 'Project does not exist ! ' });
       return res.status(200).send([project]);
     } catch (err) {
@@ -57,10 +58,31 @@ module.exports = {
   },
   async fetchAll(req, res) {
     try {
-      const projects = await Project.find().populate('admins', 'name').populate('users', 'name');
+      const projects = await Project.find()
+        .populate('admins', 'name')
+        .populate('users', 'name')
+        .populate('offers', 'name');
       return res.status(200).send(projects);
     } catch (err) {
       return res.status(404).send({ message: 'Something went wrong :(', err });
+    }
+  },
+  async editProject(req, res) {
+    const { _id, name, stack, about } = req.body;
+    try {
+      const project = await Project.findById(_id);
+      const alreadyExists = await Project.findOne({ name });
+      if (name !== project.name && alreadyExists)
+        return res.status(404).send({ message: 'Project name already taken ! ' });
+      if (!project) return res.status(404).send({ message: 'Project not found ! ' });
+      const updated = await Project.findOneAndUpdate(
+        { _id },
+        { name, slug: convertToSlug(name), stack, about },
+        { new: true }
+      );
+      return res.status(200).send(updated);
+    } catch (err) {
+      return res.status(404).send({ message: 'Could not edit project ! ' });
     }
   },
   async removeProject(req, res) {
@@ -97,22 +119,24 @@ module.exports = {
       return res.status(404).send({ message: 'Could not remove this user !' });
     }
   },
-  async editProject(req, res) {
-    const { _id, name, stack, about } = req.body;
+  async promoteOrDegradeUser(req, res) {
+    const { projectId, userId, type } = req.body;
+    if (type !== 'promote' || type !== 'degrade')
+      return res.status(400).send({ message: 'Type not passed !' });
     try {
-      const project = await Project.findById(_id);
-      const alreadyExists = await Project.findOne({ name });
-      if (name !== project.name && alreadyExists)
-        return res.status(404).send({ message: 'Project name already taken ! ' });
-      if (!project) return res.status(404).send({ message: 'Project not found ! ' });
-      const updated = await Project.findOneAndUpdate(
-        { _id },
-        { name, slug: convertToSlug(name), stack, about },
-        { new: true }
-      );
-      return res.status(200).send(updated);
+      const project = Project.findById(projectId);
+      if (!project) return res.status(404).send({ message: 'Project not found !' });
+      const user = User.findById(userId);
+      if (!user) return res.status(404).send({ message: 'User not found !' });
+      if (type === 'promote') {
+        await project.admins.push(user);
+      } else if (type === 'degrade') {
+        await project.admins.pull(user);
+      }
+      await project.save();
+      return res.status(200).send({ projectId, userId, type });
     } catch (err) {
-      return res.status(404).send({ message: 'Could not edit project ! ' });
+      return res.status(404).send({ message: 'Could not promote user !' });
     }
   },
 };

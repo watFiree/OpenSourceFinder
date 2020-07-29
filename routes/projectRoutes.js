@@ -9,12 +9,15 @@ projectRouter
   .get(projectController.getProject)
   .delete(jwtAuth, projectController.removeProject);
 
-projectRouter.route('/user').delete(jwtAuth, projectController.removeUser);
-
 projectRouter
   .route('/')
   .get(projectController.fetchAll)
   .post(jwtAuth, projectController.createProject)
   .put(jwtAuth, projectController.editProject);
+
+projectRouter
+  .route('/user')
+  .delete(jwtAuth, projectController.removeUser)
+  .put(jwtAuth, projectController.promoteOrDegradeUser);
 
 module.exports = projectRouter;
