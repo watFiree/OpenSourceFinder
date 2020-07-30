@@ -170,9 +170,9 @@ const LoggingView = ({ match, user, signUser }) => {
                 {titleText}
               </Button>
               <Links>
-                <Link color="white" to="restart-password">
+                <Link color="white" to="forgot">
                   {' '}
-                  Forget password?
+                  Forgot password?
                 </Link>
                 {pageType === 'signin' ? (
                   <Link color="white" to="/signup">

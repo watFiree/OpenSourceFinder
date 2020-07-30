@@ -19,4 +19,14 @@ module.exports = {
       return res.status(400).send({ message: 'Could not invite user !' });
     }
   },
+  async forgotPassword(req, res) {
+    const { email } = req.body;
+    try {
+      const user = await User.findOne({ email });
+      if (!user) return res.status(404).send({ message: 'User with this email not found !' });
+      return res.status(200).send({ user });
+    } catch (err) {
+      return res.status(404).send({ message: 'User with this email not found !' });
+    }
+  },
 };
