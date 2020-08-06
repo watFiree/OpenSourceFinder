@@ -42,9 +42,9 @@ const ProjectMenu = ({ data }) => {
         <Title size="1.8rem" margin="0 0 5% 0">
           RECENT ACTIVITY
         </Title>
-        <RecentActivity />
-        <RecentActivity />
-        <RecentActivity />
+        {data.activity?.map((active) => (
+          <RecentActivity data={active} />
+        ))}
       </Recent>
       <Actions>
         <Title size="1.8rem" margin="0 0 5% 0">

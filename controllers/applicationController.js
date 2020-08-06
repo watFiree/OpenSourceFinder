@@ -30,9 +30,10 @@ module.exports = {
       if (alreadyApplicated)
         return res.status(400).send({ message: 'You have already applicated to this project !' });
       const application = await new Application({ user, offer: offerId, desc });
-      console.log(application);
       await application.save();
       await project.applications.push(application);
+      await project.activity.push({ text: 'Received application ', type: 'Add', date: new Date() });
+      await project.save();
       await project.save();
       return res.status(200).send({ message: 'Application sent !' });
     } catch (err) {
@@ -51,7 +52,10 @@ module.exports = {
       await Application.deleteOne(application);
       const project = await Project.findOneAndUpdate(
         { _id: projectId },
-        { $pull: { applications: { $in: application._id } } }
+        {
+          $pull: { applications: { $in: application._id } },
+          $push: { activity: { text: 'Denied application ', type: 'Remove', date: new Date() } },
+        }
       );
       if (!project) return res.status(404).send({ message: 'Project not found ! ' });
       return res.status(200).send({ applicationId: _id, projectId: project._id });

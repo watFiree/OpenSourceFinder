@@ -8,6 +8,8 @@ userRouter.route('/').get(jwtAuth, (req, res) => res.status(200).send(req.user))
 
 userRouter.route('/invite').post(userController.inviteUser);
 
-userRouter.route('/forgot').post(userController.forgotPassword);
+userRouter.route('/forgotMail').post(userController.sendMailToResetPassword);
+
+userRouter.route('/forgotReset').post(userController.resetPassword);
 
 module.exports = userRouter;

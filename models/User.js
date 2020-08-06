@@ -14,6 +14,8 @@ const UserSchema = new Schema(
     stack: [{ type: String }],
     invitations: Array,
     about: String,
+    resetPasswordValidDate: { type: Date, default: new Date() },
+    resetPasswordValidToken: String,
   },
   {
     timestamps: true,

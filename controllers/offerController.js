@@ -27,6 +27,7 @@ module.exports = {
       });
       await offer.save();
       await project.offers.push(offer);
+      await project.activity.push({ text: 'Created offer ', type: 'Add', date: new Date() });
       await project.save();
       return res.status(201).send(offer);
     } catch (err) {
@@ -45,7 +46,10 @@ module.exports = {
       await Offer.deleteOne(offer);
       const project = await Project.findOneAndUpdate(
         { _id: projectId },
-        { $pull: { offers: { $in: offer._id } } }
+        {
+          $pull: { offers: { $in: offer._id } },
+          $push: { activity: { text: 'Removed offer ', type: 'Remove', date: new Date() } },
+        }
       );
       if (!project) return res.status(404).send({ message: 'Project not found ! ' });
       return res.status(200).send({ offerId: _id, projectId: project._id });
@@ -63,6 +67,9 @@ module.exports = {
         { name, stack, desc },
         { new: true }
       );
+      await Project.findByIdAndUpdate(offer.project, {
+        $push: { activity: { text: 'Edited offer ', type: 'Edit', date: new Date() } },
+      });
       return res.status(200).send(updated);
     } catch (err) {
       return res.status(404).send({ message: 'Could not edit offer ! ' });

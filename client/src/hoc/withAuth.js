@@ -13,8 +13,7 @@ const withAuth = (Component) => (props) => {
     if (!user.isAuth) {
       const { token } = getCookies();
       if (token) getData(token);
-      if (!token && !user.loading && match.path !== '/' && match.path !== '/projects')
-        history.push('/');
+      if (!token && !user.loading && match.path === '/user/projects') history.push('/');
     }
   }, [user.isAuth, user.loading, getData, history, match.path]);
 

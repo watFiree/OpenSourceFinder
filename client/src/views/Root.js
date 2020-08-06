@@ -9,7 +9,7 @@ import OfferView from './OfferView';
 import MembersProjectView from './ProjectView/MainView';
 import MyAccountView from './MyAccountView';
 import PublicProjectView from './PublicProjectView';
-import ForgotPasswordView from './ForgotPasswordView';
+import ForgotPasswordView from './ForgotView/MainView';
 
 const Root = () => {
   return (
@@ -20,6 +20,7 @@ const Root = () => {
         <Route exact path="/project/:id" component={PublicProjectView} />
         <Route exact path="/offer/:id" component={OfferView} />
         <Route exact path="/forgot" component={ForgotPasswordView} />
+        <Route exact path="/forgot/:data" component={ForgotPasswordView} />
         <Route exact path="/user" component={MyAccountView} />
         <Route exact path="/user/projects" component={UsersProjectsView} />
         <Route exact path="/user/project/:id" component={MembersProjectView} />

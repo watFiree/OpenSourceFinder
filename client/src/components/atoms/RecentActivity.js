@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components/macro';
-import AddUserIcon from '@material-ui/icons/PersonAddOutlined';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import RemoveIcon from '@material-ui/icons/HighlightOff';
 import Text from './Text';
 import { FlexCenterColumn, FlexCenter } from '../../helpers/cssFlex';
 
@@ -33,18 +35,21 @@ const Icon = css`
   color: ${({ theme }) => theme.blackDark};
 `;
 
-const RecentActivity = () => {
+const RecentActivity = ({ data }) => {
+  const date = `${data.date.slice(0, 10)} ${data.date.slice(11, 16)}`;
   return (
     <Wrapper>
       <IconWrapper>
-        <AddUserIcon css={Icon} fontSize="large" />
+        {data.type === 'Add' && <AddIcon css={Icon} fontSize="large" />}
+        {data.type === 'Edit' && <EditIcon css={Icon} fontSize="large" />}
+        {data.type === 'Remove' && <RemoveIcon css={Icon} fontSize="large" />}
       </IconWrapper>
       <Info>
         <Text size="1.1rem" color="gray">
-          Added new user: nickname
+          {data.text}
         </Text>
         <Text size="1.1rem" color="gray">
-          23 May 13:28
+          {date}
         </Text>
       </Info>
     </Wrapper>

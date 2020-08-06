@@ -8,6 +8,7 @@ const ProjectSchema = Schema({
   applications: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   offers: [{ type: Schema.Types.ObjectId, ref: 'Offer' }],
   stack: [{ type: String, required: true }],
+  activity: Array,
   about: {
     desc: String,
     biogram: String,

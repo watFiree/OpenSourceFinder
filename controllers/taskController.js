@@ -32,6 +32,7 @@ module.exports = {
       const task = await new Task(data);
       await task.save();
       await project.tasks.push(task);
+      await project.activity.push({ text: 'Created task ', type: 'Add', date: new Date() });
       await project.save();
       return res.status(201).send(task);
     } catch (err) {
@@ -50,7 +51,10 @@ module.exports = {
       await Task.deleteOne(task);
       const project = await Project.findOneAndUpdate(
         { _id: projectId },
-        { $pull: { tasks: { $in: task._id } } }
+        {
+          $pull: { tasks: { $in: task._id } },
+          $push: { activity: { text: 'Removed task ', type: 'Remove', date: new Date() } },
+        }
       );
       if (!project) return res.status(404).send({ message: 'Project not found ! ' });
       return res.status(200).send({ taskId: _id, projectId: project._id });
@@ -68,6 +72,9 @@ module.exports = {
         { title, content, expiration },
         { new: true }
       );
+      await Project.findByIdAndUpdate(task.project, {
+        $push: { activity: { text: 'Edited task ', type: 'Edit', date: new Date() } },
+      });
       return res.status(200).send(updated);
     } catch (err) {
       return res.status(404).send({ message: 'Could not edit offer ! ' });

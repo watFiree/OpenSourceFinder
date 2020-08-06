@@ -77,7 +77,19 @@ module.exports = {
       if (!project) return res.status(404).send({ message: 'Project not found ! ' });
       const updated = await Project.findOneAndUpdate(
         { _id },
-        { name, slug: convertToSlug(name), stack, about },
+        {
+          name,
+          slug: convertToSlug(name),
+          stack,
+          about,
+          $push: {
+            activity: {
+              text: 'Edited project data',
+              type: 'Edit',
+              date: new Date(),
+            },
+          },
+        },
         { new: true }
       );
       return res.status(200).send(updated);
@@ -112,7 +124,15 @@ module.exports = {
     try {
       const user = await User.findByIdAndUpdate({ userId }, { $pull: { projects: projectId } });
       if (!user) return res.status(400).send({ message: 'User not found !' });
-      const project = await Project.findByIdAndUpdate({ projectId }, { $pull: { user: userId } });
+      const project = await Project.findByIdAndUpdate(
+        { projectId },
+        {
+          $pull: { user: userId },
+          $push: {
+            activity: { text: 'Removed user', type: 'Remove', date: new Date() },
+          },
+        }
+      );
       if (!project) return res.status(400).send({ message: 'Project not found !' });
       return res.status(200).send({ userId, projectId });
     } catch (err) {
@@ -130,8 +150,18 @@ module.exports = {
       if (!user) return res.status(404).send({ message: 'User not found !' });
       if (type === 'promote') {
         await project.admins.push(user);
+        await project.activity.push({
+          text: 'Promoted user',
+          type: 'Promote',
+          date: new Date(),
+        });
       } else if (type === 'degrade') {
         await project.admins.pull(user);
+        await project.activity.push({
+          text: 'Degraded user',
+          type: 'Degrade',
+          date: new Date(),
+        });
       }
       await project.save();
       return res.status(200).send({ projectId, userId, type });
