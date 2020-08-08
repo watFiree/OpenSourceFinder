@@ -24,5 +24,6 @@ module.exports = {
     'no-case-declarations': 0,
     'react/jsx-props-no-spreading': 0,
     'no-underscore-dangle': 0,
+    'no-unused-expressions': 0,
   },
 };

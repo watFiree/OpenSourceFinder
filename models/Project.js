@@ -13,6 +13,7 @@ const ProjectSchema = Schema({
     desc: String,
     biogram: String,
   },
+  image: String,
   announcements: [{ type: Schema.Types.ObjectId, ref: 'Announcement' }],
   tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
 });

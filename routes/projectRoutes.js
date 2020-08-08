@@ -1,6 +1,8 @@
 const express = require('express');
+const multer = require('multer');
 const projectController = require('../controllers/projectController');
 const jwtAuth = require('../middlewares/auth-middleware');
+const upload = require('../config/multerStorage');
 
 const projectRouter = express.Router();
 
@@ -12,7 +14,7 @@ projectRouter
 projectRouter
   .route('/')
   .get(projectController.fetchAll)
-  .post(jwtAuth, projectController.createProject)
+  .post(jwtAuth, upload.single('image'), projectController.createProject)
   .put(jwtAuth, projectController.editProject);
 
 projectRouter

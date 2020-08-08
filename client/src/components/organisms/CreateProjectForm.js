@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import MenuItem from '@material-ui/core/MenuItem';
 import { Formik } from 'formik';
 import Wrapper from '../molecules/CreateFormWrapper';
 import Button from '../atoms/Button';
 import Input from '../atoms/Input';
 import Title from '../atoms/Title';
 import ErrorMessage from '../atoms/ErrorMessage';
-import Select from '../atoms/Select';
+import Select from '../molecules/SelectWithFormik';
+import UploadImageInput from '../molecules/UploadImageInput';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
 import { mapStateToProps } from '../../helpers/mapStateToProps';
 import { createProject } from '../../redux/actions/createProject';
@@ -17,7 +17,7 @@ import useFormClose from '../../hooks/useFormClose';
 
 const Form = styled.form`
   width: 80%;
-  height: 80%;
+  height: 90%;
   ${FlexCenterAroundColumn}
 `;
 
@@ -36,11 +36,10 @@ const CreateProjectForm = ({
   const [setSubmitted] = useFormClose(createProjectForm, close);
   const { _id = '', name = '', stack = ['react'], about = { desc: '', biogram: '' } } = data;
   return (
-    <Wrapper close={close}>
+    <Wrapper close={close} height="60vh">
       <Title size="1.8rem">{edit ? 'Edit' : 'Create'} Project</Title>
-
       <Formik
-        initialValues={{ _id, name, stack, about }}
+        initialValues={{ _id, name, image: null, stack, about }}
         validate={(values) => {
           const errors = {};
           if (!values.name) {
@@ -63,8 +62,8 @@ const CreateProjectForm = ({
           setSubmitted(true);
         }}
       >
-        {({ values, errors, touched, handleSubmit, handleBlur, handleChange }) => (
-          <Form onSubmit={handleSubmit}>
+        {({ values, errors, touched, setFieldValue, handleSubmit, handleBlur, handleChange }) => (
+          <Form onSubmit={handleSubmit} enctype="multipart/form-data">
             <Input
               label="Name"
               fullWidth
@@ -76,10 +75,8 @@ const CreateProjectForm = ({
               value={values.name}
             />
             {errors.name && touched.name ? <ErrorMessage>{errors.name}</ErrorMessage> : null}
-            <Select id="stack" name="stack" value={values.stack} multiple>
-              <MenuItem value="react">react</MenuItem>
-              <MenuItem value="node">node</MenuItem>
-            </Select>
+            <UploadImageInput name="image" setFieldValue={setFieldValue} />
+            <Select name="stack" value={values.stack} onChange={setFieldValue} multiple />
             {errors.stack && touched.stack ? <ErrorMessage>{errors.stack}</ErrorMessage> : null}
             <Input
               label="Biogram"

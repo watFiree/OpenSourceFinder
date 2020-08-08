@@ -73,7 +73,7 @@ const MyAccountView = ({ user }) => {
           <>
             <Content>
               <Profile>
-                <img src={BgImage} alt="profile" />
+                <img src="http://localhost:6969/avatars/img.png" alt="profile" />
                 <Info>
                   <Title as="h2" size="2.1rem" margin="0 0 20px 0">
                     {user.name}

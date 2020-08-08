@@ -14,6 +14,7 @@ import ChipsWrapper from '../atoms/ChipsWrapper';
 import List from '../molecules/List';
 import options from '../../helpers/viewsNames';
 import { removeProject } from '../../redux/actions/removeProject';
+import languagesData from '../../helpers/languagesData';
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.blackDark};
@@ -69,7 +70,7 @@ const Container = styled.div`
 
 export const ProjectCard = ({ data }) => (
   <Wrapper>
-    <Image src={img} />
+    <Image src={data.image ? data.image : img} />
     <Info>
       <Title size="2.1rem">{data.name}</Title>
       <Text color="gray">{data.about.biogram}</Text>
@@ -80,7 +81,10 @@ export const ProjectCard = ({ data }) => (
       </Icons>
       <ChipsWrapper height="30%" width="100%">
         {data.stack.map((item) => (
-          <Chip key={item} data={{ name: item, src: '/images/react.svg', color: '#427aa1' }} />
+          <Chip
+            key={item}
+            data={languagesData.find((language) => language.name.toLowerCase() === item)}
+          />
         ))}
         <Chip
           data={{

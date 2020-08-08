@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CreateTooltip from '../../components/molecules/CreateTooltip';
 import Title from '../../components/atoms/Title';
+import Text from '../../components/atoms/Text';
 import RecentActivity from '../../components/atoms/RecentActivity';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
 import InviteUserForm from '../../components/organisms/InviteUserForm';
@@ -42,9 +43,11 @@ const ProjectMenu = ({ data }) => {
         <Title size="1.8rem" margin="0 0 5% 0">
           RECENT ACTIVITY
         </Title>
-        {data.activity?.map((active) => (
-          <RecentActivity data={active} />
-        ))}
+        {data.activity?.length ? (
+          data.activity?.map((active) => <RecentActivity data={active} />)
+        ) : (
+          <Text>No activity</Text>
+        )}
       </Recent>
       <Actions>
         <Title size="1.8rem" margin="0 0 5% 0">

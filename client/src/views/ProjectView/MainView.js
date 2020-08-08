@@ -57,7 +57,11 @@ const ProjectView = ({ user, projects, getProject, match }) => {
             <ProjectUsers data={data} />
           </ContentPanel>
           <ContentPanel value={page} index={2}>
-            <ProjectOffers offersIds={data.offers} applicationsIds={data.applications} id={id} />
+            <ProjectOffers
+              offersIds={data.offers?.map((offer) => offer._id)}
+              applicationsIds={data.applications}
+              id={id}
+            />
           </ContentPanel>
           <ContentPanel value={page} index={3}>
             <ProjectTasks tasksIds={data.tasks} />

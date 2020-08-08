@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import SelectToEdit from '@material-ui/core/Select';
 
-const StyledSelect = styled(SelectToEdit)`
+const Select = styled(SelectToEdit)`
   width: 10%;
   padding: 0;
   background-color: ${({ theme }) => theme.purpleLight};
@@ -22,4 +22,4 @@ const StyledSelect = styled(SelectToEdit)`
   }
 `;
 
-export default StyledSelect;
+export default Select;

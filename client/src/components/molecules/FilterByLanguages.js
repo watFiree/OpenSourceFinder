@@ -5,6 +5,7 @@ import Chip from '../atoms/Chip';
 import Title from '../atoms/Title';
 import Select from '../atoms/Select';
 import ChipsWrapper from '../atoms/ChipsWrapper';
+import languagesData from '../../helpers/languagesData';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -38,24 +39,6 @@ const FilterByLanguages = () => {
     setTechnologies(newState);
   };
 
-  const data = [
-    {
-      name: 'React',
-      src: '/images/react.svg',
-      color: '#427aa1',
-    },
-    {
-      name: 'Node.js',
-      src: '/images/nodejs.svg',
-      color: '#008148',
-    },
-    {
-      name: 'Angular',
-      src: '/images/angular.svg',
-      color: '#ef2917',
-    },
-  ];
-
   return (
     <Wrapper>
       <Title as="h2" margin="20px">
@@ -70,7 +53,7 @@ const FilterByLanguages = () => {
         MenuProps={menuProps}
         multiple
       >
-        {data.map((item) => (
+        {languagesData.map((item) => (
           <MenuItem key={item.name} value={item.name.toLowerCase()}>
             {item.name}
           </MenuItem>
@@ -81,7 +64,7 @@ const FilterByLanguages = () => {
           <Chip
             key={item.name}
             handleDelete={handleDelete}
-            data={data.find((lang) => lang.name.toLowerCase() === item)}
+            data={languagesData.find((lang) => lang.name.toLowerCase() === item)}
           />
         ))}
       </ChipsWrapper>

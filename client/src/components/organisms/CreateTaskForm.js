@@ -48,24 +48,22 @@ const StyledDatePicker = styled(KeyboardDatePicker)`
   }
 `;
 
-const DatePickerField = ({ name, value, onChange }) => {
-  return (
-    <StyledDatePicker
-      margin="normal"
-      id="date-picker-dialog"
-      label="Deadline date"
-      format="MM/DD/YYYY"
-      value={value}
-      KeyboardButtonProps={{
-        'aria-label': 'change date',
-      }}
-      selected={(value && new Date(value)) || null}
-      onChange={(val) => {
-        onChange(name, val);
-      }}
-    />
-  );
-};
+const DatePickerField = ({ name, value, onChange }) => (
+  <StyledDatePicker
+    margin="normal"
+    id="date-picker-dialog"
+    label="Deadline date"
+    format="MM/DD/YYYY"
+    value={value}
+    KeyboardButtonProps={{
+      'aria-label': 'change date',
+    }}
+    selected={(value && new Date(value)) || null}
+    onChange={(val) => {
+      onChange(name, val);
+    }}
+  />
+);
 
 const CreateTaskForm = ({
   forms: { createTaskForm },

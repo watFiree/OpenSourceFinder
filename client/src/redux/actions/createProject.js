@@ -20,12 +20,16 @@ const createProjectFailure = (error) => ({
 });
 
 export const createProject = (input) => {
-  return async (dispatch, getState) => {
+  const formData = new FormData();
+  formData.append('image', input.image);
+  formData.append('data', JSON.stringify(input));
+  return (dispatch, getState) => {
     const { token } = getState().user;
     dispatch(createProjectStarted());
     axios
-      .post(`/project`, input, {
+      .post(`/project`, formData, {
         headers: {
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
         },
       })

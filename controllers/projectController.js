@@ -8,7 +8,8 @@ const convertToSlug = require('../helpers/convertToSlug');
 
 module.exports = {
   async createProject(req, res) {
-    const { name, stack, about } = req.body;
+    const { name, stack, about } = JSON.parse(req.body.data);
+    console.log(name, stack, about);
     if (name === undefined || validator.isEmpty(name))
       return res.status(400).send({ message: 'Name is required ! ' });
     if (stack === undefined || stack.length === 0)
@@ -29,6 +30,7 @@ module.exports = {
       tasks: [],
       stack,
       about,
+      image: req.file.path,
     };
 
     try {

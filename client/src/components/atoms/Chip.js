@@ -6,6 +6,9 @@ import MaterialChip from '@material-ui/core/Chip';
 const Wrapper = styled(MaterialChip)`
   background-color: ${({ col }) => col};
   color: ${({ theme }) => theme.white};
+  &:focus {
+    background-color: ${({ col }) => col};
+  }
 `;
 
 const Chip = ({ data, handleDelete }) => (

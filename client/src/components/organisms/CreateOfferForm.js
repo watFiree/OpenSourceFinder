@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import MenuItem from '@material-ui/core/MenuItem';
 import { Formik } from 'formik';
+import Select from '../molecules/SelectWithFormik';
 import Wrapper from '../molecules/CreateFormWrapper';
 import Button from '../atoms/Button';
 import Input from '../atoms/Input';
 import Title from '../atoms/Title';
 import ErrorMessage from '../atoms/ErrorMessage';
-import Select from '../atoms/Select';
 import { FlexCenterAroundColumn } from '../../helpers/cssFlex';
 import { createOffer } from '../../redux/actions/createOffer';
 import { editOffer } from '../../redux/actions/editOffer';
@@ -30,7 +29,7 @@ const CreateOfferForm = ({
   edit = false,
 }) => {
   const [setSubmitted] = useFormClose(createOfferForm, close);
-  const { projectId = '', _id: offerId = '', name = '', stack = ['react'], desc = '' } = data;
+  const { projectId = '', _id: offerId = '', name = '', stack = [], desc = '' } = data;
   return (
     <Wrapper close={close}>
       <Title size="1.8rem">{edit ? 'Edit' : 'Create'} offer</Title>
@@ -62,7 +61,7 @@ const CreateOfferForm = ({
           setSubmitted(true);
         }}
       >
-        {({ values, errors, touched, handleSubmit, handleBlur, handleChange }) => (
+        {({ values, errors, touched, setFieldValue, handleSubmit, handleBlur, handleChange }) => (
           <Form onSubmit={handleSubmit}>
             <Input
               label="Name"
@@ -75,10 +74,7 @@ const CreateOfferForm = ({
               value={values.name}
             />
             {errors.name && touched.name ? <ErrorMessage>{errors.name}</ErrorMessage> : null}
-            <Select id="stack" name="stack" value={values.stack} multiple>
-              <MenuItem value="react">react</MenuItem>
-              <MenuItem value="node">node</MenuItem>
-            </Select>
+            <Select name="stack" value={values.stack} onChange={setFieldValue} />
             {errors.stack && touched.stack ? <ErrorMessage>{errors.stack}</ErrorMessage> : null}
             <Input
               label="Description"
