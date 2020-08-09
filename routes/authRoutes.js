@@ -30,14 +30,6 @@ authRouter
     authController.google
   );
 
-authRouter.route('/twitter').get(passport.authenticate('twitter'));
-authRouter.route('/twitter/callback').get(
-  passport.authenticate('twitter', {
-    failureRedirect: 'http://localhost:3000/signin',
-  }),
-  authController.twitter
-);
-
 authRouter.route('/github').get(passport.authenticate('github', { scope: ['user:email'] }));
 authRouter.route('/github/callback').get(
   passport.authenticate('github', {

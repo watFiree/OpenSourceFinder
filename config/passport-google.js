@@ -13,10 +13,9 @@ const config = {
 };
 
 const verify = async (req, accessToken, refreshToken, profile, done) => {
-  console.log(accessToken);
   try {
-    const user = await User.find({ googleId: profile.id });
-    if (!user.length) {
+    const user = await User.findOne({ googleId: profile.id });
+    if (!user) {
       const data = {
         googleId: profile.id,
         name: profile.given_name,
@@ -24,6 +23,7 @@ const verify = async (req, accessToken, refreshToken, profile, done) => {
       };
       const newUser = await new User(data);
       await newUser.save();
+      console.log(newUser);
       req.user = newUser;
       return done(null, newUser);
     }

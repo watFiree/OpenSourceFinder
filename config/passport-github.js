@@ -17,9 +17,9 @@ const verify = async (accessToken, refreshToken, profile, done) => {
   console.log(profile);
 
   try {
-    const user = await User.find({ githubId: profile.id });
+    const user = await User.findOne({ githubId: profile.id });
 
-    if (!user.length) {
+    if (!user) {
       const data = {
         githubId: profile.id,
         name: profile.username,

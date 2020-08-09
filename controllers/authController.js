@@ -4,7 +4,6 @@ const User = require('../models/User');
 
 module.exports = {
   async signup(req, res) {
-    console.log(req.body);
     const { name, email, password } = req.body;
     // validation
     if (typeof name !== 'string' || typeof email !== 'string' || typeof password !== 'string')
@@ -60,31 +59,18 @@ module.exports = {
       .status(200)
       .cookie(
         'token',
-        jwt.sign({ id: req.user[0]._id }, process.env.JWT_SECRET, {
+        jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, {
           expiresIn: 3600,
         })
       )
       .redirect('http://localhost:3000/');
   },
   async github(req, res) {
-    console.log(req.user);
     return res
       .status(200)
       .cookie(
         'token',
-        jwt.sign({ id: req.user[0]._id }, process.env.JWT_SECRET, {
-          expiresIn: 3600,
-        })
-      )
-      .redirect('http://localhost:3000/');
-  },
-  async twitter(req, res) {
-    console.log(req.user);
-    return res
-      .status(200)
-      .cookie(
-        'token',
-        jwt.sign({ id: req.user[0]._id }, process.env.JWT_SECRET, {
+        jwt.sign({ id: req.user._id }, process.env.JWT_SECRET, {
           expiresIn: 3600,
         })
       )

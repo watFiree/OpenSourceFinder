@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 
 const useProjectData = (dataIds, reduxData, getFunction) => {
-  console.log(dataIds);
   const [state, setState] = useState([]);
   useEffect(() => {
     if (reduxData.deleted && state?.find((inState) => inState._id === reduxData.deleted)) {

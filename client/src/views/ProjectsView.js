@@ -17,6 +17,7 @@ import { mapStateToProps } from '../helpers/mapStateToProps';
 import { getProject } from '../redux/actions/getProject';
 import { ProjectCard } from '../components/organisms/ProjectCards';
 import usePagination from '../hooks/usePagination';
+import useProjectFilter from '../hooks/useProjectFilter';
 import withAuth from '../hoc/withAuth';
 
 const Hero = styled.div`
@@ -62,19 +63,30 @@ const Loading = styled(LinearProgress)`
   }
 `;
 
-const ProjectsView = ({ user, projects, getProject }) => {
+const ProjectsView = ({ user, projects: reduxProjects, getProject }) => {
+  const [currentPage, setCurrentPage] = useState(0);
+  useEffect(() => {
+    if (!reduxProjects.data.length && !reduxProjects.loading) getProject();
+  }, [reduxProjects, getProject]);
+  const [filteredProjects, handleFilterByName, handleFilterByLanguage] = useProjectFilter(
+    reduxProjects
+  );
+  const [paginatedProjects, pages] = usePagination(currentPage, filteredProjects);
+  const handlePagination = (event, value) => setCurrentPage(value - 1);
+
+  // const handleFilterByName = (name) => {
+  //   setFilteredName(name);
+  //   if (filteredName === '') {
+  //     setProjects(reduxProjects.data);
+  //   } else {
+  //     const rgx = new RegExp(name);
+  //     setProjects(reduxProjects.data.filter((project) => project.name.toLowerCase().match(rgx)));
+  //   }
+  // };
+  console.log('filtered', filteredProjects);
   const LoggedAndCanCreate = user.isAuth && user.avaible;
   const LoggedAndCannotCreate = user.isAuth && !user.avaible;
   const NotLoggedIn = !user.isAuth;
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const handlePagination = (event, value) => setCurrentPage(value - 1);
-
-  useEffect(() => {
-    getProject();
-  }, [getProject]);
-
-  const [data, pages] = usePagination(currentPage, projects.data);
 
   return (
     <Wrapper image={bgImage}>
@@ -111,17 +123,22 @@ const ProjectsView = ({ user, projects, getProject }) => {
         )}
       </Hero>
       <FilterWrapper>
-        <FilterByName title="find project for you" />
-        <FilterByLanguages />
+        <FilterByName title="find project for you" handleChange={handleFilterByName} />
+        <FilterByLanguages handleChange={handleFilterByLanguage} />
       </FilterWrapper>
       <ProjectsWrapper>
-        {projects.loading && <Loading />}
-        {!projects.loading && !projects.data.length && (
+        {reduxProjects.loading && <Loading />}
+        {!reduxProjects.loading && !reduxProjects.data?.length && (
           <Title margin="15px 0 0 0" size="2.1rem">
             There are no projects :({' '}
           </Title>
         )}
-        {data?.map((project) => (
+        {reduxProjects.data?.length && !filteredProjects.length && (
+          <Title margin="15px 0 0 0" size="2.1rem">
+            There are no projects with this filters :({' '}
+          </Title>
+        )}
+        {paginatedProjects?.map((project) => (
           <ProjectCard key={project.name} data={project} />
         ))}
       </ProjectsWrapper>

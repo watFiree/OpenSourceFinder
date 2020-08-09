@@ -7,6 +7,7 @@ const usePagination = (pageNum, data, perPage = 4) => {
     const tempData = data.slice(forPage, forPage + perPage);
     setProjects(tempData);
   }, [data, pageNum, perPage]);
+
   const allPages = Math.ceil(data.length / perPage);
 
   return [projects, allPages];

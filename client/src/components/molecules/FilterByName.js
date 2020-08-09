@@ -10,29 +10,29 @@ const StyledSearchIcon = styled(SearchIcon)`
   color: ${({ theme }) => theme.purpleDark};
 `;
 
-const FilterByName = ({ title, placeholder }) => {
-  return (
-    <>
-      <Title as="h2" size="2.4">
-        {title}
-      </Title>
-      <SearchInput
-        placeholder={placeholder}
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <StyledSearchIcon />
-            </InputAdornment>
-          ),
-        }}
-      />
-    </>
-  );
-};
+const FilterByName = ({ title, placeholder, handleChange }) => (
+  <>
+    <Title as="h2" size="2.4">
+      {title}
+    </Title>
+    <SearchInput
+      placeholder={placeholder}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <StyledSearchIcon />
+          </InputAdornment>
+        ),
+      }}
+      onChange={(e) => handleChange(e.target.value)}
+    />
+  </>
+);
 
 FilterByName.propTypes = {
   title: PropTypes.string,
   placeholder: PropTypes.string,
+  handleChange: PropTypes.func.isRequired,
 };
 
 FilterByName.defaultProps = {

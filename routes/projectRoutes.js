@@ -1,5 +1,4 @@
 const express = require('express');
-const multer = require('multer');
 const projectController = require('../controllers/projectController');
 const jwtAuth = require('../middlewares/auth-middleware');
 const upload = require('../config/multerStorage');

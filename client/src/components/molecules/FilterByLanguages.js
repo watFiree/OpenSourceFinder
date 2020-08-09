@@ -28,15 +28,15 @@ const menuProps = {
   getContentAnchorEl: null,
 };
 
-const FilterByLanguages = () => {
-  const [technologies, setTechnologies] = useState([]);
-
-  const handleChange = (e) => {
-    setTechnologies([...e.target.value]);
+const FilterByLanguages = ({ handleChange }) => {
+  const [languages, setLanguages] = useState([]);
+  const changeData = (e) => {
+    setLanguages([...e.target.value]);
+    handleChange(e.target.value);
   };
   const handleDelete = (name) => {
-    const newState = technologies.filter((item) => item !== name.toLowerCase());
-    setTechnologies(newState);
+    const newState = languages.filter((item) => item !== name.toLowerCase());
+    setLanguages(newState);
   };
 
   return (
@@ -47,9 +47,9 @@ const FilterByLanguages = () => {
       <Select
         labelId="select"
         variant="filled"
-        value={technologies}
-        onChange={handleChange}
-        id="technologies"
+        value={languages}
+        onChange={changeData}
+        id="languages"
         MenuProps={menuProps}
         multiple
       >
@@ -60,7 +60,7 @@ const FilterByLanguages = () => {
         ))}
       </Select>
       <ChipsWrapper>
-        {technologies.map((item) => (
+        {languages.map((item) => (
           <Chip
             key={item.name}
             handleDelete={handleDelete}

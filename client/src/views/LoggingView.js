@@ -18,7 +18,6 @@ import { FlexCenterAroundColumn, FlexCenterColumn, FlexCenter } from '../helpers
 import { signUser } from '../redux/actions/signUser';
 import GoogleButton from '../components/atoms/GoogleButton';
 import GithubButton from '../components/atoms/GithubButton';
-import TwitterButton from '../components/atoms/TwitterButton';
 import { mapStateToProps } from '../helpers/mapStateToProps';
 
 const Wrapper = styled.div`
@@ -192,7 +191,6 @@ const LoggingView = ({ match, user, signUser }) => {
         </Text>
         <SocialMedias>
           <GoogleButton />
-          <TwitterButton />
           <GithubButton />
         </SocialMedias>
       </FormWrapper>

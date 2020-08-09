@@ -6,7 +6,6 @@ const UserSchema = new Schema(
   {
     googleId: String,
     githubId: String,
-    twitterId: String,
     name: { type: String, trim: true, required: true },
     email: { type: String, lowercase: true, trim: true, required: true },
     avaible: { type: Number, default: 1 },
