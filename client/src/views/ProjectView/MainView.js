@@ -7,6 +7,7 @@ import ProjectMenu from './Menu';
 import ProjectUsers from './Users';
 import ProjectOffers from './Offers';
 import ProjectTasks from './Tasks';
+import ProjectChat from './Chat';
 import ProjectNavigation from '../../components/molecules/ProjectNavigation';
 import Wrapper from '../../components/atoms/Wrapper';
 import bgImage from '../../assets/project-view-background.jpg';
@@ -65,6 +66,9 @@ const ProjectView = ({ user, projects, getProject, match }) => {
           </ContentPanel>
           <ContentPanel value={page} index={3}>
             <ProjectTasks tasksIds={data.tasks} />
+          </ContentPanel>
+          <ContentPanel value={page} index={4}>
+            <ProjectChat />
           </ContentPanel>
         </div>
       </Wrapper>

@@ -59,6 +59,7 @@ const ProjectNavigation = () => {
         <Tab label="Users" {...a11yProps(1)} />
         <Tab label="Offers" {...a11yProps(2)} />
         <Tab label="Tasks" {...a11yProps(3)} />
+        <Tab label="Chat" {...a11yProps(4)} />
       </StyledTabs>
     </Wrapper>
   );
