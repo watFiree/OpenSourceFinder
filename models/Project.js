@@ -16,6 +16,7 @@ const ProjectSchema = Schema({
   image: String,
   announcements: [{ type: Schema.Types.ObjectId, ref: 'Announcement' }],
   tasks: [{ type: Schema.Types.ObjectId, ref: 'Task' }],
+  chat: { type: Schema.Types.ObjectId, required: true, ref: 'Chat' },
 });
 
 module.exports = model('Project', ProjectSchema, 'projects');

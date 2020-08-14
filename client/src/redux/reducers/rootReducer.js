@@ -5,6 +5,7 @@ import formsReducer from './formsReducer';
 import offersReducer from './offersReducer';
 import applicationsReducer from './applicationsReducer';
 import tasksReducer from './tasksReducer';
+import chatsReducer from './chatsReducer';
 
 const rootReducer = combineReducers({
   user: userReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   offers: offersReducer,
   applications: applicationsReducer,
   tasks: tasksReducer,
+  chats: chatsReducer,
   forms: formsReducer,
 });
 

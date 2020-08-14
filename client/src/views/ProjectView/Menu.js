@@ -65,8 +65,6 @@ const ProjectMenu = ({ data }) => {
           <CreateTooltip width="30%" onClick={() => setView(taskView)}>
             Create task
           </CreateTooltip>
-
-          <CreateTooltip width="30%">Create announcement</CreateTooltip>
         </Flex>
       </Actions>
       {view === userView && (

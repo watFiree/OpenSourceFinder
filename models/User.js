@@ -8,6 +8,7 @@ const UserSchema = new Schema(
     githubId: String,
     name: { type: String, trim: true, required: true },
     email: { type: String, lowercase: true, trim: true, required: true },
+    image: String,
     avaible: { type: Number, default: 1 },
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
     stack: [{ type: String }],

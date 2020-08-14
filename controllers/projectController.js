@@ -1,9 +1,11 @@
+const { Types } = require('mongoose');
 const validator = require('validator');
 const Project = require('../models/Project');
 const User = require('../models/User');
 const Offer = require('../models/Offer');
 const Task = require('../models/Task');
 const Application = require('../models/Application');
+const Chat = require('../models/Chat');
 const convertToSlug = require('../helpers/convertToSlug');
 
 module.exports = {
@@ -20,6 +22,7 @@ module.exports = {
     }
 
     const data = {
+      _id: Types.ObjectId(),
       name,
       slug: convertToSlug(name),
       admins: [req.user],
@@ -30,14 +33,16 @@ module.exports = {
       tasks: [],
       stack,
       about,
-      image: req.file.path,
+      image: req.file.path ? req.file.path : '',
     };
 
     try {
       const exists = await Project.findOne({ name });
       if (exists)
         return res.status(400).send({ message: 'Project with this name already exists !' });
-      const project = await new Project(data);
+      const chat = await new Chat({ project: data._id, messages: [], activeUsers: [] });
+      await chat.save();
+      const project = await new Project({ ...data, chat });
       await project.save();
       await User.findOneAndUpdate({ _id: req.user._id }, { $push: { projects: project } });
       return res.status(200).send(project);
@@ -169,6 +174,28 @@ module.exports = {
       return res.status(200).send({ projectId, userId, type });
     } catch (err) {
       return res.status(404).send({ message: 'Could not promote user !' });
+    }
+  },
+  async getChat(req, res) {
+    const { id } = req.params;
+    try {
+      const chat = await Chat.findById(id);
+      if (!chat) return res.status(404).send({ message: 'Chat not found !' });
+      return res.status(200).send(chat);
+    } catch (err) {
+      return res.status(404).send({ message: 'Could not find this chat !' });
+    }
+  },
+  async sendMessage(req, res) {
+    const { chatId, text, userName, userImage, createdAt } = req.body;
+    try {
+      const chat = await Chat.findById(chatId);
+      if (!chat) return res.status(404).send({ message: 'Chat not found !' });
+      await chat.messages.push(req.body);
+      await chat.save();
+      return res.status(200).send(req.body);
+    } catch (err) {
+      return res.status(404).send({ message: 'Could send message !' });
     }
   },
 };

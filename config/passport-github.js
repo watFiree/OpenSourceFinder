@@ -13,9 +13,6 @@ const config = {
 };
 
 const verify = async (accessToken, refreshToken, profile, done) => {
-  console.log(accessToken);
-  console.log(profile);
-
   try {
     const user = await User.findOne({ githubId: profile.id });
 

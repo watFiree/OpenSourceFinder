@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import * as flex from 'styled-components-flexbox-tooltip';
 import SendMessageInput from '../molecules/SendMessageInput';
@@ -16,58 +16,22 @@ const Messages = styled.div`
   width: 100%;
   height: 90%;
   overflow-y: scroll;
+  overflow-x: hidden;
 `;
 
-const ChatBox = () => {
+const ChatBox = ({ chatId, messages }) => {
   const scroll = useRef(null);
-  React.useEffect(() => {
+  useEffect(() => {
     scroll.current.scrollTop = scroll.current.scrollHeight;
-  }, []);
+  }, [messages]);
   return (
     <Wrapper>
       <Messages ref={scroll}>
-        <Message
-          isCurrentUser={typeof 1 === typeof 2}
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Me' }}
-        />
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />{' '}
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />
-        <Message
-          data={{ image: '/icons/angular.svg', text: 'Hello world !', name: 'Szymon Ratowski' }}
-        />
+        {messages?.map((message, index) => (
+          <Message isCurrentUser={index % 2 === 0} data={message} />
+        ))}
       </Messages>
-      <SendMessageInput />
+      <SendMessageInput chatId={chatId} />
     </Wrapper>
   );
 };

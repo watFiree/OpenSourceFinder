@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 import * as flex from 'styled-components-flexbox-tooltip';
+import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
+import { mapStateToProps } from '../../helpers/mapStateToProps';
+import { sendMessage } from '../../redux/actions/sendMessage';
 
 const Wrapper = styled.form`
   width: 80%;
@@ -28,13 +31,34 @@ const StyledIcon = styled(({ ...props }) => <SendIcon {...props} />)`
   color: ${({ theme }) => theme.purpleLight};
 `;
 
-const SendMessageInput = () => (
-  <Wrapper>
-    <Input type="text" id="message" name="message" placeholder="Type your message.." />
-    <IconButton aria-label="send message">
-      <StyledIcon fontSize="large" />
-    </IconButton>
-  </Wrapper>
-);
+const SendMessageInput = ({ user, chatId, sendMessage }) => {
+  const input = useRef(null);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      chatId,
+      text: input.current.value,
+      userImage: '',
+      userName: user.name,
+      createdAt: new Date().toISOString(),
+    };
+    sendMessage(data);
+    input.current.value = '';
+  };
+  return (
+    <Wrapper onSubmit={handleSubmit}>
+      <Input
+        type="text"
+        id="message"
+        name="message"
+        ref={input}
+        placeholder="Type your message.."
+      />
+      <IconButton type="submit" aria-label="send message">
+        <StyledIcon fontSize="large" />
+      </IconButton>
+    </Wrapper>
+  );
+};
 
-export default SendMessageInput;
+export default connect(mapStateToProps('user'), { sendMessage })(SendMessageInput);

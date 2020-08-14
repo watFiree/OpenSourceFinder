@@ -1,6 +1,5 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import * as flex from 'styled-components-flexbox-tooltip';
 
 const Wrapper = styled.div`
   margin: 1.4rem 0;
@@ -56,12 +55,15 @@ const Message = ({ isCurrentUser, data }) => {
       {isCurrentUser ? (
         <>
           <UserText isCurrentUser={isCurrentUser}>{data.text}</UserText>
-          <UserImg src={data.image} alt={data.name} />
+          <UserImg
+            src={data.userImage.trim() ? data.userImage : '/images/img.png'}
+            alt={data.userName}
+          />
         </>
       ) : (
         <>
-          <UserImg src={data.image} alt={data.name} />
-          <UserText isCurrentUser={isCurrentUser} name={data.name}>
+          <UserImg src={data.userImage} alt={data.userName} />
+          <UserText isCurrentUser={isCurrentUser} name={data.userName}>
             {data.text}
           </UserText>{' '}
         </>

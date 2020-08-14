@@ -68,7 +68,7 @@ const ProjectView = ({ user, projects, getProject, match }) => {
             <ProjectTasks tasksIds={data.tasks} />
           </ContentPanel>
           <ContentPanel value={page} index={4}>
-            <ProjectChat />
+            <ProjectChat chatId={data.chat} />
           </ContentPanel>
         </div>
       </Wrapper>

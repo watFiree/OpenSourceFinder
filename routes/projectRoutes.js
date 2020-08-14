@@ -21,4 +21,7 @@ projectRouter
   .delete(jwtAuth, projectController.removeUser)
   .put(jwtAuth, projectController.promoteOrDegradeUser);
 
+projectRouter.route('/chat/:id').get(jwtAuth, projectController.getChat);
+projectRouter.route('/chat').post(jwtAuth, projectController.sendMessage);
+
 module.exports = projectRouter;
