@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
+const webSocket = require('./config/socketIo');
 // passport config
 passport.serializeUser((user, cb) => {
   cb(null, user);
@@ -40,5 +41,13 @@ mongoose.connect(process.env.MONGO_URI, {
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, chalk.bgRed('Connection error:')));
 db.once('open', () => {
-  app.listen(port, () => console.log(`Listening at port ${chalk.green(port)}`));
+  const server = app.listen(port, () => console.log(`Listening at port ${chalk.green(port)}`));
+  const io = webSocket.init(server);
+  io.on('connection', (socket) => {
+    socket.on('joined chat', (data) => socket.join(data.chatId));
+    socket.on('send message', (data) =>
+      socket.to(data.chatId).broadcast.emit('messages', { message: data })
+    );
+    socket.on('disconnect', (data) => console.log(data));
+  });
 });

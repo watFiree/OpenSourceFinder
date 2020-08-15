@@ -70,7 +70,7 @@ const Container = styled.div`
 
 export const ProjectCard = ({ data }) => (
   <Wrapper>
-    <Image src={data.image ? data.image : img} />
+    <Image src={data.image ? `/${data.image}` : img} alt={data.name} />
     <Info>
       <Title size="2.1rem">{data.name}</Title>
       <Text color="gray">{data.about.biogram}</Text>
@@ -111,7 +111,7 @@ const SimpleProjectCard = ({ data, admin, setProjectFnc, openFnc, removeProject,
   };
   return (
     <Wrapper>
-      <Image src={img} />
+      <Image src={data.image ? `/${data.image}` : img} alt={data.name} />
       <Container>
         <Title size="2.1rem">{data.name}</Title>
         <Buttons>

@@ -7,6 +7,9 @@ import SendIcon from '@material-ui/icons/Send';
 import { mapStateToProps } from '../../helpers/mapStateToProps';
 import { sendMessage } from '../../redux/actions/sendMessage';
 
+const io = require('socket.io-client');
+const socket = io('http://localhost:6969');
+
 const Wrapper = styled.form`
   width: 80%;
   height: 10%;
@@ -42,6 +45,7 @@ const SendMessageInput = ({ user, chatId, sendMessage }) => {
       userName: user.name,
       createdAt: new Date().toISOString(),
     };
+    socket.emit('send message', data);
     sendMessage(data);
     input.current.value = '';
   };
