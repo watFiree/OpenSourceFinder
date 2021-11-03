@@ -41,6 +41,6 @@
     "request": "^2.88.2",
     "socket.io": "^2.3.0",
     "undefsafe": "^2.0.3",
-    "validator": "^13.0.0"
+    "validator": "^13.7.0"
   }
 }
